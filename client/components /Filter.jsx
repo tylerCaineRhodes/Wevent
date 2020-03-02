@@ -11,13 +11,9 @@ export default function Filter() {
     <div className="filter-container">
       <h3>Filter Results DAWG</h3>
       <Accordion>
-        <Card
-          style={{
-            backgroundColor: 'white',
-            color: 'blue',
-            width: '100%',
-            borderRadius: 0
-          }}
+        <Card style={{
+          backgroundColor: 'white', color: 'blue', width: '100%', borderRadius: 0,
+        }}
         >
           <Card.Header>
             <Accordion.Toggle as={Button} variant={Card.Header} eventKey="0">
@@ -25,9 +21,7 @@ export default function Filter() {
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
-            <Card.Body>
-              <Location />
-            </Card.Body>
+            <Card.Body><Location /></Card.Body>
           </Accordion.Collapse>
         </Card>
 
@@ -38,9 +32,7 @@ export default function Filter() {
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="1">
-            <Card.Body>
-              <Category />
-            </Card.Body>
+            <Card.Body><Category /></Card.Body>
           </Accordion.Collapse>
         </Card>
 
@@ -51,9 +43,7 @@ export default function Filter() {
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="2">
-            <Card.Body>
-              <NumberOfPeople />
-            </Card.Body>
+            <Card.Body><NumberOfPeople /></Card.Body>
           </Accordion.Collapse>
         </Card>
 
@@ -64,9 +54,7 @@ export default function Filter() {
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="3">
-            <Card.Body>
-              <Cost />
-            </Card.Body>
+            <Card.Body><Cost /></Card.Body>
           </Accordion.Collapse>
         </Card>
 
@@ -77,9 +65,7 @@ export default function Filter() {
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="4">
-            <Card.Body>
-              <PrivateOrPublic />
-            </Card.Body>
+            <Card.Body><PrivateOrPublic /></Card.Body>
           </Accordion.Collapse>
         </Card>
 
@@ -90,11 +76,10 @@ export default function Filter() {
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="5">
-            <Card.Body>
-              This should maybe be a check box or an input for time or something
-            </Card.Body>
+            <Card.Body>This should maybe be a check box or an input for time or something</Card.Body>
           </Accordion.Collapse>
         </Card>
+
       </Accordion>
     </div>
   );
