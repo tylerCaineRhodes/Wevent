@@ -6,7 +6,7 @@ export default function Category() {
       <span>A way to save the categories...</span>
 
       <form>
-        <label>
+        <label htmlFor="category">
           Category:
           <select>
             <option>TX</option>
