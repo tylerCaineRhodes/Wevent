@@ -4,3 +4,5 @@ node_js:
 before_script:
  - "npm run-script setup"
  - "npm run-script launch"
+script:
+ - "npm test"
