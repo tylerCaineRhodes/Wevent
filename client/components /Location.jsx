@@ -3,11 +3,11 @@ import React from 'react';
 export default function Location() {
   return (
     <form>
-      <label>
+      <label htmlFor="city">
         City:
         <input type="text" />
       </label>
-      <label>
+      <label htmlFor="state">
         State:
         <select>
           <option>TX</option>
@@ -20,5 +20,5 @@ export default function Location() {
       </label>
       <input type="submit" />
     </form>
-  )
+  );
 }
