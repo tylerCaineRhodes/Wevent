@@ -6,13 +6,11 @@ import Cost from './Cost.jsx';
 import PrivateOrPublic from './PrivateOrPublic.jsx';
 import NumberOfPeople from './NumberOfPeople.jsx';
 
-
 export default function Filter() {
   return (
     <div className="filter-container">
       <h3>Filter Results DAWG</h3>
       <Accordion>
-
         <Card style={{
           backgroundColor: 'white', color: 'blue', width: '100%', borderRadius: 0,
         }}
