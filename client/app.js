@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.sass';
 import axios from 'axios';
+import ModalReuseable from './components/ModalReuseable.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-
+        <ModalReuseable />
       </>
     );
   }
