@@ -16,6 +16,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 'MainPage',
+      calendarEvents: [
+        {
+          start: new Date(),
+          end: new Date(),
+          title: 'SAMPLE EVENT',
+        },
+      ],
 
       loginDisplayName: '',
       loginPassword: '',
@@ -69,6 +76,8 @@ class App extends React.Component {
     if (this.state.page === 'MainPage') {
       return (
         <MainPage
+          calendarEvents={this.state.calendarEvents}
+
           handleFilterCityChange={this.handleFilterCityChange}
           filterCityValue={this.state.filterCityValue}
           handleFilterStateChange={this.handleFilterStateChange}
