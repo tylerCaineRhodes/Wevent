@@ -75,7 +75,6 @@ class App extends React.Component {
   getAllEvents() {
     axios.get('/GetAllEvents')
       .then((res) => {
-        console.log('time -->', res.data[0].time);
         const results = [];
         for (let i = 0; i < res.data.length; i++) {
           const time = res.data[i].time.split(':');
