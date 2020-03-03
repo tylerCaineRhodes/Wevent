@@ -9,6 +9,16 @@ const MainPage = ({
   filterCityValue,
   handleFilterStateChange,
   filterStateValue,
+  handleFilterCategoryChange,
+  filterCategoryValue,
+  handleFilterNumOfPeopleChange,
+  filterNumOfPeopleValues,
+  handleFilterCostChange,
+  filterCostValue,
+  handleFilterPublicChange,
+  filterPublicValue,
+  handleFilterPrivateChange,
+  filterPrivateValue,
 }) => (
   <>
     <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} />
@@ -18,6 +28,16 @@ const MainPage = ({
         filterCityValue={filterCityValue}
         handleFilterStateChange={handleFilterStateChange}
         filterStateValue={filterStateValue}
+        handleFilterCategoryChange={handleFilterCategoryChange}
+        filterCategoryValue={filterCategoryValue}
+        handleFilterNumOfPeopleChange={handleFilterNumOfPeopleChange}
+        filterNumOfPeopleValues={filterNumOfPeopleValues}
+        handleFilterCostChange={handleFilterCostChange}
+        filterCostValue={filterCostValue}
+        handleFilterPublicChange={handleFilterPublicChange}
+        filterPublicValue={filterPublicValue}
+        handleFilterPrivateChange={handleFilterPrivateChange}
+        filterPrivateValue={filterPrivateValue}
       />
     </div>
     <div style={{ width: '66%', float: 'right' }}>

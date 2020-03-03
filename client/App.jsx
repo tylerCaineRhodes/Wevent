@@ -23,6 +23,11 @@ class App extends React.Component {
 
       filterCityValue: '',
       filterStateValue: '',
+      filterCategoryValue: '',
+      filterNumOfPeopleValues: [0, 10],
+      filterCostValue: 0,
+      filterPublicValue: false,
+      filterPrivateValue: false,
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
@@ -34,6 +39,11 @@ class App extends React.Component {
     this.closeSignUpModal = this.closeSignUpModal.bind(this);
     this.handleFilterCityChange = this.handleFilterCityChange.bind(this);
     this.handleFilterStateChange = this.handleFilterStateChange.bind(this);
+    this.handleFilterCategoryChange = this.handleFilterCategoryChange.bind(this);
+    this.handleFilterNumOfPeopleChange = this.handleFilterNumOfPeopleChange.bind(this);
+    this.handleFilterCostChange = this.handleFilterCostChange.bind(this);
+    this.handleFilterPublicChange = this.handleFilterPublicChange.bind(this);
+    this.handleFilterPrivateChange = this.handleFilterPrivateChange.bind(this);
   }
 
   handlePageRender() {
@@ -58,6 +68,16 @@ class App extends React.Component {
           filterCityValue={this.state.filterCityValue}
           handleFilterStateChange={this.handleFilterStateChange}
           filterStateValue={this.state.filterStateValue}
+          handleFilterCategoryChange={this.handleFilterCategoryChange}
+          filterCategoryValue={this.state.filterCategoryValue}
+          handleFilterNumOfPeopleChange={this.handleFilterNumOfPeopleChange}
+          filterNumOfPeopleValues={this.state.filterNumOfPeopleValues}
+          handleFilterCostChange={this.handleFilterCostChange}
+          filterCostValue={this.state.filterCostValue}
+          handleFilterPublicChange={this.handleFilterPublicChange}
+          filterPublicValue={this.state.filterPublicValue}
+          handleFilterPrivateChange={this.handleFilterPrivateChange}
+          filterPrivateValue={this.state.filterPrivateValue}
 
           openCreateEventModal={this.openCreateEventModal}
         />
@@ -114,6 +134,26 @@ class App extends React.Component {
 
   handleFilterStateChange(newValue) {
     this.setState({ filterStateValue: newValue });
+  }
+
+  handleFilterCategoryChange(newValue) {
+    this.setState({ filterCategoryValue: newValue });
+  }
+
+  handleFilterNumOfPeopleChange(newValue) {
+    this.setState({ filterNumOfPeopleValues: newValue });
+  }
+
+  handleFilterCostChange(newValue) {
+    this.setState({ filterCostValue: newValue });
+  }
+
+  handleFilterPublicChange(newValue) {
+    this.setState({ filterPublicValue: newValue });
+  }
+
+  handleFilterPrivateChange(newValue) {
+    this.setState({ filterPrivateValue: newValue });
   }
 
   render() {

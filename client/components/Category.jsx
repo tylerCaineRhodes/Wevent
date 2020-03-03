@@ -1,13 +1,16 @@
 import React from 'react';
 
-const Category = () => (
+const Category = ({
+  handleFilterCategoryChange,
+  filterCategoryValue,
+}) => (
   <div>
     <span>A way to save the categories...</span>
 
     <form>
       <label htmlFor="category">
         Category:
-        <select>
+        <select value={filterCategoryValue} onChange={(e) => handleFilterCategoryChange(e.target.value)}>
           <option>TX</option>
           <option>AZ</option>
           <option>TN</option>
@@ -16,7 +19,6 @@ const Category = () => (
           <option>MA</option>
         </select>
       </label>
-      <input type="submit" value="set" />
     </form>
   </div>
 );

@@ -11,6 +11,16 @@ const Filter = ({
   filterCityValue,
   handleFilterStateChange,
   filterStateValue,
+  handleFilterCategoryChange,
+  filterCategoryValue,
+  handleFilterNumOfPeopleChange,
+  filterNumOfPeopleValues,
+  handleFilterCostChange,
+  filterCostValue,
+  handleFilterPublicChange,
+  filterPublicValue,
+  handleFilterPrivateChange,
+  filterPrivateValue,
 }) => (
   <div className="filter-container">
     <h3>Filter Results DAWG</h3>
@@ -43,7 +53,12 @@ const Filter = ({
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey="1">
-          <Card.Body><Category /></Card.Body>
+          <Card.Body>
+            <Category
+              handleFilterCategoryChange={handleFilterCategoryChange}
+              filterCategoryValue={filterCategoryValue}
+            />
+          </Card.Body>
         </Accordion.Collapse>
       </Card>
 
@@ -54,7 +69,12 @@ const Filter = ({
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey="2">
-          <Card.Body><NumberOfPeople /></Card.Body>
+          <Card.Body>
+            <NumberOfPeople
+              handleFilterNumOfPeopleChange={handleFilterNumOfPeopleChange}
+              filterNumOfPeopleValues={filterNumOfPeopleValues}
+            />
+          </Card.Body>
         </Accordion.Collapse>
       </Card>
 
@@ -65,7 +85,12 @@ const Filter = ({
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey="3">
-          <Card.Body><Cost /></Card.Body>
+          <Card.Body>
+            <Cost
+              handleFilterCostChange={handleFilterCostChange}
+              filterCostValue={filterCostValue}
+            />
+          </Card.Body>
         </Accordion.Collapse>
       </Card>
 
@@ -76,7 +101,14 @@ const Filter = ({
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey="4">
-          <Card.Body><PrivateOrPublic /></Card.Body>
+          <Card.Body>
+            <PrivateOrPublic
+              handleFilterPublicChange={handleFilterPublicChange}
+              filterPublicValue={filterPublicValue}
+              handleFilterPrivateChange={handleFilterPrivateChange}
+              filterPrivateValue={filterPrivateValue}
+            />
+          </Card.Body>
         </Accordion.Collapse>
       </Card>
 
