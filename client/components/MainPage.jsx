@@ -3,7 +3,13 @@ import Title from './Title.jsx';
 import Filter from './Filter.jsx';
 import MainCalendar from './MainCalendar.jsx';
 
-const MainPage = ({ openCreateEventModal, handleFilterCityChange, filterCityValue, handleFilterStateChange, filterStateValue }) => (
+const MainPage = ({
+  openCreateEventModal,
+  handleFilterCityChange,
+  filterCityValue,
+  handleFilterStateChange,
+  filterStateValue,
+}) => (
   <>
     <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} />
     <div style={{ width: '33%', display: 'inline-block' }}>

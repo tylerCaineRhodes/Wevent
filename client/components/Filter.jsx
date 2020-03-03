@@ -6,7 +6,12 @@ import Cost from './Cost.jsx';
 import PrivateOrPublic from './PrivateOrPublic.jsx';
 import NumberOfPeople from './NumberOfPeople.jsx';
 
-const Filter = ({ handleFilterCityChange, filterCityValue, handleFilterStateChange, filterStateValue }) => (
+const Filter = ({
+  handleFilterCityChange,
+  filterCityValue,
+  handleFilterStateChange,
+  filterStateValue,
+}) => (
   <div className="filter-container">
     <h3>Filter Results DAWG</h3>
     <Accordion>

@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Location = ({ handleFilterCityChange, filterCityValue, handleFilterStateChange, filterStateValue }) => (
+const Location = ({
+  handleFilterCityChange,
+  filterCityValue,
+  handleFilterStateChange,
+  filterStateValue,
+}) => (
   <form>
     <label htmlFor="city">
       City:
