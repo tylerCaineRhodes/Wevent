@@ -4,10 +4,10 @@ import Button from 'react-bootstrap/Button';
 import Title from './Title.jsx';
 
 const LandingPage = ({
-  loginDisplayName, loginPassword, handleLoginDisplaynameChange, handleLoginPasswordChange, handleLoginSubmit,
+  loginDisplayName, loginPassword, handleLoginDisplaynameChange, handleLoginPasswordChange, handleLoginSubmit, openSignUpModal, closeSignUpModal,
 }) => (
   <div className="landingPage">
-    <Title />
+    <Title buttonText="signup" buttonClass="createNewEvent-button" onClick={openSignUpModal} />
     <Form className="login">
       <Form.Group controlId="Username">
         {/* <Form.Label>Welcome to Wevent</Form.Label> */}

@@ -2,23 +2,33 @@ import React from 'react';
 import './style.sass';
 import axios from 'axios';
 
+import { ThemeProvider } from 'react-bootstrap';
 import LandingPage from './components/LandingPage.jsx';
 import MainPage from './components/MainPage.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import ModalReuseable from './components/ModalReuseable.jsx';
+import CreateEvent from './components/CreateEvent.jsx';
+import Signup from './components/Signup.jsx';
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'LandingPage',
+      page: 'MainPage',
       loginDisplayName: '',
       loginPassword: '',
+      createEventDisplayed: false,
+      signUpDisplayed: false,
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     this.handlePageRender = this.handlePageRender.bind(this);
+    this.openCreateEventModal = this.openCreateEventModal.bind(this);
+    this.closeCreateEventModal = this.closeCreateEventModal.bind(this);
+    this.openSignUpModal = this.openSignUpModal.bind(this);
+    this.closeSignUpModal = this.closeSignUpModal.bind(this);
   }
 
   handlePageRender() {
@@ -30,19 +40,46 @@ class App extends React.Component {
           handleLoginDisplaynameChange={this.handleLoginDisplaynameChange}
           handleLoginPasswordChange={this.handleLoginPasswordChange}
           handleLoginSubmit={this.handleLoginSubmit}
+          openSignUpModal={this.openSignUpModal}
+          closeSignUpModal={this.closeSignUpModal}
+
         />
       );
     }
     if (this.state.page === 'MainPage') {
       return (
-        <MainPage />
+        <MainPage openCreateEventModal={this.openCreateEventModal} />
       );
     }
     if (this.state.page === 'Dashboard') {
       return (
-        <Dashboard />
+        <Dashboard openCreateEventModal={this.openCreateEventModal} />
       );
     }
+  }
+
+  openCreateEventModal() {
+    this.setState({
+      createEventDisplayed: true,
+    });
+  }
+
+  closeCreateEventModal() {
+    this.setState({
+      createEventDisplayed: false,
+    });
+  }
+
+  openSignUpModal() {
+    this.setState({
+      signUpDisplayed: true,
+    });
+  }
+
+  closeSignUpModal() {
+    this.setState({
+      signUpDisplayed: false,
+    });
   }
 
   handleLoginDisplaynameChange(newValue) {
@@ -62,7 +99,28 @@ class App extends React.Component {
   render() {
     return (
       <>
-        {this.handlePageRender('MainPage')}
+        {this.handlePageRender()}
+        {(this.state.page === 'MainPage' || this.state.page === 'Dashboard')
+        && (
+        <ModalReuseable
+          body={<CreateEvent />}
+          title="Create Event"
+          handleShow={this.openCreateEventModal}
+          handleClose={this.closeCreateEventModal}
+          show={this.state.createEventDisplayed}
+        />
+        )}
+        {this.state.page === 'LandingPage'
+        && (
+        <ModalReuseable
+          body={<Signup />}
+          title="Sign Up!"
+          handleShow={this.openSignUpModal}
+          handleClose={this.closeSignUpModal}
+          show={this.state.signUpDisplayed}
+        />
+        )}
+
       </>
     );
   }
