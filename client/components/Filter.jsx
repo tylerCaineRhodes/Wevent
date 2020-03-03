@@ -5,7 +5,6 @@ import Location from './Location.jsx';
 import Cost from './Cost.jsx';
 import PrivateOrPublic from './PrivateOrPublic.jsx';
 import NumberOfPeople from './NumberOfPeople.jsx';
-import LandingPage from './LandingPage.jsx';
 
 const Filter = () => (
   <div className="filter-container">
