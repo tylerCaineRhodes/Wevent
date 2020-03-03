@@ -7,6 +7,7 @@ const localizer = momentLocalizer(moment);
 
 const MainCalendar = ({
   calendarEvents,
+  handleCalendarEventClick,
 }) => (
   <Calendar
     localizer={localizer}
@@ -14,7 +15,7 @@ const MainCalendar = ({
     defaultView="month"
     events={calendarEvents}
     style={{ height: '100vh' }}
-    onSelectEvent={(e) => console.log('POOP :)', e)}
+    onSelectEvent={(e) => handleCalendarEventClick(e)}
   />
 );
 
