@@ -16,6 +16,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 'MainPage',
+      calendarEvents: [
+        {
+          start: new Date(),
+          end: new Date(),
+          title: 'SAMPLE EVENT',
+        },
+      ],
 
       loginDisplayName: '',
       loginPassword: '',
@@ -49,6 +56,7 @@ class App extends React.Component {
     this.handleFilterPrivateChange = this.handleFilterPrivateChange.bind(this);
     this.handleFilterToDChange = this.handleFilterToDChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
+    this.handleCalendarEventClick = this.handleCalendarEventClick.bind(this);
   }
 
   handlePageRender() {
@@ -69,6 +77,9 @@ class App extends React.Component {
     if (this.state.page === 'MainPage') {
       return (
         <MainPage
+          calendarEvents={this.state.calendarEvents}
+          handleCalendarEventClick={this.handleCalendarEventClick}
+
           handleFilterCityChange={this.handleFilterCityChange}
           filterCityValue={this.state.filterCityValue}
           handleFilterStateChange={this.handleFilterStateChange}
@@ -170,6 +181,10 @@ class App extends React.Component {
 
   handleFilterSubmit() {
     console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
+  }
+
+  handleCalendarEventClick(event) {
+    console.log('POOP :)', event, this.state.calendarEvents);
   }
 
   render() {

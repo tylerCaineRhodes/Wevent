@@ -4,6 +4,8 @@ import Filter from './Filter.jsx';
 import MainCalendar from './MainCalendar.jsx';
 
 const MainPage = ({
+  calendarEvents,
+  handleCalendarEventClick,
   openCreateEventModal,
   handleFilterCityChange,
   filterCityValue,
@@ -47,7 +49,10 @@ const MainPage = ({
       />
     </div>
     <div style={{ width: '66%', float: 'right' }}>
-      <MainCalendar />
+      <MainCalendar
+        calendarEvents={calendarEvents}
+        handleCalendarEventClick={handleCalendarEventClick}
+      />
     </div>
   </>
 );

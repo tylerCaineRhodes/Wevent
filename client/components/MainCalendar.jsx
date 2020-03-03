@@ -5,21 +5,17 @@ import moment from 'moment';
 
 const localizer = momentLocalizer(moment);
 
-const eventsList = [
-  {
-    start: new Date(),
-    end: new Date(),
-    title: 'SAMPLE EVENT',
-  },
-];
-
-const MainCalendar = (props) => (
+const MainCalendar = ({
+  calendarEvents,
+  handleCalendarEventClick,
+}) => (
   <Calendar
     localizer={localizer}
     defaultDate={new Date()}
     defaultView="month"
-    events={eventsList}
+    events={calendarEvents}
     style={{ height: '100vh' }}
+    onSelectEvent={(e) => handleCalendarEventClick(e)}
   />
 );
 
