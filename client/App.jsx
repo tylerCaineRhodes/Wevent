@@ -20,6 +20,8 @@ class App extends React.Component {
       loginPassword: '',
       createEventDisplayed: false,
       signUpDisplayed: false,
+      eventInfoDisplayed: false,
+
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
@@ -29,6 +31,8 @@ class App extends React.Component {
     this.closeCreateEventModal = this.closeCreateEventModal.bind(this);
     this.openSignUpModal = this.openSignUpModal.bind(this);
     this.closeSignUpModal = this.closeSignUpModal.bind(this);
+    this.openEventInfoModal = this.openEventInfoModal.bind(this);
+    this.closeEventInfoModal = this.closeEventInfoModal.bind(this);
   }
 
   handlePageRender() {
@@ -82,6 +86,18 @@ class App extends React.Component {
     });
   }
 
+  openEventInfoModal() {
+    this.setState({
+      EventInfoDisplayed: true,
+    });
+  }
+
+  closeEventInfoModal() {
+    this.setState({
+      EventInfoDisplayed: false,
+    });
+  }
+
   handleLoginDisplaynameChange(newValue) {
     this.setState({ loginDisplayName: newValue });
   }
@@ -108,6 +124,13 @@ class App extends React.Component {
           handleShow={this.openCreateEventModal}
           handleClose={this.closeCreateEventModal}
           show={this.state.createEventDisplayed}
+        />
+        <ModalReuseable
+          body={<EventInfo />}
+          title="Event Info"
+          handleShow={this.openEventInfoModal}
+          handleClose={this.closeEventInfoModal}
+          show={this.state.eventInfoDisplayed}
         />
         )}
         {this.state.page === 'LandingPage'
