@@ -24,9 +24,10 @@ const Filter = ({
   filterPrivateValue,
   handleFilterToDChange,
   filterToDValue,
+  handleFilterSubmit,
 }) => (
   <div className="filter-container">
-    <h3>Filter Results DAWG</h3>
+    <h3>Filter Events:</h3>
     <Accordion>
       <Card style={{
         backgroundColor: 'white', color: 'blue', width: '100%', borderRadius: 0,
@@ -127,6 +128,8 @@ const Filter = ({
           </Card.Body>
         </Accordion.Collapse>
       </Card>
+
+      <Button onClick={() => handleFilterSubmit()} />
 
     </Accordion>
   </div>

@@ -46,6 +46,7 @@ class App extends React.Component {
     this.handleFilterPublicChange = this.handleFilterPublicChange.bind(this);
     this.handleFilterPrivateChange = this.handleFilterPrivateChange.bind(this);
     this.handleFilterToDChange = this.handleFilterToDChange.bind(this);
+    this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
   }
 
   handlePageRender() {
@@ -82,6 +83,7 @@ class App extends React.Component {
           filterPrivateValue={this.state.filterPrivateValue}
           handleFilterToDChange={this.handleFilterToDChange}
           filterToDValue={this.state.filterToDValue}
+          handleFilterSubmit={this.handleFilterSubmit}
 
           openCreateEventModal={this.openCreateEventModal}
         />
@@ -162,6 +164,10 @@ class App extends React.Component {
 
   handleFilterToDChange(newValue) {
     this.setState({ filterToDValue: newValue });
+  }
+
+  handleFilterSubmit() {
+    console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
   }
 
   render() {
