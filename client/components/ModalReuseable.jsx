@@ -1,30 +1,22 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-export default function ModalReuseable() {
-  const [show, setShow] = useState(false);
+const ModalReuseable = ({
+  body, title, handleShow, handleClose, show,
+}) => (
+  <div>
+    <Modal show={show} onHide={handleClose} dialogClassName="modalStyles">
+      <Modal.Header closeButton onClick={handleClose}>
+        <Modal.Title>{title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body dialogClassName="modal-body">{body}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose} style={{ backgroundColor: 'orange' }}>
+          Close Modal
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  </div>
+);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  return (
-    <div>
-      <Button variant="primary" onClick={handleShow}>
-        example button for modal
-      </Button>
-      <Modal show={show} onHide={handleClose} dialogClassName="modalStyles">
-        <Modal.Header closeButton onClick={handleClose}>
-          <Modal.Title>Render Title component here</Modal.Title>
-        </Modal.Header>
-        <Modal.Body dialogClassName="modal-body">Here is where the component will go...</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close Modal
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <span>This is a modal</span>
-    </div>
-  );
-}
+export default ModalReuseable;
