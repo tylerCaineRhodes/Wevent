@@ -6,6 +6,7 @@
   "scripts": {
     "setup": "npm install",
     "test": "jest",
+    "test:watch": "jest --watch",
     "launch": "npm run-script start",
     "build-dev": "webpack -d --watch",
     "server-dev": "nodemon server/server.js",
