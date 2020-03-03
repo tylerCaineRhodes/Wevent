@@ -89,6 +89,7 @@ class App extends React.Component {
           handleClose={this.closeCreateEventModal}
           show={this.state.createEventDisplayed}
           buttonName="Create a New Event"
+          buttonClassStyling="modal-button"
         />
         )}
 

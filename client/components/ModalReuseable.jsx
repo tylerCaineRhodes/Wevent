@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 const ModalReuseable = ({
-  body, title, handleShow, handleClose, show, buttonName,
+  body, title, handleShow, handleClose, show, buttonName, buttonClassStyling,
 }) => (
   <div>
-    <button className="modal-button" type="submit" onClick={handleShow}>
+    <button className={buttonClassStyling} type="submit" onClick={handleShow}>
       {buttonName}
     </button>
     <Modal show={show} onHide={handleClose} dialogClassName="modalStyles">
