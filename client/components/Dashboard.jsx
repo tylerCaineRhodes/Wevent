@@ -3,12 +3,16 @@ import Title from './Title.jsx';
 
 const Dashboard = () => (
   <div>
-    <div>
-      <Title />
+    <Title />
+    <div className="outerDash">
+      <div className="hostingDash">
+        <h4>Hosting</h4>
+      </div>
+      <div className="attendingDash">
+        <h4>Attending</h4>
+      </div>
     </div>
-    <div className="hostingDash">
-      <h3>Hosting</h3>
-    </div>
+    <div className="vl" />
   </div>
 );
 
