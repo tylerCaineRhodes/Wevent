@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-export default function ModalReuseable() {
+const ModalReuseable = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -27,4 +27,6 @@ export default function ModalReuseable() {
       <span>This is a modal</span>
     </div>
   );
-}
+};
+
+export default ModalReuseable;

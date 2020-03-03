@@ -13,14 +13,14 @@ const eventsList = [
   },
 ];
 
-export default function MainCalendar(props) {
-  return (
-    <Calendar
-      localizer={localizer}
-      defaultDate={new Date()}
-      defaultView="month"
-      events={eventsList}
-      style={{ height: '100vh' }}
-    />
-  );
-}
+const MainCalendar = (props) => (
+  <Calendar
+    localizer={localizer}
+    defaultDate={new Date()}
+    defaultView="month"
+    events={eventsList}
+    style={{ height: '100vh' }}
+  />
+);
+
+export default MainCalendar;
