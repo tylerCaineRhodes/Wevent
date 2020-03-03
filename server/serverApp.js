@@ -81,5 +81,18 @@ app.get('/eventInfo', (req, res) => {
   });
 });
 
+app.get('/login', (req, res) => {
+  //console.log(req.query);
+  const { id } = req.query;
+  const { pass } = req.query;
+  db.loginCheck(id, pass, (err, data) => {
+    //console.log(data, err);
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
 module.exports.app = app;
 module.exports.connection = db.connection;
