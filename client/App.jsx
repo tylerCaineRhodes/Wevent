@@ -1,9 +1,9 @@
 import React from 'react';
 import './style.sass';
 import axios from 'axios';
+import moment from 'moment';
 
 import { ThemeProvider } from 'react-bootstrap';
-import Axios from 'axios';
 import LandingPage from './components/LandingPage.jsx';
 import MainPage from './components/MainPage.jsx';
 import Dashboard from './components/Dashboard.jsx';
@@ -75,11 +75,19 @@ class App extends React.Component {
   getAllEvents() {
     axios.get('/GetAllEvents')
       .then((res) => {
+        console.log('time -->', res.data[0].time);
         const results = [];
         for (let i = 0; i < res.data.length; i++) {
+          const time = res.data[i].time.split(':');
+          const momentTime = moment(res.data[i].date);
+          momentTime.add(time[0], 'h')
+            .add(time[1], 'm')
+            .add(time[2], 's');
+          // console.log(momentTime.toDate());
+
           results.push({
-            start: res.data[i].date,
-            end: res.data[i].date,
+            start: momentTime.toDate(),
+            end: momentTime.toDate(),
             title: res.data[i].title,
             eventId: res.data[i].event_id,
           });

@@ -112,7 +112,7 @@ module.exports.loginCheck = (id, pass, callback) => {
 };
 
 module.exports.getAllEvents = (callback) => {
-  const query = 'Select event_id, title, date from events;';
+  const query = 'Select event_id, title, date, time from events;';
 
   db.query(query, (err, results) => {
     if (err) {
