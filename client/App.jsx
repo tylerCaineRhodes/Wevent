@@ -5,6 +5,7 @@ import axios from 'axios';
 import LandingPage from './components/LandingPage.jsx';
 import MainPage from './components/MainPage.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import ModalReuseable from './components/ModalReuseable.jsx';
 
 
 class App extends React.Component {
