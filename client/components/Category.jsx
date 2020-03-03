@@ -1,14 +1,13 @@
 import React from 'react';
 
-export default function Category() {
-  return (
-    <div>
-      <span>A way to save the categories...</span>
-  
+const Category = () => (
+  <div>
+    <span>A way to save the categories...</span>
+
     <form>
-      <label>
+      <label htmlFor="category">
         Category:
-        <select >
+        <select>
           <option>TX</option>
           <option>AZ</option>
           <option>TN</option>
@@ -19,6 +18,7 @@ export default function Category() {
       </label>
       <input type="submit" value="set" />
     </form>
-    </div>
-  )
-}
+  </div>
+);
+
+export default Category;
