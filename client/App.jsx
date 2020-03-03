@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard.jsx';
 import ModalReuseable from './components/ModalReuseable.jsx';
 import CreateEvent from './components/CreateEvent.jsx';
 import Signup from './components/Signup.jsx';
+import EventInfo from './components/EventInfo.jsx';
 
 
 class App extends React.Component {
@@ -29,6 +30,8 @@ class App extends React.Component {
 
       createEventDisplayed: false,
       signUpDisplayed: false,
+      eventInfoDisplayed: false,
+
 
       filterCityValue: '',
       filterStateValue: '',
@@ -47,6 +50,8 @@ class App extends React.Component {
     this.closeCreateEventModal = this.closeCreateEventModal.bind(this);
     this.openSignUpModal = this.openSignUpModal.bind(this);
     this.closeSignUpModal = this.closeSignUpModal.bind(this);
+    this.openEventInfoModal = this.openEventInfoModal.bind(this);
+    this.closeEventInfoModal = this.closeEventInfoModal.bind(this);
     this.handleFilterCityChange = this.handleFilterCityChange.bind(this);
     this.handleFilterStateChange = this.handleFilterStateChange.bind(this);
     this.handleFilterCategoryChange = this.handleFilterCategoryChange.bind(this);
@@ -130,6 +135,18 @@ class App extends React.Component {
   closeSignUpModal() {
     this.setState({
       signUpDisplayed: false,
+    });
+  }
+
+  openEventInfoModal() {
+    this.setState({
+      eventInfoDisplayed: true,
+    });
+  }
+
+  closeEventInfoModal() {
+    this.setState({
+      eventInfoDisplayed: false,
     });
   }
 
@@ -219,14 +236,27 @@ class App extends React.Component {
         {this.handlePageRender()}
         {(this.state.page === 'MainPage' || this.state.page === 'Dashboard')
         && (
-        <ModalReuseable
-          body={<CreateEvent />}
-          title="Create Event"
-          handleShow={this.openCreateEventModal}
-          handleClose={this.closeCreateEventModal}
-          show={this.state.createEventDisplayed}
-        />
+          <>
+            <ModalReuseable
+              body={<CreateEvent />}
+              title="Create Event"
+              handleShow={this.openCreateEventModal}
+              handleClose={this.closeCreateEventModal}
+              show={this.state.createEventDisplayed}
+            />
+
+            <button className="event-info-button" type="submit" onClick={this.openEventInfoModal}>See eventInfo</button>
+
+            <ModalReuseable
+              body={<EventInfo />}
+              title="Event Info"
+              handleShow={this.openEventInfoModal}
+              handleClose={this.closeEventInfoModal}
+              show={this.state.eventInfoDisplayed}
+            />
+          </>
         )}
+
         {this.state.page === 'LandingPage'
         && (
         <ModalReuseable
