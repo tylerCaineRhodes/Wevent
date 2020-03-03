@@ -129,7 +129,7 @@ const Filter = ({
         </Accordion.Collapse>
       </Card>
 
-      <Button onClick={() => handleFilterSubmit()} />
+      <Button onClick={() => handleFilterSubmit()}>Submit Filters</Button>
 
     </Accordion>
   </div>
