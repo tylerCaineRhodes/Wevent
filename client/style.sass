@@ -1,5 +1,6 @@
 @mixin basic-styles
   display: block
+  font-family: "Trebuchet MS"
   // justify-content: center
   // align-items: center
 
@@ -9,48 +10,54 @@
 
 .grid-parent 
   @include display-grid
-  height: 600px
+  height: 620px
   width: 50%
-  grid-template-columns: 2
+  grid-template-columns: 1fr 1fr
   grid-auto-rows: 2
-  // grid-gap: 5px
+  //grid-gap: 5px
   // padding: 5px
-  border: 3px solid black
+  border: 3px solid #800d0d
+  border-radius: 10px
   
 .grid-title 
-  background-color: blue
-  height: 150px
   @include basic-styles
+  background-color: #800d0d
+  height: 120px
   grid-column: 1/3
   grid-row: 1/2
+  color: white
+  
 
-.grid-left 
-  background-color: red
-  height: 450px
+.grid-left
   @include basic-styles
+  background-color: #fc6565
+  height: 445px
   grid-column: 1/2
   grid-row: 2/3
+  padding: 20px
+  margin: 2px 0px 0px 6px
+  border-radius: 5px
   
-.grid-right 
-  background-color: green
-  height: 450px
+.grid-right
   @include basic-styles
+  background-color: white
+  height: 450px
   grid-column: 2/3
   grid-row: 2/3
-  overflow-wrap: break-word
   overflow-y: auto
+  padding: 20px
 
 p.eventInfoTitle
   font-size: 45px
   position: relative
   top: -35px
-  left: 10px
+  padding-left: 30px
 
 p.eventInfoLocation
   font-size: 25px
   position: relative
   top: -75px
-  left: 25px
+  padding-left: 40px
 
 p.eventInfoDescription
   overflow-wrap: break-word
