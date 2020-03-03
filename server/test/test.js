@@ -27,12 +27,12 @@ describe('Test the dashboard path', () => {
   //hosting events with n pending requests should have n as pending
 });
 
-describe('Test the getInfo path', () => {
-  test('It should response the GET method', (done) => {
-    request(app).get('/getInfo').then((response) => {
-      expect(response.statusCode).toBe(200);
-      done();
-    });
-  });
-//events im hosting
-});
+// describe('Test the getInfo path', () => {
+//   test('It should response the GET method', (done) => {
+//     request(app).get('/getInfo').then((response) => {
+//       expect(response.statusCode).toBe(200);
+//       done();
+//     });
+//   });
+// //events im hosting
+// });
