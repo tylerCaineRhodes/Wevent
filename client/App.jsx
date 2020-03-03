@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard.jsx';
 import ModalReuseable from './components/ModalReuseable.jsx';
 import CreateEvent from './components/CreateEvent.jsx';
 import Signup from './components/Signup.jsx';
+import EventInfo from './components/EventInfo.jsx';
 
 
 class App extends React.Component {
@@ -139,13 +140,13 @@ class App extends React.Component {
 
   openEventInfoModal() {
     this.setState({
-      EventInfoDisplayed: true,
+      eventInfoDisplayed: true,
     });
   }
 
   closeEventInfoModal() {
     this.setState({
-      EventInfoDisplayed: false,
+      eventInfoDisplayed: false,
     });
   }
 
@@ -217,6 +218,8 @@ class App extends React.Component {
               handleClose={this.closeCreateEventModal}
               show={this.state.createEventDisplayed}
             />
+
+            <button className="event-info-button" type="submit" onClick={this.openEventInfoModal}>See eventInfo</button>
 
             <ModalReuseable
               body={<EventInfo />}
