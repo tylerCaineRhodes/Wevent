@@ -5,8 +5,6 @@ const Category = ({
   filterCategoryValue,
 }) => (
   <div>
-    <span>A way to save the categories...</span>
-
     <form>
       <label htmlFor="category">
         Category:
