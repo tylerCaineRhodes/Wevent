@@ -18,7 +18,6 @@ db.connect((err) => {
 
 //routes for dashboard
 module.exports.getHostingEventsForDashboard = (hostId, cb) => {
-
   const query = 'SELECT e.title, u_e.pending FROM events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id WHERE e.host_id = ?';
   db.query(query, [hostId], (err, data) => {
     if (err) {
@@ -41,7 +40,7 @@ module.exports.getAttendingEventsForDashboard = (userId, cb) => {
 };
 
 module.exports.getNameAndLocation = (userId, cb) => {
-  const query = 'SELECT display_name, location_state, location_city FROM users WHERE user_id = ?'
+  const query = 'SELECT display_name, location_state, location_city FROM users WHERE user_id = ?';
   db.query(query, [userId], (err, data) => {
     if (err) {
       cb(err);
