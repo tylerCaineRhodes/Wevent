@@ -11,10 +11,6 @@ class App extends React.Component {
   render() {
     return (
       <>
-<<<<<<< HEAD:client/app.js
-      
-=======
->>>>>>> f4f94d4483c2d6e457a62b1e71d3347ed3098c82:client/App.jsx
       </>
     );
   }
