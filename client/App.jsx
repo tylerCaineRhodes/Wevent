@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.sass';
 import axios from 'axios';
+import Dashboard from './components/Dashboard.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class App extends React.Component {
   render() {
     return (
       <>
+        <Dashboard />
       </>
     );
   }
