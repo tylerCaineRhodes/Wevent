@@ -12,6 +12,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 'LandingPage',
+      userId: '',
       loginDisplayName: '',
       loginPassword: '',
     };
@@ -55,14 +56,30 @@ class App extends React.Component {
 
   handleLoginSubmit(event) {
     event.preventDefault();
-    this.setState({ loginDisplayName: '', loginPassword: '' });
+    axios.get('/login', {
+      params: {
+        id: this.state.loginDisplayName,
+        pass: this.state.loginPassword,
+      },
+    })
+      .then((res) => {
+        this.setState({
+          userId: res.data,
+          loginPassword: '',
+        }, () => {
+          console.log(this.state.userId);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     // DO ALL THE API CALLS TO VERIFY USER THEN SET PAGE STATE TO PAGE OR WHATEVER
   }
 
   render() {
     return (
       <>
-        {this.handlePageRender('MainPage')}
+        {this.handlePageRender(this.state.page)}
       </>
     );
   }

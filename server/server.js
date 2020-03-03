@@ -14,9 +14,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../dist')));
 
-
 //connections/queries
-
+app.get
 
 app.listen(Port, () => {
   console.log(`listening on port ${Port}`);
