@@ -16,3 +16,5 @@ const PrivateOrPublic = ({
     </FormControl>
   </>
 );
+
+export default PrivateOrPublic;

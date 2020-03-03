@@ -131,3 +131,5 @@ const Filter = ({
     </Accordion>
   </div>
 );
+
+export default Filter;
