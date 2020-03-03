@@ -1,9 +1,9 @@
 import React from 'react';
 import Title from './Title.jsx';
 
-const Dashboard = () => (
+const Dashboard = ({ openCreateEventModal }) => (
   <div>
-    <Title />
+    <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} />
     <div className="outerDash">
       <div className="hostingDash">
         <h4>Hosting</h4>
