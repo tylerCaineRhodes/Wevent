@@ -1,0 +1,60 @@
+@mixin basic-styles
+  display: block
+  // justify-content: center
+  // align-items: center
+
+@mixin display-grid 
+  display: -ms-grid
+  display: grid
+
+.grid-parent 
+  @include display-grid
+  height: 600px
+  width: 50%
+  grid-template-columns: 2
+  grid-auto-rows: 2
+  // grid-gap: 5px
+  // padding: 5px
+  border: 3px solid black
+  
+.grid-title 
+  background-color: blue
+  height: 150px
+  @include basic-styles
+  grid-column: 1/3
+  grid-row: 1/2
+
+.grid-left 
+  background-color: red
+  height: 450px
+  @include basic-styles
+  grid-column: 1/2
+  grid-row: 2/3
+  
+.grid-right 
+  background-color: green
+  height: 450px
+  @include basic-styles
+  grid-column: 2/3
+  grid-row: 2/3
+  overflow-wrap: break-word
+  overflow-y: auto
+
+p.eventInfoTitle
+  font-size: 45px
+  position: relative
+  top: -35px
+  left: 10px
+
+p.eventInfoLocation
+  font-size: 25px
+  position: relative
+  top: -75px
+  left: 25px
+
+p.eventInfoDescription
+  overflow-wrap: break-word
+  overflow-y: auto
+
+
+
