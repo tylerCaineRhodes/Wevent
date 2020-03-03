@@ -28,6 +28,7 @@ class App extends React.Component {
       filterCostValue: 0,
       filterPublicValue: false,
       filterPrivateValue: false,
+      filterToDValue: '',
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
@@ -44,6 +45,7 @@ class App extends React.Component {
     this.handleFilterCostChange = this.handleFilterCostChange.bind(this);
     this.handleFilterPublicChange = this.handleFilterPublicChange.bind(this);
     this.handleFilterPrivateChange = this.handleFilterPrivateChange.bind(this);
+    this.handleFilterToDChange = this.handleFilterToDChange.bind(this);
   }
 
   handlePageRender() {
@@ -78,6 +80,8 @@ class App extends React.Component {
           filterPublicValue={this.state.filterPublicValue}
           handleFilterPrivateChange={this.handleFilterPrivateChange}
           filterPrivateValue={this.state.filterPrivateValue}
+          handleFilterToDChange={this.handleFilterToDChange}
+          filterToDValue={this.state.filterToDValue}
 
           openCreateEventModal={this.openCreateEventModal}
         />
@@ -154,6 +158,10 @@ class App extends React.Component {
 
   handleFilterPrivateChange(newValue) {
     this.setState({ filterPrivateValue: newValue });
+  }
+
+  handleFilterToDChange(newValue) {
+    this.setState({ filterToDValue: newValue });
   }
 
   render() {

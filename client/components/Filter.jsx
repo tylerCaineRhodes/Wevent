@@ -5,6 +5,7 @@ import Location from './Location.jsx';
 import Cost from './Cost.jsx';
 import PrivateOrPublic from './PrivateOrPublic.jsx';
 import NumberOfPeople from './NumberOfPeople.jsx';
+import TimeOfDay from './TimeOfDay.jsx';
 
 const Filter = ({
   handleFilterCityChange,
@@ -21,6 +22,8 @@ const Filter = ({
   filterPublicValue,
   handleFilterPrivateChange,
   filterPrivateValue,
+  handleFilterToDChange,
+  filterToDValue,
 }) => (
   <div className="filter-container">
     <h3>Filter Results DAWG</h3>
@@ -119,7 +122,9 @@ const Filter = ({
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey="5">
-          <Card.Body>This should maybe be a check box or an input for time or something</Card.Body>
+          <Card.Body>
+            <TimeOfDay handleFilterToDChange={handleFilterToDChange} filterToDValue={filterToDValue} />
+          </Card.Body>
         </Accordion.Collapse>
       </Card>
 

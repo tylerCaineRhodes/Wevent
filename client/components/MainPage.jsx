@@ -19,6 +19,8 @@ const MainPage = ({
   filterPublicValue,
   handleFilterPrivateChange,
   filterPrivateValue,
+  handleFilterToDChange,
+  filterToDValue,
 }) => (
   <>
     <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} />
@@ -38,6 +40,8 @@ const MainPage = ({
         filterPublicValue={filterPublicValue}
         handleFilterPrivateChange={handleFilterPrivateChange}
         filterPrivateValue={filterPrivateValue}
+        handleFilterToDChange={handleFilterToDChange}
+        filterToDValue={filterToDValue}
       />
     </div>
     <div style={{ width: '66%', float: 'right' }}>
