@@ -8,18 +8,16 @@ const useStyles = makeStyles({
   },
 });
 
-const Cost = () => {
+const Cost = ({
+  handleFilterCostChange,
+  filterCostValue,
+}) => {
   const classes = useStyles();
-  const [valueOfCost, setValueOfCost] = React.useState([37]);
-
-  const handleChange = (event, newValue) => {
-    setValueOfCost(newValue);
-  };
 
   return (
     <div className={classes.root}>
       <span>Cost</span>
-      <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={valueOfCost} onChange={handleChange} />
+      <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={filterCostValue} onChange={(e, v) => handleFilterCostChange(v)} />
     </div>
   );
 };

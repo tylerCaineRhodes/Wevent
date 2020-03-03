@@ -1,14 +1,19 @@
 import React from 'react';
 
-const Location = () => (
+const Location = ({
+  handleFilterCityChange,
+  filterCityValue,
+  handleFilterStateChange,
+  filterStateValue,
+}) => (
   <form>
     <label htmlFor="city">
       City:
-      <input type="text" />
+      <input type="text" value={filterCityValue} onChange={(e) => handleFilterCityChange(e.target.value)} />
     </label>
     <label htmlFor="state">
       State:
-      <select>
+      <select value={filterStateValue} onChange={(e) => handleFilterStateChange(e.target.value)}>
         <option>TX</option>
         <option>AZ</option>
         <option>TN</option>
@@ -17,7 +22,6 @@ const Location = () => (
         <option>MA</option>
       </select>
     </label>
-    <input type="submit" />
   </form>
 );
 

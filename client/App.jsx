@@ -16,10 +16,21 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 'MainPage',
+
       loginDisplayName: '',
       loginPassword: '',
+
       createEventDisplayed: false,
       signUpDisplayed: false,
+
+      filterCityValue: '',
+      filterStateValue: '',
+      filterCategoryValue: '',
+      filterNumOfPeopleValues: [0, 10],
+      filterCostValue: 0,
+      filterPublicValue: false,
+      filterPrivateValue: false,
+      filterToDValue: '',
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
@@ -29,6 +40,15 @@ class App extends React.Component {
     this.closeCreateEventModal = this.closeCreateEventModal.bind(this);
     this.openSignUpModal = this.openSignUpModal.bind(this);
     this.closeSignUpModal = this.closeSignUpModal.bind(this);
+    this.handleFilterCityChange = this.handleFilterCityChange.bind(this);
+    this.handleFilterStateChange = this.handleFilterStateChange.bind(this);
+    this.handleFilterCategoryChange = this.handleFilterCategoryChange.bind(this);
+    this.handleFilterNumOfPeopleChange = this.handleFilterNumOfPeopleChange.bind(this);
+    this.handleFilterCostChange = this.handleFilterCostChange.bind(this);
+    this.handleFilterPublicChange = this.handleFilterPublicChange.bind(this);
+    this.handleFilterPrivateChange = this.handleFilterPrivateChange.bind(this);
+    this.handleFilterToDChange = this.handleFilterToDChange.bind(this);
+    this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
   }
 
   handlePageRender() {
@@ -48,7 +68,27 @@ class App extends React.Component {
     }
     if (this.state.page === 'MainPage') {
       return (
-        <MainPage openCreateEventModal={this.openCreateEventModal} />
+        <MainPage
+          handleFilterCityChange={this.handleFilterCityChange}
+          filterCityValue={this.state.filterCityValue}
+          handleFilterStateChange={this.handleFilterStateChange}
+          filterStateValue={this.state.filterStateValue}
+          handleFilterCategoryChange={this.handleFilterCategoryChange}
+          filterCategoryValue={this.state.filterCategoryValue}
+          handleFilterNumOfPeopleChange={this.handleFilterNumOfPeopleChange}
+          filterNumOfPeopleValues={this.state.filterNumOfPeopleValues}
+          handleFilterCostChange={this.handleFilterCostChange}
+          filterCostValue={this.state.filterCostValue}
+          handleFilterPublicChange={this.handleFilterPublicChange}
+          filterPublicValue={this.state.filterPublicValue}
+          handleFilterPrivateChange={this.handleFilterPrivateChange}
+          filterPrivateValue={this.state.filterPrivateValue}
+          handleFilterToDChange={this.handleFilterToDChange}
+          filterToDValue={this.state.filterToDValue}
+          handleFilterSubmit={this.handleFilterSubmit}
+
+          openCreateEventModal={this.openCreateEventModal}
+        />
       );
     }
     if (this.state.page === 'Dashboard') {
@@ -94,6 +134,42 @@ class App extends React.Component {
     event.preventDefault();
     this.setState({ loginDisplayName: '', loginPassword: '' });
     // DO ALL THE API CALLS TO VERIFY USER THEN SET PAGE STATE TO PAGE OR WHATEVER
+  }
+
+  handleFilterCityChange(newValue) {
+    this.setState({ filterCityValue: newValue });
+  }
+
+  handleFilterStateChange(newValue) {
+    this.setState({ filterStateValue: newValue });
+  }
+
+  handleFilterCategoryChange(newValue) {
+    this.setState({ filterCategoryValue: newValue });
+  }
+
+  handleFilterNumOfPeopleChange(newValue) {
+    this.setState({ filterNumOfPeopleValues: newValue });
+  }
+
+  handleFilterCostChange(newValue) {
+    this.setState({ filterCostValue: newValue });
+  }
+
+  handleFilterPublicChange(newValue) {
+    this.setState({ filterPublicValue: newValue });
+  }
+
+  handleFilterPrivateChange(newValue) {
+    this.setState({ filterPrivateValue: newValue });
+  }
+
+  handleFilterToDChange(newValue) {
+    this.setState({ filterToDValue: newValue });
+  }
+
+  handleFilterSubmit() {
+    console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
   }
 
   render() {
