@@ -1,4 +1,3 @@
-/* eslint-disable */
 DROP DATABASE IF EXISTS Wevent;
 CREATE DATABASE Wevent;
 USE Wevent;

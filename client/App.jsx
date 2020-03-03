@@ -63,12 +63,22 @@ class App extends React.Component {
       },
     })
       .then((res) => {
-        this.setState({
-          userId: res.data,
-          loginPassword: '',
-        }, () => {
-          console.log(this.state.userId);
-        });
+        if (!res.data[0]) {
+          // eslint-disable-next-line no-alert
+          alert('Incorrect Login Information');
+          this.setState({
+            loginDisplayName: '',
+            loginPassword: '',
+          });
+        } else {
+          this.setState({
+            userId: res.data[0].user_id,
+            loginPassword: '',
+            page: 'MainPage',
+          }, () => {
+            console.log(this.state.userId);
+          });
+        }
       })
       .catch((error) => {
         console.error(error);
