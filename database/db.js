@@ -7,8 +7,8 @@ const db = mysql.createConnection({
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
 });
-console.log(process.env.DB_USER);
-console.log(process.env.DB_HOST);
+
+// check db connection
 db.connect((err) => {
   if (err) {
     return console.error('error: ', err.message);
@@ -97,6 +97,19 @@ module.exports.getEventInfoForNonHost = (eventId, hasAccess, cb) => {
   }
 };
 
+module.exports.loginCheck = (id, pass, callback) => {
+  //console.log(id, pass);
+  const query = `select user_id from users where display_name = '${id}' and password_hash = '${pass}';`
+  // eslint-disable-next-line sql/no-unsafe-query
+  db.query(query, (err, results) => {
+    //console.log(err, results);
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
 
 module.exports.connection = db;
 // module.exports.getCalendarEvents = (filters, cb) =>{
@@ -106,3 +119,4 @@ module.exports.connection = db;
 // module.exports.logIn = (filters, cb) =>{
 
 // }
+
