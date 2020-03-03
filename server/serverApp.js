@@ -42,6 +42,7 @@ app.get('/dashboard', (req, res) => {
 
 app.get('/eventInfo', (req, res) => {
   req.query.userId = parseInt(req.query.userId, 10);
+  console.log(req.query.userId);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
     if (err) {
       console.error(err);
@@ -80,4 +81,5 @@ app.get('/eventInfo', (req, res) => {
   });
 });
 
-module.exports = app;
+module.exports.app = app;
+module.exports.connection = db.connection;

@@ -98,6 +98,8 @@ module.exports.getEventInfoForNonHost = (eventId, hasAccess, cb) => {
   }
 };
 
+
+module.exports.connection = db;
 // module.exports.getCalendarEvents = (filters, cb) =>{
 
 // }
