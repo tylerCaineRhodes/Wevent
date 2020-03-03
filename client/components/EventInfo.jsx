@@ -2,7 +2,8 @@ import React from 'react';
 
 export default function EventInfo() {
   let status = 'owner';
-  let pending = ['adam', 'beth', 'charlie', 'dave']
+  let pending = ['Adam', 'Beth', 'Charlie', 'Dave'];
+  let accepted = ['Erik', 'Felicia', 'George', 'Harry'];
   return (
     <div className={`grid-parent-${status}`}>
       <div className="grid-title">
@@ -21,10 +22,23 @@ export default function EventInfo() {
         status === 'owner'
           ? (
             <div className="grid-owner-pend-accept">
-            {/* <div> */}
-              {/* {pending.map(x => <p>{x}</p>)}*/}
-              <div className="grid-owner-pend"></div>
-              <div className="grid-owner-accept"></div>
+
+              <div className="grid-owner-pend" style={{ display: 'inline-block' }}>
+                {pending.map((pend) => (
+                  <div>
+                    <p className="pend-accept-name">{pend}</p>
+                    <button type="button" className="pend-accept-button">Accept</button>
+                  </div>
+                ))}
+              </div>
+              <div className="grid-owner-accept" style={{ display: 'inline-block' }}>
+                {accepted.map((accept) => (
+                  <div>
+                    <p className="pend-accept-name">{accept}</p>
+                    <button type="button" className="pend-accept-button">Remove</button>
+                  </div>
+                ))}
+              </div>
             </div>
             // </div>
           ) : null
