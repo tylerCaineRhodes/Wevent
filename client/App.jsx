@@ -16,8 +16,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 'MainPage',
+
       loginDisplayName: '',
       loginPassword: '',
+
       createEventDisplayed: false,
       signUpDisplayed: false,
 
