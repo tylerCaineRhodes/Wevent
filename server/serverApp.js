@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const db = require('../database/db');
-const middleware = require('./middleware')
+const middleware = require('./middleware');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -14,71 +14,70 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 
 //connections/queries
-app.get('/dashboard', (req, res) =>{
-  db.getAttendingEventsForDashboard(req.query.user_id, (err, attending) => {
-    if(err){
+app.get('/dashboard', (req, res) => {
+  db.getAttendingEventsForDashboard(req.query.userId, (err, attending) => {
+    if (err) {
       console.error(err);
       res.sendStatus(500);
       return;
     }
-    db.getHostingEventsForDashboard(req.query.user_id, (err, hosting) => {
-      if(err){
-        console.error(err);
+    db.getHostingEventsForDashboard(req.query.userId, (error, hostingData) => {
+      if (error) {
+        console.error(error);
         res.sendStatus(500);
         return;
       }
-      hosting = middleware.prettifyHostingEventsForDashboard(hosting);
-      db.getNameAndLocation(req.query.user_id, (err, nameAndLocation) => {
-        if(err){
-          console.error(err);
+      const hosting = middleware.prettifyHostingEventsForDashboard(hostingData);
+      db.getNameAndLocation(req.query.userId, (problem, nameAndLocation) => {
+        if (problem) {
+          console.error(problem);
           res.sendStatus(500);
           return;
         }
-        res.send({attending, hosting, nameAndLocation})
-      })
-    })
-  })
-})
+        res.send({ attending, hosting, nameAndLocation });
+      });
+    });
+  });
+});
 
-app.get('/eventInfo', (req, res) =>{
-  req.query.user_id = parseInt(req.query.user_id)
-  db.getEventInfoForConditionalRender(req.query.event_id, req.query.user_id, (err, info)=>{
-    if(err){
+app.get('/eventInfo', (req, res) => {
+  req.query.userId = parseInt(req.query.userId, 10);
+  db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
+    if (err) {
       console.error(err);
       res.sendStatus(500);
       return;
     }
-    if (info[0].host_id === req.query.user_id){
-      db.getEventInfoForHost(req.query.event_id,(err, eventInfo)=>{
-        if(err){
-          console.error(err);
+    if (info[0].host_id === req.query.userId) {
+      db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
+        if (error) {
+          console.error(error);
           res.sendStatus(500);
           return;
         }
-        eventInfo = middleware.prettifyHostingForEventInfo(eventInfo);
-        res.send({access: 'host', eventInfo});
-      })
-    } else if (info[0].private === 0 || info[0].pending === 0){
-      db.getEventInfoForNonHost (req.query.event_id, true, (err, eventInfo) =>{
-        if(err){
-          console.error(err);
+        const eventInfo = middleware.prettifyHostingForEventInfo(infoForEvent);
+        res.send({ access: 'host', eventInfo });
+      });
+    } else if (info[0].private === 0 || info[0].pending === 0) {
+      db.getEventInfoForNonHost(req.query.eventId, true, (goofUp, eventInfo) => {
+        if (goofUp) {
+          console.error(goofUp);
           res.sendStatus(500);
           return;
         }
-        res.send({access: 'full', eventInfo});
-      })
+        res.send({ access: 'full', eventInfo });
+      });
     } else {
-      db.getEventInfoForNonHost (req.query.event_id, false, (err, eventInfo) =>{
-        if(err){
-          console.error(err);
+      db.getEventInfoForNonHost(req.query.eventId, false, (quandary, eventInfo) => {
+        if (quandary) {
+          console.error(quandary);
           res.sendStatus(500);
           return;
         }
-        res.send({access: 'limited', eventInfo});
-      })
+        res.send({ access: 'limited', eventInfo });
+      });
     }
-  })
-})
+  });
+});
 
 module.exports = app;
-

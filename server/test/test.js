@@ -1,4 +1,4 @@
-const request = require ('supertest');
+const request = require('supertest');
 const app = require('../serverApp');
 
 test('adds 1 + 2 to equal 3', () => {
@@ -7,19 +7,19 @@ test('adds 1 + 2 to equal 3', () => {
 
 describe('Test the root path', () => {
   test('It should respond to the GET method', (done) => {
-      request(app).get('/').then((response) => {
-          expect(response.statusCode).toBe(200);
-          done();
-      });
+    request(app).get('/').then((response) => {
+      expect(response.statusCode).toBe(200);
+      done();
+    });
   });
 });
 
 describe('Test the dashboard path', () => {
   test('It should response the GET method', (done) => {
-      request(app).get('/dashboard').then((response) => {
-          expect(response.statusCode).toBe(200);
-          done();
-      });
+    request(app).get('/dashboard').then((response) => {
+      expect(response.statusCode).toBe(200);
+      done();
+    });
   });
   //events im hosting should be included under hosting
   //events im attending should be included under attending
@@ -29,10 +29,10 @@ describe('Test the dashboard path', () => {
 
 describe('Test the getInfo path', () => {
   test('It should response the GET method', (done) => {
-      request(app).get('/getInfo').then((response) => {
-          expect(response.statusCode).toBe(200);
-          done();
-      });
+    request(app).get('/getInfo').then((response) => {
+      expect(response.statusCode).toBe(200);
+      done();
+    });
   });
-  //events im hosting 
+//events im hosting
 });
