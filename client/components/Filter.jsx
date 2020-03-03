@@ -6,7 +6,7 @@ import Cost from './Cost.jsx';
 import PrivateOrPublic from './PrivateOrPublic.jsx';
 import NumberOfPeople from './NumberOfPeople.jsx';
 
-const Filter = () => (
+const Filter = ({ handleFilterCityChange, filterCityValue, handleFilterStateChange, filterStateValue }) => (
   <div className="filter-container">
     <h3>Filter Results DAWG</h3>
     <Accordion>
@@ -20,7 +20,14 @@ const Filter = () => (
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey="0">
-          <Card.Body><Location /></Card.Body>
+          <Card.Body>
+            <Location
+              handleFilterCityChange={handleFilterCityChange}
+              filterCityValue={filterCityValue}
+              handleFilterStateChange={handleFilterStateChange}
+              filterStateValue={filterStateValue}
+            />
+          </Card.Body>
         </Accordion.Collapse>
       </Card>
 

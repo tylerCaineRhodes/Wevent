@@ -20,6 +20,9 @@ class App extends React.Component {
       loginPassword: '',
       createEventDisplayed: false,
       signUpDisplayed: false,
+
+      filterCityValue: '',
+      filterStateValue: '',
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
@@ -29,6 +32,8 @@ class App extends React.Component {
     this.closeCreateEventModal = this.closeCreateEventModal.bind(this);
     this.openSignUpModal = this.openSignUpModal.bind(this);
     this.closeSignUpModal = this.closeSignUpModal.bind(this);
+    this.handleFilterCityChange = this.handleFilterCityChange.bind(this);
+    this.handleFilterStateChange = this.handleFilterStateChange.bind(this);
   }
 
   handlePageRender() {
@@ -48,7 +53,14 @@ class App extends React.Component {
     }
     if (this.state.page === 'MainPage') {
       return (
-        <MainPage openCreateEventModal={this.openCreateEventModal} />
+        <MainPage
+          handleFilterCityChange={this.handleFilterCityChange}
+          filterCityValue={this.state.filterCityValue}
+          handleFilterStateChange={this.handleFilterStateChange}
+          filterStateValue={this.state.filterStateValue}
+
+          openCreateEventModal={this.openCreateEventModal}
+        />
       );
     }
     if (this.state.page === 'Dashboard') {
@@ -94,6 +106,14 @@ class App extends React.Component {
     event.preventDefault();
     this.setState({ loginDisplayName: '', loginPassword: '' });
     // DO ALL THE API CALLS TO VERIFY USER THEN SET PAGE STATE TO PAGE OR WHATEVER
+  }
+
+  handleFilterCityChange(newValue) {
+    this.setState({ filterCityValue: newValue });
+  }
+
+  handleFilterStateChange(newValue) {
+    this.setState({ filterStateValue: newValue });
   }
 
   render() {
