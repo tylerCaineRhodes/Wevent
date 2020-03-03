@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-export default function ModalReuseable() {
+const ModalReuseable = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -10,13 +10,13 @@ export default function ModalReuseable() {
   return (
     <div>
       <Button variant="primary" onClick={handleShow}>
-        Open Modal button- example
+        example button for modal
       </Button>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} dialogClassName="modalStyles">
         <Modal.Header closeButton onClick={handleClose}>
           <Modal.Title>Render Title component here</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="modal-body">Here is where the component will go...</Modal.Body>
+        <Modal.Body dialogClassName="modal-body">Here is where the component will go...</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close Modal
@@ -27,4 +27,6 @@ export default function ModalReuseable() {
       <span>This is a modal</span>
     </div>
   );
-}
+};
+
+export default ModalReuseable;
