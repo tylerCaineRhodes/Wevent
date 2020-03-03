@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function NumberOfPeople() {
+const Cost = () => {
   const classes = useStyles();
   const [valueOfCost, setValueOfCost] = React.useState([37]);
 
@@ -22,4 +22,6 @@ export default function NumberOfPeople() {
       <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={valueOfCost} onChange={handleChange} />
     </div>
   );
-}
+};
+
+export default Cost;

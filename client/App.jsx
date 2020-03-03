@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import LandingPage from './components/LandingPage.jsx';
 import MainPage from './components/MainPage.jsx';
+import Dashboard from './components/Dashboard.jsx';
 
 
 class App extends React.Component {
@@ -35,6 +36,11 @@ class App extends React.Component {
     if (this.state.page === 'MainPage') {
       return (
         <MainPage />
+      );
+    }
+    if (this.state.page === 'Dashboard') {
+      return (
+        <Dashboard />
       );
     }
   }
