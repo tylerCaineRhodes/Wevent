@@ -3,9 +3,9 @@ import Title from './Title.jsx';
 import Filter from './Filter.jsx';
 import MainCalendar from './MainCalendar.jsx';
 
-const MainPage = (props) => (
+const MainPage = ({ openCreateEventModal }) => (
   <>
-    <Title />
+    <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} />
     <div style={{ width: '33%', display: 'inline-block' }}>
       <Filter />
     </div>
