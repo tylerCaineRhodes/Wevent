@@ -16,6 +16,14 @@ const MainCalendar = ({
     events={calendarEvents}
     style={{ height: '100vh' }}
     onSelectEvent={(e) => handleCalendarEventClick(e)}
+    eventPropGetter={(event) => ({
+      style: {
+        backgroundColor: event.private === 0
+          ? 'orange'
+          : 'red',
+      },
+    })}
+
   />
 );
 

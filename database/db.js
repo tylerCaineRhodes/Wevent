@@ -137,7 +137,8 @@ module.exports.signUpAddUser = (displayName, password, city, state, callback) =>
 };
 
 module.exports.getAllEvents = (callback) => {
-  const query = 'Select event_id, title, date, time from events;';
+  const query = 'Select event_id, title, date, time, price, private, attendance_max, attendance_current, city, state FROM events where attendance_max != attendance_current or attendance_max is null;';
+
   db.query(query, (err, results) => {
     if (err) {
       callback(err);
