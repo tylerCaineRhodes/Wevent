@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'MainPage',
+      page: 'LandingPage',
       userId: '',
       calendarEvents: [
         {
@@ -371,7 +371,7 @@ class App extends React.Component {
     console.log('POOP :)', event, this.state.calendarEvents);
   }
 
-  render() { 
+  render() {
     return (
       <>
         {this.handlePageRender()}
@@ -388,7 +388,7 @@ class App extends React.Component {
 
             <button className="event-info-button" type="submit" onClick={this.openEventInfoModal}>See eventInfo</button>
 
-            <ModalReuseable   
+            <ModalReuseable
               body={<EventInfo />}
               title="Event Info"
               handleShow={this.openEventInfoModal}
