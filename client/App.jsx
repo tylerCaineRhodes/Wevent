@@ -482,48 +482,62 @@ class App extends React.Component {
 
   handleCreateEventSubmit(event) {
     event.preventDefault();
-    const createEventData = {
-      userId: this.state.userId,
-      title: this.state.createEventTitle,
-      description: this.state.createEventDescription,
-      category: this.state.createEventCategory,
-      date: this.state.createEventDate,
-      time: this.state.createEventTime,
-      cost: this.state.createEventCost,
-      privateEvent: this.state.createEventPrivate,
-      address1: this.state.createEventAddress1,
-      address2: this.state.createEventAddress2,
-      city: this.state.createEventCity,
-      state: this.state.createEventState,
-      zipcode: this.state.createEventZipcode,
-      maxPeople: this.state.createEventMaxPeople,
-    };
-    axios.post('/createEvent', createEventData)
-      .then(() => {
-        this.setState({
-          createEventDisplayed: false,
-          createEventTitle: '',
-          createEventDescription: '',
-          createEventCategory: '',
-          createEventDate: moment().format('YYYY-MM-DD'),
-          createEventTime: moment().format('hh:mm'),
-          createEventCost: 0,
-          createEventPrivate: false,
-          createEventAddress1: '',
-          createEventAddress2: '',
-          createEventCity: '',
-          createEventState: '',
-          createEventZipcode: 0,
-          createEventMaxPeople: 50,
-        }, () => {
-          this.getAllEvents();
-          // eslint-disable-next-line no-alert
-          alert('Event Created!');
+    if (
+      this.state.createEventTitle === ''
+      || this.state.createEventState === ''
+      || this.state.createEventDescription === ''
+      || this.state.createEventCategory === ''
+      || this.state.createEventDate === ''
+      || this.state.createEventTime === ''
+      || this.state.createEventCity === ''
+      || this.state.userId === ''
+    ) {
+      // eslint-disable-next-line no-alert
+      alert('Please fill out all fields.');
+    } else {
+      const createEventData = {
+        userId: this.state.userId,
+        title: this.state.createEventTitle,
+        description: this.state.createEventDescription,
+        category: this.state.createEventCategory,
+        date: this.state.createEventDate,
+        time: this.state.createEventTime,
+        cost: this.state.createEventCost,
+        privateEvent: this.state.createEventPrivate,
+        address1: this.state.createEventAddress1,
+        address2: this.state.createEventAddress2,
+        city: this.state.createEventCity,
+        state: this.state.createEventState,
+        zipcode: this.state.createEventZipcode,
+        maxPeople: this.state.createEventMaxPeople,
+      };
+      axios.post('/createEvent', createEventData)
+        .then(() => {
+          this.setState({
+            createEventDisplayed: false,
+            createEventTitle: '',
+            createEventDescription: '',
+            createEventCategory: '',
+            createEventDate: moment().format('YYYY-MM-DD'),
+            createEventTime: moment().format('hh:mm'),
+            createEventCost: 0,
+            createEventPrivate: false,
+            createEventAddress1: '',
+            createEventAddress2: '',
+            createEventCity: '',
+            createEventState: '',
+            createEventZipcode: 0,
+            createEventMaxPeople: 50,
+          }, () => {
+            this.getAllEvents();
+            // eslint-disable-next-line no-alert
+            alert('Event Created!');
+          });
+        })
+        .catch((error) => {
+          console.error(error);
         });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    }
   }
 
   render() {
