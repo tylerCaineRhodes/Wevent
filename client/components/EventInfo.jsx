@@ -22,8 +22,8 @@ export default function EventInfo() {
         status === 'owner'
           ? (
             <div className="grid-owner-pend-accept">
-
               <div className="grid-owner-pend" style={{ display: 'inline-block' }}>
+              <div className="pend-accept-heading">Pending</div>
                 {pending.map((pend) => (
                   <div>
                     <p className="pend-accept-name">{pend}</p>
@@ -32,6 +32,7 @@ export default function EventInfo() {
                 ))}
               </div>
               <div className="grid-owner-accept" style={{ display: 'inline-block' }}>
+              <div className="pend-accept-heading">Accepted</div>
                 {accepted.map((accept) => (
                   <div>
                     <p className="pend-accept-name">{accept}</p>
