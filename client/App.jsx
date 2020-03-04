@@ -12,17 +12,21 @@ import CreateEvent from './components/CreateEvent.jsx';
 import Signup from './components/Signup.jsx';
 import EventInfo from './components/EventInfo.jsx';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       page: 'MainPage',
       userId: '',
-      calendarEvents: [
-      ],
+      calendarEvents: [],
+      filteredEvents: [],
       loginDisplayName: '',
       loginPassword: '',
+
+      signUpDisplayName: '',
+      signUpPassword: '',
+      signUpCity: '',
+      signUpState: '',
 
       createEventDisplayed: false,
       signUpDisplayed: false,
@@ -32,8 +36,8 @@ class App extends React.Component {
       filterCityValue: '',
       filterStateValue: '',
       filterCategoryValue: '',
-      filterNumOfPeopleValues: [0, 10],
-      filterCostValue: 0,
+      filterNumOfPeopleValues: [15, 40],
+      filterCostValue: 100,
       filterPublicValue: false,
       filterPrivateValue: false,
       filterToDValue: '',
@@ -84,6 +88,78 @@ class App extends React.Component {
     this.handleCreateEventZipcodeChange = this.handleCreateEventZipcodeChange.bind(this);
     this.handleCreateEventMaxPeopleChange = this.handleCreateEventMaxPeopleChange.bind(this);
     this.handleCreateEventSubmit = this.handleCreateEventSubmit.bind(this);
+    this.handleSignUpDisplaynameChange = this.handleSignUpDisplaynameChange.bind(this);
+    this.handleSignUpPasswordChange = this.handleSignUpPasswordChange.bind(this);
+    this.handleSignUpCityNameChange = this.handleSignUpCityNameChange.bind(this);
+    this.handleSignUpStateNameChange = this.handleSignUpStateNameChange.bind(this);
+    this.handleSignUpSubmit = this.handleSignUpSubmit.bind(this);
+    this.getAllEvents = this.getAllEvents.bind(this);
+    this.filterEvents = this.filterEvents.bind(this);
+  }
+
+  componentDidMount() {
+    this.getAllEvents();
+    this.filterEvents();
+  }
+
+
+  getAllEvents() {
+    axios.get('/GetAllEvents')
+      .then((res) => {
+        console.log(res.data);
+        const results = [];
+        for (let i = 0; i < res.data.length; i++) {
+          const time = res.data[i].time.split(':');
+          const momentTime = moment(res.data[i].date);
+          momentTime.add(time[0], 'h')
+            .add(time[1], 'm')
+            .add(time[2], 's');
+          // console.log(momentTime.toDate());
+
+          results.push({
+            start: momentTime.toDate(),
+            end: momentTime.toDate(),
+            title: res.data[i].title,
+            eventId: res.data[i].event_id,
+            city: res.data[i].city,
+            state: res.data[i].state,
+            price: res.data[i].price,
+            attendance_max: res.data[i].attendance_max,
+            attendance_current: res.data[i].attendance_current,
+            private: res.data[i].private,
+          });
+        }
+        this.setState({
+          calendarEvents: results,
+          filteredEvents: results,
+        });
+      })
+      .catch((err) => {
+        if (err) {
+          console.log('didn\'t work from front');
+        }
+      });
+  }
+
+  filterEvents() {
+    let storage = [];
+    for (let i = 0; i < this.state.calendarEvents.length; i++) {
+      if (this.state.calendarEvents[i].city === this.state.filterCityValue) {
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue) {
+          if ((this.state.calendarEvents[i].attendance_current > this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) {
+            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
+              storage.push(this.state.calendarEvents[i]);
+              //add filter for public/private
+            }
+          }
+        }
+      }
+    }
+    this.setState({
+      filteredEvents: storage,
+    }, () => {
+      storage = [];
+    });
   }
 
   handlePageRender() {
@@ -97,14 +173,14 @@ class App extends React.Component {
           handleLoginSubmit={this.handleLoginSubmit}
           openSignUpModal={this.openSignUpModal}
           closeSignUpModal={this.closeSignUpModal}
-
         />
       );
     }
     if (this.state.page === 'MainPage') {
       return (
         <MainPage
-          calendarEvents={this.state.calendarEvents}
+          filterEvents={this.filterEvents}
+          calendarEvents={this.state.filteredEvents}
           handleCalendarEventClick={this.handleCalendarEventClick}
 
           handleFilterCityChange={this.handleFilterCityChange}
@@ -158,6 +234,67 @@ class App extends React.Component {
     this.setState({
       signUpDisplayed: false,
     });
+  }
+
+  handleSignUpDisplaynameChange(newValue) {
+    this.setState({ signUpDisplayName: newValue });
+  }
+
+  handleSignUpPasswordChange(newValue) {
+    this.setState({ signUpPassword: newValue });
+  }
+
+  handleSignUpCityNameChange(newValue) {
+    this.setState({ signUpCity: newValue });
+  }
+
+  handleSignUpStateNameChange(newValue) {
+    this.setState({ signUpState: newValue });
+  }
+
+  handleSignUpSubmit(event) {
+    event.preventDefault();
+    const signUpData = {
+      displayName: this.state.signUpDisplayName,
+      password: this.state.signUpPassword,
+      city: this.state.signUpCity,
+      state: this.state.signUpState,
+    };
+    axios.get('/signup', {
+      params: {
+        displayName: signUpData.displayName,
+      },
+    })
+      .then((res) => {
+        if (!res.data[0]) {
+          axios.post('/signup', signUpData)
+            .then(() => {
+              this.setState({
+                signUpDisplayName: '',
+                signUpPassword: '',
+                signUpCity: '',
+                signUpState: '',
+                signUpDisplayed: false,
+              }, () => {
+                // eslint-disable-next-line no-alert
+                alert('User Created, Login please!');
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        } else {
+          // eslint-disable-next-line no-alert
+          alert('Display Name Already Taken!');
+          this.setState({
+            signUpDisplayName: '',
+            signUpPassword: '',
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   openEventInfoModal() {
@@ -246,6 +383,7 @@ class App extends React.Component {
 
   handleFilterSubmit() {
     console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
+    this.filterEvents();
   }
 
   handleCalendarEventClick(event) {
@@ -362,14 +500,25 @@ class App extends React.Component {
         {this.state.page === 'LandingPage'
         && (
         <ModalReuseable
-          body={<Signup />}
+          body={(
+            <Signup
+              signUpDisplayName={this.state.signUpDisplayName}
+              signUpPassword={this.state.signUpPassword}
+              signUpCity={this.state.signUpCity}
+              signUpState={this.state.signUpState}
+              handleSignUpDisplaynameChange={this.handleSignUpDisplaynameChange}
+              handleSignUpPasswordChange={this.handleSignUpPasswordChange}
+              handleSignUpCityNameChange={this.handleSignUpCityNameChange}
+              handleSignUpStateNameChange={this.handleSignUpStateNameChange}
+              handleSignUpSubmit={this.handleSignUpSubmit}
+            />
+          )}
           title="Sign Up!"
           handleShow={this.openSignUpModal}
           handleClose={this.closeSignUpModal}
           show={this.state.signUpDisplayed}
         />
         )}
-
       </>
     );
   }

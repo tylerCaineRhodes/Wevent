@@ -7,13 +7,14 @@ const cors = require('cors');
 const db = require('../database/db');
 const middleware = require('./middleware');
 
+// middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../dist')));
 
 
-//connections/queries
+// connections/queries
 app.get('/dashboard', (req, res) => {
   db.getAttendingEventsForDashboard(req.query.userId, (err, attending) => {
     if (err) {
@@ -87,6 +88,38 @@ app.get('/login', (req, res) => {
   const { pass } = req.query;
   db.loginCheck(id, pass, (err, data) => {
     //console.log(data, err);
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
+app.get('/signup', (req, res) => {
+  const { displayName } = req.query;
+  db.signUpCheck(displayName, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
+app.post('/signup', (req, res) => {
+  const { displayName } = req.body;
+  const { password } = req.body;
+  const { city } = req.body;
+  const { state } = req.body;
+  db.signUpAddUser(displayName, password, city, state, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
+app.get('/GetAllEvents', (req, res) => {
+  db.getAllEvents((err, data) => {
     if (err) {
       throw err;
     }
