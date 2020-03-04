@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Title from './Title.jsx';
 
 const LandingPage = ({
-  loginDisplayName, loginPassword, handleLoginDisplaynameChange, handleLoginPasswordChange, handleLoginSubmit, openSignUpModal, closeSignUpModal,
+  loginDisplayName, loginPassword, handleLoginDisplaynameChange, handleLoginPasswordChange, handleLoginSubmit, openSignUpModal, closeSignUpModal, handleGuestSubmit,
 }) => (
   <div className="landingPage">
     <Title buttonText="signup" buttonClass="createNewEvent-button" onClick={openSignUpModal} />
@@ -23,7 +23,10 @@ const LandingPage = ({
     </Form>
     <div>
       <span>
-        <h6>Dont have an account?</h6>
+        <div id="splashnoaccount">Dont have an account?</div>
+        <Button variant="primary" type="submit" id="guestButton" onClick={(e) => handleGuestSubmit(e)}>
+          Guest
+        </Button>
       </span>
     </div>
   </div>
