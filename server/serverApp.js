@@ -45,7 +45,7 @@ app.get('/eventInfo', (req, res) => {
   req.query.userId = parseInt(req.query.userId, 10);
   console.log(req.query.userId);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
-    if (err) {
+    if (err || info[0] === undefined) {
       console.error(err);
       res.sendStatus(500);
       return;
@@ -148,6 +148,17 @@ app.get('/GetAllEvents', (req, res) => {
       throw err;
     }
     res.send(data);
+  });
+});
+
+app.delete('/event', (req, res) => {
+  db.deleteEvent(parseInt(req.query.eventId, 0), (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    res.sendStatus(200);
   });
 });
 
