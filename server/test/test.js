@@ -1,5 +1,5 @@
 const request = require('supertest');
-// const { app, connection } = require('../serverApp');
+//const { app, connection } = require('../serverApp');
 
 
 // afterAll((done) => {
@@ -61,12 +61,12 @@ test('adds 1 + 2 to equal 3', () => {
   //pending attending events should have pending 1
   //hosting events with n pending requests should have n as pending
 
-// describe('Test the getInfo path', () => {
-//   test('It should response the GET method', (done) => {
-//     request(app).get('/getInfo').then((response) => {
-//       expect(response.statusCode).toBe(200);
-//       done();
-//     });
-//   });
-// //events im hosting
+  // describe('Test the getInfo path', () => {
+  //   test('It should response the GET method', (done) => {
+  //     request(app).get('/getInfo').then((response) => {
+  //       expect(response.statusCode).toBe(200);
+  //       done();
+  //     });
+  //   });
+  // });
 // });

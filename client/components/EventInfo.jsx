@@ -1,19 +1,21 @@
 import React from 'react';
 
-export default function EventInfo() {
+export default function EventInfo({eventInfo, eventInfoAccess}) {
   const status = 'public'; //public
   const accept = 'accepted';
   const pending = ['Adam', 'Beth', 'Charlie', 'Dave'];
   const accepted = ['Erik', 'Felicia', 'George', 'Harry'];
+  console.log(eventInfo);
   return (
     <div className={`grid-parent-${status}`}>
       <div className="grid-title">
-        <p className="eventInfoTitle">Event Name</p>
+        <p className="eventInfoTitle">{eventInfo.title}</p>
         <p className="eventInfoLocation">Austin, TX</p>
       </div>
       <div className={`grid-left-${status}`}>
         <p className="eventInfo">Time</p>
         <p className="eventInfo">Address1<br />Address2<br />City<br />State<br />Zip</p>
+        <p className="eventInfo">{eventInfo.price}</p>
         <p className="eventInfo">Attendance</p>
         <div>
         {
@@ -29,7 +31,7 @@ export default function EventInfo() {
         </div>
       </div>
       <div className={`grid-right-${status}`}>
-        <p className="eventInfoDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p className="eventInfoDescription">{eventInfo.description}</p>
       </div>
       {
         status === 'owner'

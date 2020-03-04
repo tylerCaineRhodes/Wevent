@@ -1,11 +1,13 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "jtworm96/boiler-plate"
+    "Name": "bpernick/blueocean:latest",
+    "Update": "true"
   },
   "Ports": [
     {
       "ContainerPort": "3000"
     }
-  ]
+  ],
+  "Logging": "/var/log/nginx"
 }

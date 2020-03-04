@@ -16,8 +16,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'LandingPage',
-      userId: '',
+      page: 'MainPage',
+      userId: 5,
       calendarEvents: [
         {
           start: new Date(),
@@ -29,10 +29,14 @@ class App extends React.Component {
       loginDisplayName: '',
       loginPassword: '',
 
+      signUpDisplayName: '',
+      signUpPassword: '',
+      signUpCity: '',
+      signUpState: '',
+
       createEventDisplayed: false,
       signUpDisplayed: false,
       eventInfoDisplayed: false,
-
 
       filterCityValue: '',
       filterStateValue: '',
@@ -42,6 +46,9 @@ class App extends React.Component {
       filterPublicValue: false,
       filterPrivateValue: false,
       filterToDValue: '',
+
+      eventInfoAccess: '',
+      eventInfo: '',
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
@@ -63,6 +70,11 @@ class App extends React.Component {
     this.handleFilterToDChange = this.handleFilterToDChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.handleCalendarEventClick = this.handleCalendarEventClick.bind(this);
+    this.handleSignUpDisplaynameChange = this.handleSignUpDisplaynameChange.bind(this);
+    this.handleSignUpPasswordChange = this.handleSignUpPasswordChange.bind(this);
+    this.handleSignUpCityNameChange = this.handleSignUpCityNameChange.bind(this);
+    this.handleSignUpStateNameChange = this.handleSignUpStateNameChange.bind(this);
+    this.handleSignUpSubmit = this.handleSignUpSubmit.bind(this);
     this.getAllEvents = this.getAllEvents.bind(this);
   }
 
@@ -112,7 +124,6 @@ class App extends React.Component {
           handleLoginSubmit={this.handleLoginSubmit}
           openSignUpModal={this.openSignUpModal}
           closeSignUpModal={this.closeSignUpModal}
-
         />
       );
     }
@@ -175,9 +186,87 @@ class App extends React.Component {
     });
   }
 
+  handleSignUpDisplaynameChange(newValue) {
+    this.setState({ signUpDisplayName: newValue });
+  }
+
+  handleSignUpPasswordChange(newValue) {
+    this.setState({ signUpPassword: newValue });
+  }
+
+  handleSignUpCityNameChange(newValue) {
+    this.setState({ signUpCity: newValue });
+  }
+
+  handleSignUpStateNameChange(newValue) {
+    this.setState({ signUpState: newValue });
+  }
+
+  handleSignUpSubmit(event) {
+    event.preventDefault();
+    const signUpData = {
+      displayName: this.state.signUpDisplayName,
+      password: this.state.signUpPassword,
+      city: this.state.signUpCity,
+      state: this.state.signUpState,
+    };
+    axios.get('/signup', {
+      params: {
+        displayName: signUpData.displayName,
+      },
+    })
+      .then((res) => {
+        if (!res.data[0]) {
+          axios.post('/signup', signUpData)
+            .then(() => {
+              this.setState({
+                signUpDisplayName: '',
+                signUpPassword: '',
+                signUpCity: '',
+                signUpState: '',
+                signUpDisplayed: false,
+              }, () => {
+                // eslint-disable-next-line no-alert
+                alert('User Created, Login please!');
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        } else {
+          // eslint-disable-next-line no-alert
+          alert('Display Name Already Taken!');
+          this.setState({
+            signUpDisplayName: '',
+            signUpPassword: '',
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   openEventInfoModal() {
-    this.setState({
-      eventInfoDisplayed: true,
+    axios.get('/eventInfo', {
+      params: { 
+        userId: this.state.userId,
+        eventId: this.state.calendarEvents[0].eventId
+      },
+    })
+    .then((res) => {
+      console.log('Clicking Calendar - openEventInfoModal retrieving from DB')
+      console.log(res.data) //<---------------------------------------------------------------------------
+      this.setState({
+        eventInfoAccess: res.data.access,
+        eventInfo: res.data.eventInfo[0],
+        eventInfoDisplayed: true,
+      });
+    })
+    .catch((err) => {
+      if (err) {
+        console.log('openEventInfoModal - Error retrieving from DB');
+      }
     });
   }
 
@@ -194,7 +283,6 @@ class App extends React.Component {
   handleLoginPasswordChange(newValue) {
     this.setState({ loginPassword: newValue });
   }
-
 
   handleLoginSubmit(event) {
     event.preventDefault();
@@ -266,6 +354,7 @@ class App extends React.Component {
 
   handleCalendarEventClick(event) {
     console.log('POOP :)', event, this.state.calendarEvents);
+
   }
 
   render() {
@@ -286,8 +375,10 @@ class App extends React.Component {
             <button className="event-info-button" type="submit" onClick={this.openEventInfoModal}>See eventInfo</button>
 
             <ModalReuseable
-              body={<EventInfo />}
-              title="Event Info"
+              body={<EventInfo 
+                eventInfoAccess={this.state.eventInfoAccess}
+                eventInfo={this.state.eventInfo}
+              />}
               handleShow={this.openEventInfoModal}
               handleClose={this.closeEventInfoModal}
               show={this.state.eventInfoDisplayed}
@@ -298,14 +389,25 @@ class App extends React.Component {
         {this.state.page === 'LandingPage'
         && (
         <ModalReuseable
-          body={<Signup />}
+          body={(
+            <Signup
+              signUpDisplayName={this.state.signUpDisplayName}
+              signUpPassword={this.state.signUpPassword}
+              signUpCity={this.state.signUpCity}
+              signUpState={this.state.signUpState}
+              handleSignUpDisplaynameChange={this.handleSignUpDisplaynameChange}
+              handleSignUpPasswordChange={this.handleSignUpPasswordChange}
+              handleSignUpCityNameChange={this.handleSignUpCityNameChange}
+              handleSignUpStateNameChange={this.handleSignUpStateNameChange}
+              handleSignUpSubmit={this.handleSignUpSubmit}
+            />
+          )}
           title="Sign Up!"
           handleShow={this.openSignUpModal}
           handleClose={this.closeSignUpModal}
           show={this.state.signUpDisplayed}
         />
         )}
-        <EventInfo />
       </>
     );
   }

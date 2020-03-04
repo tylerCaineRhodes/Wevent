@@ -7,13 +7,14 @@ const cors = require('cors');
 const db = require('../database/db');
 const middleware = require('./middleware');
 
+// middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../dist')));
 
 
-//connections/queries
+// connections/queries
 app.get('/dashboard', (req, res) => {
   db.getAttendingEventsForDashboard(req.query.userId, (err, attending) => {
     if (err) {
@@ -41,7 +42,7 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.get('/eventInfo', (req, res) => {
-  req.query.userId = parseInt(req.query.userId, 10);
+  // req.query.userId = parseInt(req.query.userId);
   console.log(req.query.userId);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
     if (err) {
@@ -49,7 +50,7 @@ app.get('/eventInfo', (req, res) => {
       res.sendStatus(500);
       return;
     }
-    if (info[0].host_id === req.query.userId) {
+    if (info[0].host_id == req.query.userId) { //Removed strict equality to handle num vs. str comparison
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
           console.error(error);
@@ -87,6 +88,29 @@ app.get('/login', (req, res) => {
   const { pass } = req.query;
   db.loginCheck(id, pass, (err, data) => {
     //console.log(data, err);
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
+app.get('/signup', (req, res) => {
+  const { displayName } = req.query;
+  db.signUpCheck(displayName, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
+app.post('/signup', (req, res) => {
+  const { displayName } = req.body;
+  const { password } = req.body;
+  const { city } = req.body;
+  const { state } = req.body;
+  db.signUpAddUser(displayName, password, city, state, (err, data) => {
     if (err) {
       throw err;
     }
