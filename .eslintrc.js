@@ -21,9 +21,24 @@ module.exports = {
   },
   plugins: [
     'react',
+    'sql',
     'jest',
   ],
   rules: {
+    "sql/format": [
+      2,
+      {
+        "ignoreExpressions": true,
+        "ignoreInline": true,
+        "ignoreTagless": true
+      }
+    ],
+    "sql/no-unsafe-query": [
+      2,
+      {
+        "allowLiteral": false
+      }
+    ],
     "no-console": "off",
     "no-unused-vars": "off",
     "no-plusplus": "off",
