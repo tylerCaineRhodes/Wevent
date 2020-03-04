@@ -52,6 +52,17 @@ module.exports.getNameAndLocation = (userId, cb) => {
   });
 };
 
+module.exports.deleteEvent = (eventId, callback) => {
+  const query = 'DELETE FROM events_categories WHERE event_id = ?;DELETE FROM users_events_attending WHERE event_id =?;DELETE FROM events WHERE event_id = ?;';
+  db.query(query, [eventId, eventId, eventId], (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 // routes for event info
 
 module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
@@ -141,16 +152,6 @@ module.exports.getAllEvents = (callback) => {
   const query = 'Select event_id, title, date, time, price, private, attendance_max, attendance_current, city, state FROM events where attendance_max != attendance_current or attendance_max is null;';
 
   db.query(query, (err, results) => {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, results);
-    }
-  });
-};
-module.exports.deleteEvent = (eventId, callback) => {
-  const query = 'DELETE FROM events_categories WHERE event_id = ?;DELETE FROM users_events_attending WHERE event_id =?;DELETE FROM events WHERE event_id = ?;';
-  db.query(query, [eventId, eventId, eventId], (err, results) => {
     if (err) {
       callback(err);
     } else {
