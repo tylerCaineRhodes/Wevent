@@ -5,7 +5,7 @@ export default function EventInfo({eventInfo, eventInfoAccess}) {
   const accept = 'accepted';
   const pending = ['Adam', 'Beth', 'Charlie', 'Dave'];
   const accepted = ['Erik', 'Felicia', 'George', 'Harry'];
-  console.log(eventInfo);
+  //console.log(eventInfo);
   return (
     <div className={`grid-parent-${status}`}>
       <div className="grid-title">
@@ -38,7 +38,7 @@ export default function EventInfo({eventInfo, eventInfoAccess}) {
           ? (
             <div className="grid-owner-pend-accept">
               <div className="grid-owner-pend" style={{ display: 'inline-block' }}>
-              <div className="pend-accept-heading">Pending</div>
+                <div className="pend-accept-heading">Pending</div>
                 {pending.map((pend) => (
                   <div>
                     <p className="pend-accept-name">{pend}</p>

@@ -16,16 +16,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'MainPage',
-      userId: 5,
-      calendarEvents: [
-        {
-          start: new Date(),
-          end: new Date(),
-          title: 'SAMPLE EVENT',
-          eventId: '',
-        },
-      ],
+      page: 'LandingPage',
+      userId: '',
+      calendarEvents: [],
+      filteredEvents: [],
       loginDisplayName: '',
       loginPassword: '',
 
@@ -41,14 +35,28 @@ class App extends React.Component {
       filterCityValue: '',
       filterStateValue: '',
       filterCategoryValue: '',
-      filterNumOfPeopleValues: [0, 10],
-      filterCostValue: 0,
+      filterNumOfPeopleValues: [15, 40],
+      filterCostValue: 100,
       filterPublicValue: false,
       filterPrivateValue: false,
       filterToDValue: '',
 
       eventInfoAccess: '',
       eventInfo: '',
+      
+      createEventTitle: '',
+      createEventDescription: '',
+      createEventCategory: '',
+      createEventDate: moment().format('YYYY-MM-DD'),
+      createEventTime: moment().format('hh:mm'),
+      createEventCost: 0,
+      createEventPrivate: false,
+      createEventAddress1: '',
+      createEventAddress2: '',
+      createEventCity: '',
+      createEventState: '',
+      createEventZipcode: 0,
+      createEventMaxPeople: 50,
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
@@ -70,22 +78,39 @@ class App extends React.Component {
     this.handleFilterToDChange = this.handleFilterToDChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.handleCalendarEventClick = this.handleCalendarEventClick.bind(this);
+    this.handleCreateEventTitleChange = this.handleCreateEventTitleChange.bind(this);
+    this.handleCreateEventDescriptionChange = this.handleCreateEventDescriptionChange.bind(this);
+    this.handleCreateEventCategoryChange = this.handleCreateEventCategoryChange.bind(this);
+    this.handleCreateEventDateChange = this.handleCreateEventDateChange.bind(this);
+    this.handleCreateEventTimeChange = this.handleCreateEventTimeChange.bind(this);
+    this.handleCreateEventCostChange = this.handleCreateEventCostChange.bind(this);
+    this.handleCreateEventPrivateChange = this.handleCreateEventPrivateChange.bind(this);
+    this.handleCreateEventAddress1Change = this.handleCreateEventAddress1Change.bind(this);
+    this.handleCreateEventAddress2Change = this.handleCreateEventAddress2Change.bind(this);
+    this.handleCreateEventCityChange = this.handleCreateEventCityChange.bind(this);
+    this.handleCreateEventStateChange = this.handleCreateEventStateChange.bind(this);
+    this.handleCreateEventZipcodeChange = this.handleCreateEventZipcodeChange.bind(this);
+    this.handleCreateEventMaxPeopleChange = this.handleCreateEventMaxPeopleChange.bind(this);
+    this.handleCreateEventSubmit = this.handleCreateEventSubmit.bind(this);
     this.handleSignUpDisplaynameChange = this.handleSignUpDisplaynameChange.bind(this);
     this.handleSignUpPasswordChange = this.handleSignUpPasswordChange.bind(this);
     this.handleSignUpCityNameChange = this.handleSignUpCityNameChange.bind(this);
     this.handleSignUpStateNameChange = this.handleSignUpStateNameChange.bind(this);
     this.handleSignUpSubmit = this.handleSignUpSubmit.bind(this);
     this.getAllEvents = this.getAllEvents.bind(this);
+    this.filterEvents = this.filterEvents.bind(this);
   }
 
   componentDidMount() {
     this.getAllEvents();
+    this.filterEvents();
   }
 
 
   getAllEvents() {
     axios.get('/GetAllEvents')
       .then((res) => {
+        console.log(res.data);
         const results = [];
         for (let i = 0; i < res.data.length; i++) {
           const time = res.data[i].time.split(':');
@@ -100,10 +125,17 @@ class App extends React.Component {
             end: momentTime.toDate(),
             title: res.data[i].title,
             eventId: res.data[i].event_id,
+            city: res.data[i].city,
+            state: res.data[i].state,
+            price: res.data[i].price,
+            attendance_max: res.data[i].attendance_max,
+            attendance_current: res.data[i].attendance_current,
+            private: res.data[i].private,
           });
         }
         this.setState({
           calendarEvents: results,
+          filteredEvents: results,
         });
       })
       .catch((err) => {
@@ -111,6 +143,27 @@ class App extends React.Component {
           console.log('didn\'t work from front');
         }
       });
+  }
+
+  filterEvents() {
+    let storage = [];
+    for (let i = 0; i < this.state.calendarEvents.length; i++) {
+      if (this.state.calendarEvents[i].city === this.state.filterCityValue) {
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue) {
+          if ((this.state.calendarEvents[i].attendance_current > this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) {
+            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
+              storage.push(this.state.calendarEvents[i]);
+              //add filter for public/private
+            }
+          }
+        }
+      }
+    }
+    this.setState({
+      filteredEvents: storage,
+    }, () => {
+      storage = [];
+    });
   }
 
   handlePageRender() {
@@ -130,7 +183,8 @@ class App extends React.Component {
     if (this.state.page === 'MainPage') {
       return (
         <MainPage
-          calendarEvents={this.state.calendarEvents}
+          filterEvents={this.filterEvents}
+          calendarEvents={this.state.filteredEvents}
           handleCalendarEventClick={this.handleCalendarEventClick}
 
           handleFilterCityChange={this.handleFilterCityChange}
@@ -210,41 +264,54 @@ class App extends React.Component {
       city: this.state.signUpCity,
       state: this.state.signUpState,
     };
-    axios.get('/signup', {
-      params: {
-        displayName: signUpData.displayName,
-      },
-    })
-      .then((res) => {
-        if (!res.data[0]) {
-          axios.post('/signup', signUpData)
-            .then(() => {
-              this.setState({
-                signUpDisplayName: '',
-                signUpPassword: '',
-                signUpCity: '',
-                signUpState: '',
-                signUpDisplayed: false,
-              }, () => {
-                // eslint-disable-next-line no-alert
-                alert('User Created, Login please!');
-              });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        } else {
-          // eslint-disable-next-line no-alert
-          alert('Display Name Already Taken!');
-          this.setState({
-            signUpDisplayName: '',
-            signUpPassword: '',
-          });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+
+    if (signUpData.DisplayName === '' || signUpData.password === '' || signUpData.city === '' || signUpData.state === '') {
+      this.setState({
+        signUpDisplayName: '',
+        signUpPassword: '',
+        signUpCity: '',
+        signUpState: '',
+      }, () => {
+        // eslint-disable-next-line no-alert
+        alert('Please fill out all fields');
       });
+    } else {
+      axios.get('/signup', {
+        params: {
+          displayName: signUpData.displayName,
+        },
+      })
+        .then((res) => {
+          if (!res.data[0]) {
+            axios.post('/signup', signUpData)
+              .then(() => {
+                this.setState({
+                  signUpDisplayName: '',
+                  signUpPassword: '',
+                  signUpCity: '',
+                  signUpState: '',
+                  signUpDisplayed: false,
+                }, () => {
+                  // eslint-disable-next-line no-alert
+                  alert('User Created, Login please!');
+                });
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          } else {
+            // eslint-disable-next-line no-alert
+            alert('Display Name Already Taken!');
+            this.setState({
+              signUpDisplayName: '',
+              signUpPassword: '',
+            });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 
   openEventInfoModal(eventId) {
@@ -350,12 +417,111 @@ class App extends React.Component {
 
   handleFilterSubmit() {
     console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
+    this.filterEvents();
   }
 
   handleCalendarEventClick(event) {
     console.log('POOP :)', event, this.state.calendarEvents);
     this.openEventInfoModal(event.eventId);
 
+  }
+
+  handleCreateEventTitleChange(newValue) {
+    this.setState({ createEventTitle: newValue });
+  }
+
+  handleCreateEventDescriptionChange(newValue) {
+    this.setState({ createEventDescription: newValue });
+  }
+
+  handleCreateEventCategoryChange(newValue) {
+    this.setState({ createEventCategory: newValue });
+  }
+
+  handleCreateEventDateChange(newValue) {
+    this.setState({ createEventDate: newValue });
+  }
+
+  handleCreateEventTimeChange(newValue) {
+    this.setState({ createEventTime: newValue });
+  }
+
+  handleCreateEventCostChange(newValue) {
+    this.setState({ createEventCost: newValue });
+  }
+
+  handleCreateEventPrivateChange(newValue) {
+    this.setState({ createEventPrivate: newValue });
+  }
+
+  handleCreateEventAddress1Change(newValue) {
+    this.setState({ createEventAddress1: newValue });
+  }
+
+  handleCreateEventAddress2Change(newValue) {
+    this.setState({ createEventAddress2: newValue });
+  }
+
+  handleCreateEventCityChange(newValue) {
+    this.setState({ createEventCity: newValue });
+  }
+
+  handleCreateEventStateChange(newValue) {
+    this.setState({ createEventState: newValue });
+  }
+
+  handleCreateEventZipcodeChange(newValue) {
+    this.setState({ createEventZipcode: newValue });
+  }
+
+  handleCreateEventMaxPeopleChange(newValue) {
+    this.setState({ createEventMaxPeople: newValue });
+  }
+
+  handleCreateEventSubmit(event) {
+    event.preventDefault();
+    const createEventData = {
+      userId: this.state.userId,
+      title: this.state.createEventTitle,
+      description: this.state.createEventDescription,
+      category: this.state.createEventCategory,
+      date: this.state.createEventDate,
+      time: this.state.createEventTime,
+      cost: this.state.createEventCost,
+      privateEvent: this.state.createEventPrivate,
+      address1: this.state.createEventAddress1,
+      address2: this.state.createEventAddress2,
+      city: this.state.createEventCity,
+      state: this.state.createEventState,
+      zipcode: this.state.createEventZipcode,
+      maxPeople: this.state.createEventMaxPeople,
+    };
+    axios.post('/createEvent', createEventData)
+      .then(() => {
+        this.setState({
+          createEventDisplayed: false,
+          createEventTitle: '',
+          createEventDescription: '',
+          createEventCategory: '',
+          createEventDate: moment().format('YYYY-MM-DD'),
+          createEventTime: moment().format('hh:mm'),
+          createEventCost: 0,
+          createEventPrivate: false,
+          createEventAddress1: '',
+          createEventAddress2: '',
+          createEventCity: '',
+          createEventState: '',
+          createEventZipcode: 0,
+          createEventMaxPeople: 50,
+        }, () => {
+          this.getAllEvents();
+          // eslint-disable-next-line no-alert
+          alert('Event Created!');
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render() {
@@ -366,7 +532,37 @@ class App extends React.Component {
         && (
           <>
             <ModalReuseable
-              body={<CreateEvent />}
+              body={(
+                <CreateEvent
+                  createEventTitle={this.state.createEventTitle}
+                  createEventDescription={this.state.createEventDescription}
+                  createEventCategory={this.state.createEventCategory}
+                  createEventDate={this.state.createEventDate}
+                  createEventTime={this.state.createEventTime}
+                  createEventCost={this.state.createEventCost}
+                  createEventPrivate={this.state.createEventPrivate}
+                  createEventAddress1={this.state.createEventAddress1}
+                  createEventAddress2={this.state.createEventAddress2}
+                  createEventCity={this.state.createEventCity}
+                  createEventState={this.state.createEventState}
+                  createEventZipcode={this.state.createEventZipcode}
+                  createEventMaxPeople={this.state.createEventMaxPeople}
+                  handleCreateEventTitleChange={this.handleCreateEventTitleChange}
+                  handleCreateEventDescriptionChange={this.handleCreateEventDescriptionChange}
+                  handleCreateEventCategoryChange={this.handleCreateEventCategoryChange}
+                  handleCreateEventDateChange={this.handleCreateEventDateChange}
+                  handleCreateEventTimeChange={this.handleCreateEventTimeChange}
+                  handleCreateEventCostChange={this.handleCreateEventCostChange}
+                  handleCreateEventPrivateChange={this.handleCreateEventPrivateChange}
+                  handleCreateEventAddress1Change={this.handleCreateEventAddress1Change}
+                  handleCreateEventAddress2Change={this.handleCreateEventAddress2Change}
+                  handleCreateEventCityChange={this.handleCreateEventCityChange}
+                  handleCreateEventStateChange={this.handleCreateEventStateChange}
+                  handleCreateEventZipcodeChange={this.handleCreateEventZipcodeChange}
+                  handleCreateEventMaxPeopleChange={this.handleCreateEventMaxPeopleChange}
+                  handleCreateEventSubmit={this.handleCreateEventSubmit}
+                />
+              )}
               title="Create Event"
               handleShow={this.openCreateEventModal}
               handleClose={this.closeCreateEventModal}
