@@ -118,6 +118,30 @@ app.post('/signup', (req, res) => {
   });
 });
 
+app.post('/createEvent', (req, res) => {
+  const { userId } = req.body;
+  const { title } = req.body;
+  const { description } = req.body;
+  const { category } = req.body;
+  const { date } = req.body;
+  const { time } = req.body;
+  const { cost } = req.body;
+  const { privateEvent } = req.body;
+  const { address1 } = req.body;
+  const { address2 } = req.body;
+  const { city } = req.body;
+  const { state } = req.body;
+  const { zipcode } = req.body;
+  const { maxPeople } = req.body;
+
+  db.createEvent(userId, title, description, category, date, time, cost, privateEvent, address1, address2, city, state, zipcode, maxPeople, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
 app.get('/GetAllEvents', (req, res) => {
   db.getAllEvents((err, data) => {
     if (err) {
