@@ -135,6 +135,17 @@ module.exports.signUpAddUser = (displayName, password, city, state, callback) =>
   });
 };
 
+module.exports.getAllEvents = (callback) => {
+  const query = 'Select event_id, title, date, time from events;';
+  db.query(query, (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 module.exports.connection = db;
 // module.exports.getCalendarEvents = (filters, cb) =>{
 
