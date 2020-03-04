@@ -5,6 +5,7 @@ import { Slider, Switch } from '@material-ui/core';
 const CreateEvent = ({
   createEventTitle,
   createEventDescription,
+  createEventCategory,
   createEventDate,
   createEventTime,
   createEventCost,
@@ -17,6 +18,7 @@ const CreateEvent = ({
   createEventMaxPeople,
   handleCreateEventTitleChange,
   handleCreateEventDescriptionChange,
+  handleCreateEventCategoryChange,
   handleCreateEventDateChange,
   handleCreateEventTimeChange,
   handleCreateEventCostChange,
@@ -35,6 +37,17 @@ const CreateEvent = ({
       <input type="text" id="createEventTitle" name="Event Title" defaultValue={createEventTitle} onChange={(e) => handleCreateEventTitleChange(e.target.value)} />
       <span>Event Description:</span>
       <textarea id="createEventDescription" name="Event Description" defaultValue={createEventDescription} onChange={(e) => handleCreateEventDescriptionChange(e.target.value)} />
+      <span>Event Category:</span>
+      <select id="createEventCategory" name="Event Category" defaultValue={createEventCategory} onChange={(e) => handleCreateEventCategoryChange(e.target.value)}>
+        <option>  </option>
+        <option>TX</option>
+        <option>AZ</option>
+        <option>TN</option>
+        <option>HI</option>
+        <option>NY</option>
+        <option>HI</option>
+        <option>MA</option>
+      </select>
       <span>Event Date:</span>
       <input type="date" id="createEventDate" name="Event Date" defaultValue={moment().format('YYYY-MM-DD')} onChange={(e) => handleCreateEventDateChange(e.target.value)} />
       <span>Event Time:</span>

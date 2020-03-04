@@ -7,6 +7,7 @@ const db = mysql.createConnection({
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   port: process.env.PORT,
+  multipleStatements: true,
 });
 
 // check db connection
@@ -48,6 +49,17 @@ module.exports.getNameAndLocation = (userId, cb) => {
       return;
     }
     cb(null, data);
+  });
+};
+
+module.exports.deleteEvent = (eventId, callback) => {
+  const query = 'DELETE FROM events_categories WHERE event_id = ?;DELETE FROM users_events_attending WHERE event_id =?;DELETE FROM events WHERE event_id = ?;';
+  db.query(query, [eventId, eventId, eventId], (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
   });
 };
 
@@ -136,6 +148,49 @@ module.exports.signUpAddUser = (displayName, password, city, state, callback) =>
   });
 };
 
+module.exports.createEvent = (userId, title, description, category, date, time, cost, privateEvent, address1, address2, city, state, zipcode, maxPeople, callback) => {
+  let query = '';
+  if (privateEvent) {
+    // eslint-disable-next-line sql/no-unsafe-query
+    query = `INSERT INTO events (host_id, title, description, date, time, price, private, address_1, address_2, city, state, zipcode, attendance_max, attendance_current) values ('${userId}', '${title}', '${description}', '${date}', '${time}', ${cost}, ${privateEvent}, '${address1}', '${address2}', '${city}', '${state}', ${zipcode}, ${maxPeople}, 0)`;
+  } else {
+    // eslint-disable-next-line sql/no-unsafe-query
+    query = `INSERT INTO events (host_id, title, description, date, time, price, private, address_1, address_2, city, state, zipcode) values ('${userId}', '${title}', '${description}', '${date}', '${time}', ${cost}, ${privateEvent}, '${address1}', '${address2}', '${city}', '${state}', ${zipcode})`;
+  }
+
+  db.query(query, (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      // eslint-disable-next-line sql/no-unsafe-query
+      const eventQuery = `SELECT event_id FROM events WHERE title = '${title}'`;
+      db.query(eventQuery, (error, eventId) => {
+        if (error) {
+          callback(error);
+        } else {
+          // eslint-disable-next-line sql/no-unsafe-query
+          const categoryQuery = `SELECT category_id FROM categories WHERE category_name = '${category}'`;
+          db.query(categoryQuery, (er, categoryId) => {
+            if (er) {
+              callback(er);
+            } else {
+              // eslint-disable-next-line sql/no-unsafe-query
+              const eventsCategoriesQuery = `INSERT INTO events_categories (event_id, category_id) values (${eventId[0].event_id}, ${categoryId[0].category_id})`;
+              db.query(eventsCategoriesQuery, (finalError, finalQuery) => {
+                if (finalError) {
+                  callback(finalError);
+                } else {
+                  callback(null, finalQuery);
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+};
+
 module.exports.getAllEvents = (callback) => {
   const query = 'Select event_id, title, date, time, price, private, attendance_max, attendance_current, city, state FROM events where attendance_max != attendance_current or attendance_max is null;';
 
@@ -147,12 +202,4 @@ module.exports.getAllEvents = (callback) => {
     }
   });
 };
-
 module.exports.connection = db;
-// module.exports.getCalendarEvents = (filters, cb) =>{
-
-// }
-
-// module.exports.logIn = (filters, cb) =>{
-
-// }
