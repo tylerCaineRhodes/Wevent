@@ -2,7 +2,7 @@
 FROM node:12.7.0-alpine
 
 # Set the working directory to /app
-WORKDIR '/dist'
+WORKDIR /usr/src/app
 
 # Copy package.json to the working directory
 COPY package.json .
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Run index.js when the container launches
-CMD ["node", "Server/Server.js"]
+CMD ["node", "server/server.js"]
