@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.sass';
 import axios from 'axios';
+import moment from 'moment';
 
 import { ThemeProvider } from 'react-bootstrap';
 import LandingPage from './components/LandingPage.jsx';
@@ -10,7 +11,6 @@ import ModalReuseable from './components/ModalReuseable.jsx';
 import CreateEvent from './components/CreateEvent.jsx';
 import Signup from './components/Signup.jsx';
 import EventInfo from './components/EventInfo.jsx';
-
 
 class App extends React.Component {
   constructor(props) {
@@ -23,6 +23,7 @@ class App extends React.Component {
           start: new Date(),
           end: new Date(),
           title: 'SAMPLE EVENT',
+          eventId: 1,
         },
       ],
       loginDisplayName: '',
@@ -62,6 +63,42 @@ class App extends React.Component {
     this.handleFilterToDChange = this.handleFilterToDChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.handleCalendarEventClick = this.handleCalendarEventClick.bind(this);
+    this.getAllEvents = this.getAllEvents.bind(this);
+  }
+
+  componentDidMount() {
+    this.getAllEvents();
+  }
+
+
+  getAllEvents() {
+    axios.get('/GetAllEvents')
+      .then((res) => {
+        const results = [];
+        for (let i = 0; i < res.data.length; i++) {
+          const time = res.data[i].time.split(':');
+          const momentTime = moment(res.data[i].date);
+          momentTime.add(time[0], 'h')
+            .add(time[1], 'm')
+            .add(time[2], 's');
+          // console.log(momentTime.toDate());
+
+          results.push({
+            start: momentTime.toDate(),
+            end: momentTime.toDate(),
+            title: res.data[i].title,
+            eventId: res.data[i].event_id,
+          });
+        }
+        this.setState({
+          calendarEvents: results,
+        });
+      })
+      .catch((err) => {
+        if (err) {
+          console.log('didn\'t work from front');
+        }
+      });
   }
 
   handlePageRender() {
@@ -157,6 +194,7 @@ class App extends React.Component {
   handleLoginPasswordChange(newValue) {
     this.setState({ loginPassword: newValue });
   }
+
 
   handleLoginSubmit(event) {
     event.preventDefault();
@@ -267,7 +305,6 @@ class App extends React.Component {
           show={this.state.signUpDisplayed}
         />
         )}
-
       </>
     );
   }

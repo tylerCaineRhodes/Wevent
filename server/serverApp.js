@@ -94,5 +94,14 @@ app.get('/login', (req, res) => {
   });
 });
 
+app.get('/GetAllEvents', (req, res) => {
+  db.getAllEvents((err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
 module.exports.app = app;
 module.exports.connection = db.connection;
