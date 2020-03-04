@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'LandingPage',
+      page: 'MainPage',
       userId: '',
       calendarEvents: [
         {
@@ -43,10 +43,10 @@ class App extends React.Component {
       filterCityValue: '',
       filterStateValue: '',
       filterCategoryValue: '',
-      filterNumOfPeopleValues: [15, 40],
+      filterNumOfPeopleValues: [0, 100],
       filterCostValue: 100,
-      filterPublicValue: false,
-      filterPrivateValue: false,
+      filterPublicValue: true,
+      filterPrivateValue: true,
       filterToDValue: '',
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
@@ -124,13 +124,18 @@ class App extends React.Component {
 
   filterEvents() {
     let storage = [];
+    //if city is initial value, ignore
     for (let i = 0; i < this.state.calendarEvents.length; i++) {
-      if (this.state.calendarEvents[i].city === this.state.filterCityValue) {
-        if (this.state.calendarEvents[i].state === this.state.filterStateValue) {
-          if ((this.state.calendarEvents[i].attendance_current > this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) {
+      if (this.state.calendarEvents[i].city === this.state.filterCityValue || this.state.filterCityValue === "") {
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === "") {
+          if ((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1]) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
-              storage.push(this.state.calendarEvents[i]);
-              //add filter for public/private
+              if(this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue){
+                storage.push(this.state.calendarEvents[i]);
+              }
+              if(this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue){
+                storage.push(this.state.calendarEvents[i]);
+              }
             }
           }
         }
