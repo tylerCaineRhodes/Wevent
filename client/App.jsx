@@ -117,13 +117,9 @@ class App extends React.Component {
     let storage = [];
     for (let i = 0; i < this.state.calendarEvents.length; i++) {
       if (this.state.calendarEvents[i].city === this.state.filterCityValue) {
-        console.log(this.state.calendarEvents[i].state);
         if (this.state.calendarEvents[i].state === this.state.filterStateValue) {
-          console.log(1)
           if ((this.state.calendarEvents[i].attendance_current > this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) {
-            console.log(3)
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
-              console.log(4)
               storage.push(this.state.calendarEvents[i]);
             }
           }
