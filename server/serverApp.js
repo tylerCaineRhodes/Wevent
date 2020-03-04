@@ -127,5 +127,14 @@ app.get('/GetAllEvents', (req, res) => {
   });
 });
 
+app.get('/getCategories', (req, res) => {
+  db.getCategories((err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
 module.exports.app = app;
 module.exports.connection = db.connection;

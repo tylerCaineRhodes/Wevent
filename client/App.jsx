@@ -39,6 +39,7 @@ class App extends React.Component {
       signUpDisplayed: false,
       eventInfoDisplayed: false,
 
+      filterDropdownCategories: [],
 
       filterCityValue: '',
       filterStateValue: '',
@@ -76,11 +77,13 @@ class App extends React.Component {
     this.handleSignUpSubmit = this.handleSignUpSubmit.bind(this);
     this.getAllEvents = this.getAllEvents.bind(this);
     this.filterEvents = this.filterEvents.bind(this);
+    this.getCategories = this.getCategories.bind(this);
   }
 
   componentDidMount() {
     this.getAllEvents();
     this.filterEvents();
+    this.getCategories();
   }
 
 
@@ -130,6 +133,7 @@ class App extends React.Component {
         if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === "") {
           if ((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1]) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
+              if(this.state.calendarEvents[i].filterCategoryValue === )
               if(this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue){
                 storage.push(this.state.calendarEvents[i]);
               }
@@ -169,6 +173,8 @@ class App extends React.Component {
           calendarEvents={this.state.filteredEvents}
           handleCalendarEventClick={this.handleCalendarEventClick}
 
+
+          filterDropdownCategories={this.state.filterDropdownCategories}
           handleFilterCityChange={this.handleFilterCityChange}
           filterCityValue={this.state.filterCityValue}
           handleFilterStateChange={this.handleFilterStateChange}
@@ -220,6 +226,15 @@ class App extends React.Component {
     this.setState({
       signUpDisplayed: false,
     });
+  }
+  getCategories(){
+    axios.get('/getCategories')
+    .then(res => {
+      this.setState({ filterDropdownCategories: res.data })
+    })
+    .catch(err => {
+      console.log('nope for the categories from front end', err)
+    })
   }
 
   handleSignUpDisplaynameChange(newValue) {

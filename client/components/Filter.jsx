@@ -25,6 +25,7 @@ const Filter = ({
   handleFilterToDChange,
   filterToDValue,
   handleFilterSubmit,
+  filterDropdownCategories
 }) => (
   <div className="filter-container">
     <h3>Filter Events:</h3>
@@ -58,6 +59,7 @@ const Filter = ({
           <Category
             handleFilterCategoryChange={handleFilterCategoryChange}
             filterCategoryValue={filterCategoryValue}
+            filterDropdownCategories={filterDropdownCategories}
           />
         </Card.Body>
         {/* </Accordion.Collapse> */}

@@ -148,6 +148,18 @@ module.exports.getAllEvents = (callback) => {
   });
 };
 
+module.exports.getCategories = (callback) => {
+  const query = 'Select * from categories;'
+
+  db.query(query, (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 module.exports.connection = db;
 // module.exports.getCalendarEvents = (filters, cb) =>{
 
