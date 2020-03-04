@@ -24,6 +24,7 @@ const MainPage = ({
   handleFilterToDChange,
   filterToDValue,
   handleFilterSubmit,
+  filterDropdownCategories
 }) => (
   <>
     <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} />
@@ -46,6 +47,7 @@ const MainPage = ({
         handleFilterToDChange={handleFilterToDChange}
         filterToDValue={filterToDValue}
         handleFilterSubmit={handleFilterSubmit}
+        filterDropdownCategories={filterDropdownCategories}
       />
     </div>
     <div style={{ width: '66%', float: 'right' }}>

@@ -32,13 +32,18 @@ class App extends React.Component {
       signUpDisplayed: false,
       eventInfoDisplayed: false,
 
+      filterDropdownCategories: [],
+
       filterCityValue: '',
       filterStateValue: '',
-      filterCategoryValue: '',
-      filterNumOfPeopleValues: [15, 40],
+      filterCategoryValue: {
+        name: '',
+        id: '',
+      },
+      filterNumOfPeopleValues: [0, 100],
       filterCostValue: 100,
-      filterPublicValue: false,
-      filterPrivateValue: false,
+      filterPublicValue: true,
+      filterPrivateValue: true,
       filterToDValue: '',
       states: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA',
         'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT',
@@ -102,12 +107,14 @@ class App extends React.Component {
     this.handleSignUpSubmit = this.handleSignUpSubmit.bind(this);
     this.getAllEvents = this.getAllEvents.bind(this);
     this.filterEvents = this.filterEvents.bind(this);
+    this.getCategories = this.getCategories.bind(this);
     this.handleGuestSubmit = this.handleGuestSubmit.bind(this);
   }
 
   componentDidMount() {
     this.getAllEvents();
     this.filterEvents();
+    this.getCategories();
   }
 
 
@@ -135,6 +142,7 @@ class App extends React.Component {
             attendance_max: res.data[i].attendance_max,
             attendance_current: res.data[i].attendance_current,
             private: res.data[i].private,
+            category_ids: res.data[i].category_ids.split(','),
           });
         }
         this.setState({
@@ -149,24 +157,38 @@ class App extends React.Component {
       });
   }
 
-  filterEvents() {
-    let storage = [];
-    for (let i = 0; i < this.state.calendarEvents.length; i++) {
-      if (this.state.calendarEvents[i].city === this.state.filterCityValue) {
-        if (this.state.calendarEvents[i].state === this.state.filterStateValue) {
-          if ((this.state.calendarEvents[i].attendance_current > this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) {
-            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
-              storage.push(this.state.calendarEvents[i]);
-              //add filter for public/private
-            }
-          }
-        }
-      }
-    }
+  getCategories() {
+    axios.get('/getCategories')
+      .then((res) => {
+        this.setState({ filterDropdownCategories: res.data });
+      })
+      .catch((err) => {
+        console.log('nope for the categories from front end', err);
+      });
+  }
+
+  openSignUpModal() {
     this.setState({
-      filteredEvents: storage,
-    }, () => {
-      storage = [];
+      signUpDisplayed: true,
+    });
+  }
+
+  closeSignUpModal() {
+    this.setState({
+      signUpDisplayed: false,
+    });
+  }
+
+
+  closeCreateEventModal() {
+    this.setState({
+      createEventDisplayed: false,
+    });
+  }
+
+  openCreateEventModal() {
+    this.setState({
+      createEventDisplayed: true,
     });
   }
 
@@ -192,6 +214,8 @@ class App extends React.Component {
           calendarEvents={this.state.filteredEvents}
           handleCalendarEventClick={this.handleCalendarEventClick}
 
+
+          filterDropdownCategories={this.state.filterDropdownCategories}
           handleFilterCityChange={this.handleFilterCityChange}
           filterCityValue={this.state.filterCityValue}
           handleFilterStateChange={this.handleFilterStateChange}
@@ -221,27 +245,31 @@ class App extends React.Component {
     }
   }
 
-  openCreateEventModal() {
+  filterEvents() {
+    let storage = [];
+    //if city is initial value, ignore
+    for (let i = 0; i < this.state.calendarEvents.length; i++) {
+      if (this.state.calendarEvents[i].city === this.state.filterCityValue || this.state.filterCityValue === '') {
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
+          if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
+            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
+              if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '') {
+                if (this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) {
+                  storage.push(this.state.calendarEvents[i]);
+                }
+                if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
+                  storage.push(this.state.calendarEvents[i]);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     this.setState({
-      createEventDisplayed: true,
-    });
-  }
-
-  closeCreateEventModal() {
-    this.setState({
-      createEventDisplayed: false,
-    });
-  }
-
-  openSignUpModal() {
-    this.setState({
-      signUpDisplayed: true,
-    });
-  }
-
-  closeSignUpModal() {
-    this.setState({
-      signUpDisplayed: false,
+      filteredEvents: storage,
+    }, () => {
+      storage = [];
     });
   }
 

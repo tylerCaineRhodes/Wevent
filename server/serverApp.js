@@ -151,6 +151,15 @@ app.get('/GetAllEvents', (req, res) => {
   });
 });
 
+app.get('/getCategories', (req, res) => {
+  db.getCategories((err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
 app.delete('/event', (req, res) => {
   db.deleteEvent(parseInt(req.query.eventId, 0), (err, data) => {
     if (err) {
