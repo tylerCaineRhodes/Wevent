@@ -157,6 +157,9 @@ app.get('/getCategories', (req, res) => {
       throw err;
     }
     res.send(data);
+  });
+});
+
 app.delete('/event', (req, res) => {
   db.deleteEvent(parseInt(req.query.eventId, 0), (err, data) => {
     if (err) {

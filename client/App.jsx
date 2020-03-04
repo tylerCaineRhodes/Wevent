@@ -253,7 +253,7 @@ class App extends React.Component {
         if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
-              if (this.state.calendarEvents[i].category_ids.indexOf(this.state.filterCategoryValue.id) !== -1 || this.state.filterCategoryValue.id === '') {
+              if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '') {
                 if (this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) {
                   storage.push(this.state.calendarEvents[i]);
                 }
