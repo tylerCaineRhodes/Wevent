@@ -260,41 +260,54 @@ class App extends React.Component {
       city: this.state.signUpCity,
       state: this.state.signUpState,
     };
-    axios.get('/signup', {
-      params: {
-        displayName: signUpData.displayName,
-      },
-    })
-      .then((res) => {
-        if (!res.data[0]) {
-          axios.post('/signup', signUpData)
-            .then(() => {
-              this.setState({
-                signUpDisplayName: '',
-                signUpPassword: '',
-                signUpCity: '',
-                signUpState: '',
-                signUpDisplayed: false,
-              }, () => {
-                // eslint-disable-next-line no-alert
-                alert('User Created, Login please!');
-              });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        } else {
-          // eslint-disable-next-line no-alert
-          alert('Display Name Already Taken!');
-          this.setState({
-            signUpDisplayName: '',
-            signUpPassword: '',
-          });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+
+    if (signUpData.DisplayName === '' || signUpData.password === '' || signUpData.city === '' || signUpData.state === '') {
+      this.setState({
+        signUpDisplayName: '',
+        signUpPassword: '',
+        signUpCity: '',
+        signUpState: '',
+      }, () => {
+        // eslint-disable-next-line no-alert
+        alert('Please fill out all fields');
       });
+    } else {
+      axios.get('/signup', {
+        params: {
+          displayName: signUpData.displayName,
+        },
+      })
+        .then((res) => {
+          if (!res.data[0]) {
+            axios.post('/signup', signUpData)
+              .then(() => {
+                this.setState({
+                  signUpDisplayName: '',
+                  signUpPassword: '',
+                  signUpCity: '',
+                  signUpState: '',
+                  signUpDisplayed: false,
+                }, () => {
+                  // eslint-disable-next-line no-alert
+                  alert('User Created, Login please!');
+                });
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          } else {
+            // eslint-disable-next-line no-alert
+            alert('Display Name Already Taken!');
+            this.setState({
+              signUpDisplayName: '',
+              signUpPassword: '',
+            });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 
   openEventInfoModal() {
