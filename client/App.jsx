@@ -305,6 +305,7 @@ class App extends React.Component {
           show={this.state.signUpDisplayed}
         />
         )}
+        <EventInfo />
       </>
     );
   }
