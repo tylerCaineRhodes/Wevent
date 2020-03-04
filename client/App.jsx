@@ -41,12 +41,13 @@ class App extends React.Component {
       filterPublicValue: false,
       filterPrivateValue: false,
       filterToDValue: '',
-      states: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 
-      'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 
-      'VT', 'VA', 'WA', 'WV', 'WI', 'WY'],
+      states: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA',
+        'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT',
+        'VT', 'VA', 'WA', 'WV', 'WI', 'WY'],
 
       createEventTitle: '',
       createEventDescription: '',
+      createEventCategory: '',
       createEventDate: moment().format('YYYY-MM-DD'),
       createEventTime: moment().format('hh:mm'),
       createEventCost: 0,
@@ -80,6 +81,7 @@ class App extends React.Component {
     this.handleCalendarEventClick = this.handleCalendarEventClick.bind(this);
     this.handleCreateEventTitleChange = this.handleCreateEventTitleChange.bind(this);
     this.handleCreateEventDescriptionChange = this.handleCreateEventDescriptionChange.bind(this);
+    this.handleCreateEventCategoryChange = this.handleCreateEventCategoryChange.bind(this);
     this.handleCreateEventDateChange = this.handleCreateEventDateChange.bind(this);
     this.handleCreateEventTimeChange = this.handleCreateEventTimeChange.bind(this);
     this.handleCreateEventCostChange = this.handleCreateEventCostChange.bind(this);
@@ -414,6 +416,10 @@ class App extends React.Component {
     this.setState({ createEventDescription: newValue });
   }
 
+  handleCreateEventCategoryChange(newValue) {
+    this.setState({ createEventCategory: newValue });
+  }
+
   handleCreateEventDateChange(newValue) {
     this.setState({ createEventDate: newValue });
   }
@@ -455,7 +461,49 @@ class App extends React.Component {
   }
 
   handleCreateEventSubmit(event) {
-    console.log('POOP :)', event, this.state.createEventTitle);
+    event.preventDefault();
+    const createEventData = {
+      userId: this.state.userId,
+      title: this.state.createEventTitle,
+      description: this.state.createEventDescription,
+      category: this.state.createEventCategory,
+      date: this.state.createEventDate,
+      time: this.state.createEventTime,
+      cost: this.state.createEventCost,
+      privateEvent: this.state.createEventPrivate,
+      address1: this.state.createEventAddress1,
+      address2: this.state.createEventAddress2,
+      city: this.state.createEventCity,
+      state: this.state.createEventState,
+      zipcode: this.state.createEventZipcode,
+      maxPeople: this.state.createEventMaxPeople,
+    };
+    axios.post('/createEvent', createEventData)
+      .then(() => {
+        this.setState({
+          createEventDisplayed: false,
+          createEventTitle: '',
+          createEventDescription: '',
+          createEventCategory: '',
+          createEventDate: moment().format('YYYY-MM-DD'),
+          createEventTime: moment().format('hh:mm'),
+          createEventCost: 0,
+          createEventPrivate: false,
+          createEventAddress1: '',
+          createEventAddress2: '',
+          createEventCity: '',
+          createEventState: '',
+          createEventZipcode: 0,
+          createEventMaxPeople: 50,
+        }, () => {
+          this.getAllEvents();
+          // eslint-disable-next-line no-alert
+          alert('Event Created!');
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render() {
@@ -470,6 +518,7 @@ class App extends React.Component {
                 <CreateEvent
                   createEventTitle={this.state.createEventTitle}
                   createEventDescription={this.state.createEventDescription}
+                  createEventCategory={this.state.createEventCategory}
                   createEventDate={this.state.createEventDate}
                   createEventTime={this.state.createEventTime}
                   createEventCost={this.state.createEventCost}
@@ -482,6 +531,7 @@ class App extends React.Component {
                   createEventMaxPeople={this.state.createEventMaxPeople}
                   handleCreateEventTitleChange={this.handleCreateEventTitleChange}
                   handleCreateEventDescriptionChange={this.handleCreateEventDescriptionChange}
+                  handleCreateEventCategoryChange={this.handleCreateEventCategoryChange}
                   handleCreateEventDateChange={this.handleCreateEventDateChange}
                   handleCreateEventTimeChange={this.handleCreateEventTimeChange}
                   handleCreateEventCostChange={this.handleCreateEventCostChange}
