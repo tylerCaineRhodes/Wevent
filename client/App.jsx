@@ -102,6 +102,7 @@ class App extends React.Component {
     this.handleSignUpSubmit = this.handleSignUpSubmit.bind(this);
     this.getAllEvents = this.getAllEvents.bind(this);
     this.filterEvents = this.filterEvents.bind(this);
+    this.handleGuestSubmit = this.handleGuestSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -180,6 +181,7 @@ class App extends React.Component {
           handleLoginSubmit={this.handleLoginSubmit}
           openSignUpModal={this.openSignUpModal}
           closeSignUpModal={this.closeSignUpModal}
+          handleGuestSubmit={this.handleGuestSubmit}
         />
       );
     }
@@ -384,6 +386,13 @@ class App extends React.Component {
         console.error(error);
       });
     // DO ALL THE API CALLS TO VERIFY USER THEN SET PAGE STATE TO PAGE OR WHATEVER
+  }
+
+  handleGuestSubmit(event) {
+    this.setState({
+      loginDisplayName: 'Guest',
+      page: 'MainPage',
+    });
   }
 
   handleFilterCityChange(newValue) {
