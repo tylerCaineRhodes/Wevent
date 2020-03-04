@@ -42,7 +42,7 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.get('/eventInfo', (req, res) => {
-  req.query.userId = parseInt(req.query.userId, 10);
+  // req.query.userId = parseInt(req.query.userId);
   console.log(req.query.userId);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
     if (err || info[0] === undefined) {
@@ -50,7 +50,7 @@ app.get('/eventInfo', (req, res) => {
       res.sendStatus(500);
       return;
     }
-    if (info[0].host_id === req.query.userId) {
+    if (info[0].host_id == req.query.userId) { //Removed strict equality to handle num vs. str comparison
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
           console.error(error);

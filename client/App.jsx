@@ -32,7 +32,6 @@ class App extends React.Component {
       signUpDisplayed: false,
       eventInfoDisplayed: false,
 
-
       filterCityValue: '',
       filterStateValue: '',
       filterCategoryValue: '',
@@ -45,6 +44,9 @@ class App extends React.Component {
         'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT',
         'VT', 'VA', 'WA', 'WV', 'WI', 'WY'],
 
+      eventInfoAccess: '',
+      eventInfo: '',
+      
       createEventTitle: '',
       createEventDescription: '',
       createEventCategory: '',
@@ -315,9 +317,26 @@ class App extends React.Component {
     }
   }
 
-  openEventInfoModal() {
-    this.setState({
-      eventInfoDisplayed: true,
+  openEventInfoModal(eventId) {
+    axios.get('/eventInfo', {
+      params: { 
+        userId: this.state.userId,
+        eventId,
+      },
+    })
+    .then((res) => {
+      console.log('Clicking Calendar - openEventInfoModal retrieving from DB')
+      console.log(res.data) 
+      this.setState({
+        eventInfoAccess: res.data.access,
+        eventInfo: res.data.eventInfo[0],
+        eventInfoDisplayed: true,
+      });
+    })
+    .catch((err) => {
+      if (err) {
+        console.log('openEventInfoModal - Error retrieving from DB');
+      }
     });
   }
 
@@ -406,6 +425,8 @@ class App extends React.Component {
 
   handleCalendarEventClick(event) {
     console.log('POOP :)', event, this.state.calendarEvents);
+    this.openEventInfoModal(event.eventId);
+
   }
 
   handleCreateEventTitleChange(newValue) {
@@ -554,8 +575,10 @@ class App extends React.Component {
             <button className="event-info-button" type="submit" onClick={this.openEventInfoModal}>See eventInfo</button>
 
             <ModalReuseable
-              body={<EventInfo />}
-              title="Event Info"
+              body={<EventInfo 
+                eventInfoAccess={this.state.eventInfoAccess}
+                eventInfo={this.state.eventInfo}
+              />}
               handleShow={this.openEventInfoModal}
               handleClose={this.closeEventInfoModal}
               show={this.state.eventInfoDisplayed}
