@@ -64,3 +64,6 @@ typings/
 .DS_Store
 
 
+# ignore bundle.js
+dist/bundle.js
+
