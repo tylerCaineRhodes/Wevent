@@ -9,13 +9,15 @@ import Dashboard from './components/Dashboard.jsx';
 import ModalReuseable from './components/ModalReuseable.jsx';
 import CreateEvent from './components/CreateEvent.jsx';
 import Signup from './components/Signup.jsx';
+import EventInfo from './components/EventInfo.jsx';
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'MainPage',
+      page: 'LandingPage',
+      userId: '',
       calendarEvents: [
         {
           start: new Date(),
@@ -23,12 +25,13 @@ class App extends React.Component {
           title: 'SAMPLE EVENT',
         },
       ],
-
       loginDisplayName: '',
       loginPassword: '',
 
       createEventDisplayed: false,
       signUpDisplayed: false,
+      eventInfoDisplayed: false,
+
 
       filterCityValue: '',
       filterStateValue: '',
@@ -47,6 +50,8 @@ class App extends React.Component {
     this.closeCreateEventModal = this.closeCreateEventModal.bind(this);
     this.openSignUpModal = this.openSignUpModal.bind(this);
     this.closeSignUpModal = this.closeSignUpModal.bind(this);
+    this.openEventInfoModal = this.openEventInfoModal.bind(this);
+    this.closeEventInfoModal = this.closeEventInfoModal.bind(this);
     this.handleFilterCityChange = this.handleFilterCityChange.bind(this);
     this.handleFilterStateChange = this.handleFilterStateChange.bind(this);
     this.handleFilterCategoryChange = this.handleFilterCategoryChange.bind(this);
@@ -133,6 +138,18 @@ class App extends React.Component {
     });
   }
 
+  openEventInfoModal() {
+    this.setState({
+      eventInfoDisplayed: true,
+    });
+  }
+
+  closeEventInfoModal() {
+    this.setState({
+      eventInfoDisplayed: false,
+    });
+  }
+
   handleLoginDisplaynameChange(newValue) {
     this.setState({ loginDisplayName: newValue });
   }
@@ -143,7 +160,33 @@ class App extends React.Component {
 
   handleLoginSubmit(event) {
     event.preventDefault();
-    this.setState({ loginDisplayName: '', loginPassword: '' });
+    axios.get('/login', {
+      params: {
+        id: this.state.loginDisplayName,
+        pass: this.state.loginPassword,
+      },
+    })
+      .then((res) => {
+        if (!res.data[0]) {
+          // eslint-disable-next-line no-alert
+          alert('Incorrect Login Information');
+          this.setState({
+            loginDisplayName: '',
+            loginPassword: '',
+          });
+        } else {
+          this.setState({
+            userId: res.data[0].user_id,
+            loginPassword: '',
+            page: 'MainPage',
+          }, () => {
+            console.log(this.state.userId);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     // DO ALL THE API CALLS TO VERIFY USER THEN SET PAGE STATE TO PAGE OR WHATEVER
   }
 
@@ -193,14 +236,27 @@ class App extends React.Component {
         {this.handlePageRender()}
         {(this.state.page === 'MainPage' || this.state.page === 'Dashboard')
         && (
-        <ModalReuseable
-          body={<CreateEvent />}
-          title="Create Event"
-          handleShow={this.openCreateEventModal}
-          handleClose={this.closeCreateEventModal}
-          show={this.state.createEventDisplayed}
-        />
+          <>
+            <ModalReuseable
+              body={<CreateEvent />}
+              title="Create Event"
+              handleShow={this.openCreateEventModal}
+              handleClose={this.closeCreateEventModal}
+              show={this.state.createEventDisplayed}
+            />
+
+            <button className="event-info-button" type="submit" onClick={this.openEventInfoModal}>See eventInfo</button>
+
+            <ModalReuseable
+              body={<EventInfo />}
+              title="Event Info"
+              handleShow={this.openEventInfoModal}
+              handleClose={this.closeEventInfoModal}
+              show={this.state.eventInfoDisplayed}
+            />
+          </>
         )}
+
         {this.state.page === 'LandingPage'
         && (
         <ModalReuseable
