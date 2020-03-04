@@ -42,15 +42,15 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.get('/eventInfo', (req, res) => {
-  req.query.userId = parseInt(req.query.userId, 10);
+  // req.query.userId = parseInt(req.query.userId);
   console.log(req.query.userId);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
-    if (err) {
+    if (err || info[0] === undefined) {
       console.error(err);
       res.sendStatus(500);
       return;
     }
-    if (info[0].host_id === req.query.userId) {
+    if (info[0].host_id === req.query.userId) { //Removed strict equality to handle num vs. str comparison
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
           console.error(error);
@@ -118,6 +118,30 @@ app.post('/signup', (req, res) => {
   });
 });
 
+app.post('/createEvent', (req, res) => {
+  const { userId } = req.body;
+  const { title } = req.body;
+  const { description } = req.body;
+  const { category } = req.body;
+  const { date } = req.body;
+  const { time } = req.body;
+  const { cost } = req.body;
+  const { privateEvent } = req.body;
+  const { address1 } = req.body;
+  const { address2 } = req.body;
+  const { city } = req.body;
+  const { state } = req.body;
+  const { zipcode } = req.body;
+  const { maxPeople } = req.body;
+
+  db.createEvent(userId, title, description, category, date, time, cost, privateEvent, address1, address2, city, state, zipcode, maxPeople, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
 app.get('/GetAllEvents', (req, res) => {
   db.getAllEvents((err, data) => {
     if (err) {
@@ -133,6 +157,14 @@ app.get('/getCategories', (req, res) => {
       throw err;
     }
     res.send(data);
+app.delete('/event', (req, res) => {
+  db.deleteEvent(parseInt(req.query.eventId, 0), (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    res.sendStatus(200);
   });
 });
 

@@ -25,7 +25,7 @@ const Filter = ({
   handleFilterToDChange,
   filterToDValue,
   handleFilterSubmit,
-  filterDropdownCategories
+  filterDropdownCategories,
 }) => (
   <div className="filter-container">
     <h3>Filter Events:</h3>

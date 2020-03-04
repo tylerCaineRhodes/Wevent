@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 const Signup = ({
-  signUpDisplayName, signUpPassword, signUpCity, signUpState, handleSignUpDisplaynameChange, handleSignUpPasswordChange, handleSignUpCityNameChange, handleSignUpStateNameChange, handleSignUpSubmit,
+  signUpDisplayName, signUpPassword, signUpCity, states, handleSignUpDisplaynameChange, handleSignUpPasswordChange, handleSignUpCityNameChange, handleSignUpStateNameChange, handleSignUpSubmit,
 }) => (
   <div id="signup">
     <Form>
@@ -21,9 +21,15 @@ const Signup = ({
       </Form.Group>
       <Form.Group controlId="State">
         <Form.Label>State:</Form.Label>
-        <Form.Control type="state" placeholder="State" value={signUpState} onChange={(e) => handleSignUpStateNameChange(e.target.value)} />
+        <Form.Control onChange={(e) => handleSignUpStateNameChange(e.target.value)} as="select">
+          <option>Select State</option>
+          {states.map((state) => (
+            <option>{state}</option>
+          ))}
+        </Form.Control>
       </Form.Group>
     </Form>
+
     <Button varient="primary" type="submit" id="signupButton" onClick={handleSignUpSubmit}>
       Signup
     </Button>
