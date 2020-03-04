@@ -23,7 +23,7 @@ class App extends React.Component {
           start: new Date(),
           end: new Date(),
           title: 'SAMPLE EVENT',
-          eventId: 1,
+          eventId: '',
         },
       ],
       loginDisplayName: '',
@@ -247,16 +247,16 @@ class App extends React.Component {
       });
   }
 
-  openEventInfoModal() {
+  openEventInfoModal(eventId) {
     axios.get('/eventInfo', {
       params: { 
         userId: this.state.userId,
-        eventId: this.state.calendarEvents[0].eventId
+        eventId,
       },
     })
     .then((res) => {
       console.log('Clicking Calendar - openEventInfoModal retrieving from DB')
-      console.log(res.data) //<---------------------------------------------------------------------------
+      console.log(res.data) 
       this.setState({
         eventInfoAccess: res.data.access,
         eventInfo: res.data.eventInfo[0],
@@ -354,6 +354,7 @@ class App extends React.Component {
 
   handleCalendarEventClick(event) {
     console.log('POOP :)', event, this.state.calendarEvents);
+    this.openEventInfoModal(event.eventId);
 
   }
 

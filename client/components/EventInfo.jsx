@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function EventInfo({eventInfo, eventInfoAccess}) {
-  const status = 'public'; //public
+  const status = 'owner'; //public 'owner'
   const accept = 'accepted';
   const pending = ['Adam', 'Beth', 'Charlie', 'Dave'];
   const accepted = ['Erik', 'Felicia', 'George', 'Harry'];
@@ -10,13 +10,13 @@ export default function EventInfo({eventInfo, eventInfoAccess}) {
     <div className={`grid-parent-${status}`}>
       <div className="grid-title">
         <p className="eventInfoTitle">{eventInfo.title}</p>
-        <p className="eventInfoLocation">Austin, TX</p>
+        <p className="eventInfoLocation">{eventInfo.city}, {eventInfo.state}</p>
       </div>
       <div className={`grid-left-${status}`}>
-        <p className="eventInfo">Time</p>
-        <p className="eventInfo">Address1<br />Address2<br />City<br />State<br />Zip</p>
-        <p className="eventInfo">{eventInfo.price}</p>
-        <p className="eventInfo">Attendance</p>
+        <p className="eventInfo">Time {eventInfo.time}</p>
+        <p className="eventInfo">Address1<br />Address2<br />{eventInfo.city}<br />{eventInfo.state}<br />Zip</p>
+        <p className="eventInfo">Price: ${eventInfo.price}</p>
+        <p className="eventInfo">Attendance: {eventInfo.attendance_current} / {eventInfo.attendance_max}</p>
         <div>
         {
           status === 'owner'
