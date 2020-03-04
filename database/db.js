@@ -123,11 +123,14 @@ module.exports.getAllEvents = (callback) => {
     }
   });
 };
+module.exports.deleteEvent = (eventId) => {
+  const query = 'DELETE FROM events WHERE event_id = ?; DELETE FROM events_categories WHERE event_id = ?; DELETE FROM users_events_attending WHERE event_id =?';
+  db.query(query, [eventId, eventId, eventId], (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
 module.exports.connection = db;
-// module.exports.getCalendarEvents = (filters, cb) =>{
-
-// }
-
-// module.exports.logIn = (filters, cb) =>{
-
-// }

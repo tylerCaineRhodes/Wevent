@@ -103,5 +103,16 @@ app.get('/GetAllEvents', (req, res) => {
   });
 });
 
+app.delete('/event', (req, res) => {
+  db.delete(req.query.eventId, (err, data) => {
+    if (err){
+      console.log(err)
+      res.sendStatus(500);
+      return;
+    }
+    res.sendStatus(200);
+  });
+});
+
 module.exports.app = app;
 module.exports.connection = db.connection;
