@@ -159,7 +159,7 @@ p.eventInfoDescription
 .modalStyles
   min-width: 90%
   .modal-body
-    height: 700px
+    height: 100%
 
 .createNewEvent-button
   position: relative
@@ -202,5 +202,11 @@ p.eventInfoDescription
   border-width: 2px
   border-color: white
 
+#createEventForm > input, span, select,
+  display: block
 
+#createEventCost, #createEventMaxPeople
+  width: 15%
 
+#createEventDescription
+  height: 150px
