@@ -16,14 +16,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'LandingPage',
+      page: 'MainPage',
       userId: '',
       calendarEvents: [
-        {
-          start: new Date(),
-          end: new Date(),
-          title: 'SAMPLE EVENT',
-        },
       ],
       loginDisplayName: '',
       loginPassword: '',
@@ -41,6 +36,19 @@ class App extends React.Component {
       filterPublicValue: false,
       filterPrivateValue: false,
       filterToDValue: '',
+
+      createEventTitle: '',
+      createEventDescription: '',
+      createEventDate: '',
+      createEventTime: '',
+      createEventCost: 0,
+      createEventPrivate: false,
+      createEventAddress1: '',
+      createEventAddress2: '',
+      createEventCity: '',
+      createEventState: '',
+      createEventZipcode: 0,
+      createEventMaxPeople: 50,
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
@@ -238,7 +246,22 @@ class App extends React.Component {
         && (
           <>
             <ModalReuseable
-              body={<CreateEvent />}
+              body={(
+                <CreateEvent
+                  createEventTitle={this.state.createEventTitle}
+                  createEventDescription={this.state.createEventDescription}
+                  createEventDate={this.state.createEventDate}
+                  createEventTime={this.state.createEventTime}
+                  createEventCost={this.state.createEventCost}
+                  createEventPrivate={this.state.createEventPrivate}
+                  createEventAddress1={this.state.createEventAddress1}
+                  createEventAddress2={this.state.createEventAddress2}
+                  createEventCity={this.state.createEventCity}
+                  createEventState={this.state.createEventState}
+                  createEventZipcode={this.state.createEventZipcode}
+                  createEventMaxPeople={this.state.createEventMaxPeople}
+                />
+              )}
               title="Create Event"
               handleShow={this.openCreateEventModal}
               handleClose={this.closeCreateEventModal}
