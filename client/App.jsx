@@ -12,7 +12,6 @@ import CreateEvent from './components/CreateEvent.jsx';
 import Signup from './components/Signup.jsx';
 import EventInfo from './components/EventInfo.jsx';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -306,7 +305,6 @@ class App extends React.Component {
           show={this.state.signUpDisplayed}
         />
         )}
-
       </>
     );
   }
