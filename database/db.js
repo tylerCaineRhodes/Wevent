@@ -6,6 +6,7 @@ const db = mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
+  port: process.env.PORT,
 });
 
 // check db connection
@@ -99,10 +100,34 @@ module.exports.getEventInfoForNonHost = (eventId, hasAccess, cb) => {
 
 module.exports.loginCheck = (id, pass, callback) => {
   //console.log(id, pass);
-  const query = `select user_id from users where display_name = '${id}' and password_hash = '${pass}';`;
   // eslint-disable-next-line sql/no-unsafe-query
+  const query = `select user_id from users where display_name = '${id}' and password_hash = '${pass}';`;
   db.query(query, (err, results) => {
     //console.log(err, results);
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+module.exports.signUpCheck = (displayName, callback) => {
+  // eslint-disable-next-line sql/no-unsafe-query
+  const query = `select * from users where display_name = '${displayName}'`;
+  db.query(query, (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+module.exports.signUpAddUser = (displayName, password, city, state, callback) => {
+  // eslint-disable-next-line sql/no-unsafe-query
+  const query = `INSERT INTO users (display_name, password_hash, location_state, location_city) values ('${displayName}', '${password}', '${state}', '${city}')`;
+  db.query(query, (err, results) => {
     if (err) {
       callback(err);
     } else {
@@ -122,6 +147,7 @@ module.exports.getAllEvents = (callback) => {
     }
   });
 };
+
 module.exports.connection = db;
 // module.exports.getCalendarEvents = (filters, cb) =>{
 

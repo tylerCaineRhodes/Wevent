@@ -14,7 +14,7 @@ const Location = ({
     <label htmlFor="state">
       State:
       <select value={filterStateValue} onChange={(e) => handleFilterStateChange(e.target.value)}>
-        <option></option>
+        <option> </option>
         <option>TX</option>
         <option>AZ</option>
         <option>HI</option>
