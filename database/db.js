@@ -137,7 +137,8 @@ module.exports.signUpAddUser = (displayName, password, city, state, callback) =>
 };
 
 module.exports.getAllEvents = (callback) => {
-  const query = 'Select event_id, title, date, time, price, private, attendance_max, attendance_current, city, state FROM events where attendance_max != attendance_current or attendance_max is null;';
+  // eslint-disable-next-line sql/no-unsafe-query
+  const query = 'Select e.event_id, e.host_id, e.title, e.description, e.date, e.time, e.price, e.private, e.attendance_max, e.attendance_current, e.city, e.state, group_concat(ec.category_id order by category_id asc separator ",") as category_ids from events e inner join events_categories ec on e.event_id = ec.event_id where e.attendance_max != attendance_current or e.attendance_max is null group by e.event_id;';
 
   db.query(query, (err, results) => {
     if (err) {
@@ -149,7 +150,7 @@ module.exports.getAllEvents = (callback) => {
 };
 
 module.exports.getCategories = (callback) => {
-  const query = 'Select * from categories;'
+  const query = 'Select * from categories order by category_id;';
 
   db.query(query, (err, results) => {
     if (err) {

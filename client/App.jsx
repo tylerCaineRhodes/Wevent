@@ -36,7 +36,10 @@ class App extends React.Component {
 
       filterCityValue: '',
       filterStateValue: '',
-      filterCategoryValue: '',
+      filterCategoryValue: {
+        name: '',
+        id: '',
+      },
       filterNumOfPeopleValues: [0, 100],
       filterCostValue: 100,
       filterPublicValue: true,
@@ -130,6 +133,7 @@ class App extends React.Component {
             attendance_max: res.data[i].attendance_max,
             attendance_current: res.data[i].attendance_current,
             private: res.data[i].private,
+            category_ids: res.data[i].category_ids.split(','),
           });
         }
         this.setState({
@@ -144,30 +148,38 @@ class App extends React.Component {
       });
   }
 
-  filterEvents() {
-    let storage = [];
-    //if city is initial value, ignore
-    for (let i = 0; i < this.state.calendarEvents.length; i++) {
-      if (this.state.calendarEvents[i].city === this.state.filterCityValue || this.state.filterCityValue === "") {
-        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === "") {
-          if ((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1]) || this.state.calendarEvents[i].attendance_current === null) {
-            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
-              if(this.state.calendarEvents[i].filterCategoryValue === )
-              if(this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue){
-                storage.push(this.state.calendarEvents[i]);
-              }
-              if(this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue){
-                storage.push(this.state.calendarEvents[i]);
-              }
-            }
-          }
-        }
-      }
-    }
+  getCategories() {
+    axios.get('/getCategories')
+      .then((res) => {
+        this.setState({ filterDropdownCategories: res.data });
+      })
+      .catch((err) => {
+        console.log('nope for the categories from front end', err);
+      });
+  }
+
+  openSignUpModal() {
     this.setState({
-      filteredEvents: storage,
-    }, () => {
-      storage = [];
+      signUpDisplayed: true,
+    });
+  }
+
+  closeSignUpModal() {
+    this.setState({
+      signUpDisplayed: false,
+    });
+  }
+
+
+  closeCreateEventModal() {
+    this.setState({
+      createEventDisplayed: false,
+    });
+  }
+
+  openCreateEventModal() {
+    this.setState({
+      createEventDisplayed: true,
     });
   }
 
@@ -223,37 +235,32 @@ class App extends React.Component {
     }
   }
 
-  openCreateEventModal() {
+  filterEvents() {
+    let storage = [];
+    //if city is initial value, ignore
+    for (let i = 0; i < this.state.calendarEvents.length; i++) {
+      if (this.state.calendarEvents[i].city === this.state.filterCityValue || this.state.filterCityValue === '') {
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
+          if ((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1]) || this.state.calendarEvents[i].attendance_current === null) {
+            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
+              if (this.state.calendarEvents[i].category_ids.indexOf(this.state.filterCategoryValue.id) !== -1 || this.state.filterCategoryValue.id === '') {
+                if (this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) {
+                  storage.push(this.state.calendarEvents[i]);
+                }
+                if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
+                  storage.push(this.state.calendarEvents[i]);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     this.setState({
-      createEventDisplayed: true,
+      filteredEvents: storage,
+    }, () => {
+      storage = [];
     });
-  }
-
-  closeCreateEventModal() {
-    this.setState({
-      createEventDisplayed: false,
-    });
-  }
-
-  openSignUpModal() {
-    this.setState({
-      signUpDisplayed: true,
-    });
-  }
-
-  closeSignUpModal() {
-    this.setState({
-      signUpDisplayed: false,
-    });
-  }
-  getCategories(){
-    axios.get('/getCategories')
-    .then(res => {
-      this.setState({ filterDropdownCategories: res.data })
-    })
-    .catch(err => {
-      console.log('nope for the categories from front end', err)
-    })
   }
 
   handleSignUpDisplaynameChange(newValue) {
