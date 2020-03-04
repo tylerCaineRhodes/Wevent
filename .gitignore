@@ -63,4 +63,5 @@ typings/
 # Mac Finder
 .DS_Store
 
-bundle.js
+# ignore bundle.js
+dist/bundle.js
