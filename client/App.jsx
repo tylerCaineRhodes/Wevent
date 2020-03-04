@@ -18,14 +18,7 @@ class App extends React.Component {
     this.state = {
       page: 'LandingPage',
       userId: '',
-      calendarEvents: [
-        {
-          start: new Date(),
-          end: new Date(),
-          title: 'SAMPLE EVENT',
-          eventId: 1,
-        },
-      ],
+      calendarEvents: [],
       filteredEvents: [],
       loginDisplayName: '',
       loginPassword: '',
@@ -48,6 +41,19 @@ class App extends React.Component {
       filterPublicValue: false,
       filterPrivateValue: false,
       filterToDValue: '',
+
+      createEventTitle: '',
+      createEventDescription: '',
+      createEventDate: moment().format('YYYY-MM-DD'),
+      createEventTime: moment().format('hh:mm'),
+      createEventCost: 0,
+      createEventPrivate: false,
+      createEventAddress1: '',
+      createEventAddress2: '',
+      createEventCity: '',
+      createEventState: '',
+      createEventZipcode: 0,
+      createEventMaxPeople: 50,
     };
     this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
@@ -69,6 +75,19 @@ class App extends React.Component {
     this.handleFilterToDChange = this.handleFilterToDChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.handleCalendarEventClick = this.handleCalendarEventClick.bind(this);
+    this.handleCreateEventTitleChange = this.handleCreateEventTitleChange.bind(this);
+    this.handleCreateEventDescriptionChange = this.handleCreateEventDescriptionChange.bind(this);
+    this.handleCreateEventDateChange = this.handleCreateEventDateChange.bind(this);
+    this.handleCreateEventTimeChange = this.handleCreateEventTimeChange.bind(this);
+    this.handleCreateEventCostChange = this.handleCreateEventCostChange.bind(this);
+    this.handleCreateEventPrivateChange = this.handleCreateEventPrivateChange.bind(this);
+    this.handleCreateEventAddress1Change = this.handleCreateEventAddress1Change.bind(this);
+    this.handleCreateEventAddress2Change = this.handleCreateEventAddress2Change.bind(this);
+    this.handleCreateEventCityChange = this.handleCreateEventCityChange.bind(this);
+    this.handleCreateEventStateChange = this.handleCreateEventStateChange.bind(this);
+    this.handleCreateEventZipcodeChange = this.handleCreateEventZipcodeChange.bind(this);
+    this.handleCreateEventMaxPeopleChange = this.handleCreateEventMaxPeopleChange.bind(this);
+    this.handleCreateEventSubmit = this.handleCreateEventSubmit.bind(this);
     this.handleSignUpDisplaynameChange = this.handleSignUpDisplaynameChange.bind(this);
     this.handleSignUpPasswordChange = this.handleSignUpPasswordChange.bind(this);
     this.handleSignUpCityNameChange = this.handleSignUpCityNameChange.bind(this);
@@ -384,6 +403,58 @@ class App extends React.Component {
     console.log('POOP :)', event, this.state.calendarEvents);
   }
 
+  handleCreateEventTitleChange(newValue) {
+    this.setState({ createEventTitle: newValue });
+  }
+
+  handleCreateEventDescriptionChange(newValue) {
+    this.setState({ createEventDescription: newValue });
+  }
+
+  handleCreateEventDateChange(newValue) {
+    this.setState({ createEventDate: newValue });
+  }
+
+  handleCreateEventTimeChange(newValue) {
+    this.setState({ createEventTime: newValue });
+  }
+
+  handleCreateEventCostChange(newValue) {
+    this.setState({ createEventCost: newValue });
+  }
+
+  handleCreateEventPrivateChange(newValue) {
+    this.setState({ createEventPrivate: newValue });
+  }
+
+  handleCreateEventAddress1Change(newValue) {
+    this.setState({ createEventAddress1: newValue });
+  }
+
+  handleCreateEventAddress2Change(newValue) {
+    this.setState({ createEventAddress2: newValue });
+  }
+
+  handleCreateEventCityChange(newValue) {
+    this.setState({ createEventCity: newValue });
+  }
+
+  handleCreateEventStateChange(newValue) {
+    this.setState({ createEventState: newValue });
+  }
+
+  handleCreateEventZipcodeChange(newValue) {
+    this.setState({ createEventZipcode: newValue });
+  }
+
+  handleCreateEventMaxPeopleChange(newValue) {
+    this.setState({ createEventMaxPeople: newValue });
+  }
+
+  handleCreateEventSubmit(event) {
+    console.log('POOP :)', event, this.state.createEventTitle);
+  }
+
   render() {
     return (
       <>
@@ -392,7 +463,35 @@ class App extends React.Component {
         && (
           <>
             <ModalReuseable
-              body={<CreateEvent />}
+              body={(
+                <CreateEvent
+                  createEventTitle={this.state.createEventTitle}
+                  createEventDescription={this.state.createEventDescription}
+                  createEventDate={this.state.createEventDate}
+                  createEventTime={this.state.createEventTime}
+                  createEventCost={this.state.createEventCost}
+                  createEventPrivate={this.state.createEventPrivate}
+                  createEventAddress1={this.state.createEventAddress1}
+                  createEventAddress2={this.state.createEventAddress2}
+                  createEventCity={this.state.createEventCity}
+                  createEventState={this.state.createEventState}
+                  createEventZipcode={this.state.createEventZipcode}
+                  createEventMaxPeople={this.state.createEventMaxPeople}
+                  handleCreateEventTitleChange={this.handleCreateEventTitleChange}
+                  handleCreateEventDescriptionChange={this.handleCreateEventDescriptionChange}
+                  handleCreateEventDateChange={this.handleCreateEventDateChange}
+                  handleCreateEventTimeChange={this.handleCreateEventTimeChange}
+                  handleCreateEventCostChange={this.handleCreateEventCostChange}
+                  handleCreateEventPrivateChange={this.handleCreateEventPrivateChange}
+                  handleCreateEventAddress1Change={this.handleCreateEventAddress1Change}
+                  handleCreateEventAddress2Change={this.handleCreateEventAddress2Change}
+                  handleCreateEventCityChange={this.handleCreateEventCityChange}
+                  handleCreateEventStateChange={this.handleCreateEventStateChange}
+                  handleCreateEventZipcodeChange={this.handleCreateEventZipcodeChange}
+                  handleCreateEventMaxPeopleChange={this.handleCreateEventMaxPeopleChange}
+                  handleCreateEventSubmit={this.handleCreateEventSubmit}
+                />
+              )}
               title="Create Event"
               handleShow={this.openCreateEventModal}
               handleClose={this.closeCreateEventModal}
