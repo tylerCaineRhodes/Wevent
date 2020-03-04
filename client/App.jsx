@@ -17,7 +17,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'LandingPage',
+      page: 'MainPage',
       userId: '',
       calendarEvents: [
         {
@@ -27,6 +27,7 @@ class App extends React.Component {
           eventId: 1,
         },
       ],
+      filteredEvents: [],
       loginDisplayName: '',
       loginPassword: '',
 
@@ -38,8 +39,8 @@ class App extends React.Component {
       filterCityValue: '',
       filterStateValue: '',
       filterCategoryValue: '',
-      filterNumOfPeopleValues: [0, 10],
-      filterCostValue: 0,
+      filterNumOfPeopleValues: [15, 40],
+      filterCostValue: 100,
       filterPublicValue: false,
       filterPrivateValue: false,
       filterToDValue: '',
@@ -65,16 +66,19 @@ class App extends React.Component {
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.handleCalendarEventClick = this.handleCalendarEventClick.bind(this);
     this.getAllEvents = this.getAllEvents.bind(this);
+    this.filterEvents = this.filterEvents.bind(this);
   }
 
   componentDidMount() {
     this.getAllEvents();
+    this.filterEvents();
   }
 
 
   getAllEvents() {
     axios.get('/GetAllEvents')
       .then((res) => {
+        console.log(res.data);
         const results = [];
         for (let i = 0; i < res.data.length; i++) {
           const time = res.data[i].time.split(':');
@@ -89,10 +93,17 @@ class App extends React.Component {
             end: momentTime.toDate(),
             title: res.data[i].title,
             eventId: res.data[i].event_id,
+            city: res.data[i].city,
+            state: res.data[i].state,
+            price: res.data[i].price,
+            attendance_max: res.data[i].attendance_max,
+            attendance_current: res.data[i].attendance_current,
+            private: res.data[i].private,
           });
         }
         this.setState({
           calendarEvents: results,
+          filteredEvents: results,
         });
       })
       .catch((err) => {
@@ -100,6 +111,30 @@ class App extends React.Component {
           console.log('didn\'t work from front');
         }
       });
+  }
+
+  filterEvents() {
+    let storage = [];
+    for (let i = 0; i < this.state.calendarEvents.length; i++) {
+      if (this.state.calendarEvents[i].city === this.state.filterCityValue) {
+        console.log(this.state.calendarEvents[i].state);
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue) {
+          console.log(1)
+          if ((this.state.calendarEvents[i].attendance_current > this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) {
+            console.log(3)
+            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
+              console.log(4)
+              storage.push(this.state.calendarEvents[i]);
+            }
+          }
+        }
+      }
+    }
+    this.setState({
+      filteredEvents: storage,
+    }, () => {
+      storage = [];
+    });
   }
 
   handlePageRender() {
@@ -120,7 +155,8 @@ class App extends React.Component {
     if (this.state.page === 'MainPage') {
       return (
         <MainPage
-          calendarEvents={this.state.calendarEvents}
+          filterEvents={this.filterEvents}
+          calendarEvents={this.state.filteredEvents}
           handleCalendarEventClick={this.handleCalendarEventClick}
 
           handleFilterCityChange={this.handleFilterCityChange}
@@ -263,6 +299,7 @@ class App extends React.Component {
 
   handleFilterSubmit() {
     console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
+    this.filterEvents();
   }
 
   handleCalendarEventClick(event) {
