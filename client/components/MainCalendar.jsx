@@ -22,8 +22,7 @@ const MainCalendar = ({
               ? 'orange'
               : 'red',
       }
-     
-  })}
+    })}
   
   />
 );

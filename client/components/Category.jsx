@@ -9,7 +9,7 @@ const Category = ({
       <label htmlFor="category">
         Category:
         <select value={filterCategoryValue} onChange={(e) => handleFilterCategoryChange(e.target.value)}>
-          <option></option>
+          <option>  </option>
           <option>TX</option>
           <option>AZ</option>
           <option>TN</option>
