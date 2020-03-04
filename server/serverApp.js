@@ -44,7 +44,7 @@ app.get('/eventInfo', (req, res) => {
   req.query.userId = parseInt(req.query.userId, 10);
   console.log(req.query.userId);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
-    if (err) {
+    if (err || info[0]===undefined) {
       console.error(err);
       res.sendStatus(500);
       return;
@@ -104,7 +104,7 @@ app.get('/GetAllEvents', (req, res) => {
 });
 
 app.delete('/event', (req, res) => {
-  db.delete(req.query.eventId, (err, data) => {
+  db.deleteEvent(parseInt(req.query.eventId), (err, data) => {
     if (err){
       console.log(err)
       res.sendStatus(500);
