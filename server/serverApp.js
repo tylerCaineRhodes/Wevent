@@ -94,5 +94,28 @@ app.get('/login', (req, res) => {
   });
 });
 
+app.get('/signup', (req, res) => {
+  const { displayName } = req.query;
+  db.signUpCheck(displayName, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
+app.post('/signup', (req, res) => {
+  const { displayName } = req.body;
+  const { password } = req.body;
+  const { city } = req.body;
+  const { state } = req.body;
+  db.signUpAddUser(displayName, password, city, state, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
 module.exports.app = app;
 module.exports.connection = db.connection;
