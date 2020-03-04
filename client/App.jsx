@@ -9,7 +9,6 @@ import Dashboard from './components/Dashboard.jsx';
 import ModalReuseable from './components/ModalReuseable.jsx';
 import CreateEvent from './components/CreateEvent.jsx';
 import Signup from './components/Signup.jsx';
-import EventInfo from './components/EventInfo.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -190,8 +189,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-      <EventInfo />
-        {/* {this.handlePageRender()}
+        {this.handlePageRender()}
         {(this.state.page === 'MainPage' || this.state.page === 'Dashboard')
         && (
         <ModalReuseable
@@ -211,7 +209,7 @@ class App extends React.Component {
           handleClose={this.closeSignUpModal}
           show={this.state.signUpDisplayed}
         />
-        )} */}
+        )}
       </>
     );
   }
