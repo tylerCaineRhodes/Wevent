@@ -7,13 +7,14 @@ const cors = require('cors');
 const db = require('../database/db');
 const middleware = require('./middleware');
 
+// middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../dist')));
 
 
-//connections/queries
+// connections/queries
 app.get('/dashboard', (req, res) => {
   db.getAttendingEventsForDashboard(req.query.userId, (err, attending) => {
     if (err) {
