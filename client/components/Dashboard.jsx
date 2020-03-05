@@ -1,32 +1,43 @@
 import React from 'react';
 import Title from './Title.jsx';
 
-const Dashboard = (props) => 
-// {console.log(props)}
-(
-  <div>
-    {/* <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} /> */}
-    <div className="outerDash">
-        <p>{props.info.nameAndLocation[0].display_name}</p>
-        <p>{props.info.nameAndLocation[0].location_state}</p>
-        <p>{props.info.nameAndLocation[0].location_city}</p>
-      <div className="hostingDash">
-        <h4>Hosting</h4>
-        <>{props.info.hosting.map( (event, i) => {
-            return (<div key = {i} pending = {event.pending} onClick = {props.openEventInfoModal}>{event.title}</div>)
-          }
-        )}</>
-      </div>
-      <div className="attendingDash">
-        <h4>Attending</h4>
-        <>{props.info.attending.map( (event, i) => {
-            return (<div key = {i} pending = {event.pending} onClick = {props.openEventInfoModal}>{event.title}</div>)
-          }
-        )}</>
-      </div>
-    </div>
-    <button onClick = {props.changePage}>Main Page</button>
-  </div>
-);
+class Dashboard extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  onClick (e) {
+    this.props.openEventInfoModal(1);
+  }
+
+  render () {
+    return (
+      <div>
+        {/* <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} /> */}
+        <div className="outerDash">
+            <p>{this.props.info.nameAndLocation[0].display_name}</p>
+            <p>{this.props.info.nameAndLocation[0].location_state}</p>
+            <p>{this.props.info.nameAndLocation[0].location_city}</p>
+          <div className="hostingDash">
+            <h4>Hosting</h4>
+            <>{this.props.info.hosting.map( (event, i) => {
+                return (<div key = {i} pending = {event.pending} onClick = {this.onClick.bind(this)}>{event.title}</div>)
+              }
+            )}</>
+          </div>
+          <div className="attendingDash">
+            <h4>Attending</h4>
+            <>{this.props.info.attending.map( (event, i) => {
+                return (<div key = {i} pending = {event.pending} onClick = {this.onClick.bind(this)}>{event.title}</div>)
+              }
+            )}</>
+          </div>
+        </div>
+        <button type="button" onClick={this.props.changePage}>Main Page</button>
+      </div>
+    );
+   }
+}
 export default Dashboard;
