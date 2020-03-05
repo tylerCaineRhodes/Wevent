@@ -134,6 +134,14 @@ class App extends React.Component {
       });
   }
 
+  getEventsForDashboard(){
+    const userId = this.state.userId;
+    axios.get('/dashboard', { params : {userId} })
+    .then((data) =>{
+      this.setState({dashboardInfo : data.data})
+    });
+  };
+  
   getCategories() {
     axios.get('/getCategories')
       .then((res) => {
