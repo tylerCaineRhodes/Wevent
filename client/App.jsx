@@ -87,6 +87,7 @@ class App extends React.Component {
     this.changePage = this.changePage.bind(this);
     this.getEventsForDashboard = this.getEventsForDashboard.bind(this);
     this.getAllStates = this.getAllStates.bind(this);
+    this.handleGuestBackToLandingPage = this.handleGuestBackToLandingPage.bind(this);
   }
 
   componentDidMount() {
@@ -216,7 +217,7 @@ class App extends React.Component {
 
           loginDisplayName={this.state.loginDisplayName}
 
-
+          handleGuestBackToLandingPage={this.handleGuestBackToLandingPage}
           filterDropdownCategories={this.state.filterDropdownCategories}
           filterCityValue={this.state.filterCityValue}
           filterStateValue={this.state.filterStateValue}
@@ -270,6 +271,10 @@ class App extends React.Component {
     }, () => {
       storage = [];
     });
+  }
+
+  handleGuestBackToLandingPage() {
+    this.setState({ page: 'LandingPage' });
   }
 
   changePage() {
@@ -345,15 +350,17 @@ class App extends React.Component {
   }
 
   openEventInfoModal(eventId) {
+    const params = { eventId };
+    if (this.state.userId) {
+      params.userId = 0;
+    } else {
+      params.userId = this.state.userId;
+    }
     axios.get('/eventInfo', {
-      params: {
-        userId: this.state.userId,
-        eventId,
-      },
+      params,
     })
       .then((res) => {
-        // console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
-        // console.log(res.data);
+        //console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
@@ -541,7 +548,7 @@ class App extends React.Component {
               handleSignUpSubmit={this.handleSignUpSubmit}
             />
           )}
-          title="Sign Up!"
+          title="Sign Up"
           handleShow={this.openSignUpModal}
           handleClose={this.closeSignUpModal}
           show={this.state.signUpDisplayed}
