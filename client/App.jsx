@@ -45,9 +45,7 @@ class App extends React.Component {
       filterPublicValue: true,
       filterPrivateValue: true,
       filterToDValue: '',
-      states: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA',
-        'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT',
-        'VT', 'VA', 'WA', 'WV', 'WI', 'WY'],
+      states: [],
 
       eventInfoAccess: '',
       eventInfo: '',
@@ -88,11 +86,26 @@ class App extends React.Component {
     this.openCreateEventModal = this.openCreateEventModal.bind(this);
     this.changePage = this.changePage.bind(this);
     this.getEventsForDashboard = this.getEventsForDashboard.bind(this);
+    this.getAllStates = this.getAllStates.bind(this);
+    this.handleGuestBackToLandingPage = this.handleGuestBackToLandingPage.bind(this);
   }
 
   componentDidMount() {
     this.getAllEvents();
     this.getCategories();
+    this.getAllStates();
+  }
+
+  getAllStates() {
+    axios.get('/getallstates')
+      .then((response) => {
+        this.setState({
+          states: response.data,
+        });
+      })
+      .catch((err) => {
+        console.log('getAllStates error', err);
+      });
   }
 
 
@@ -204,7 +217,7 @@ class App extends React.Component {
 
           loginDisplayName={this.state.loginDisplayName}
 
-
+          handleGuestBackToLandingPage={this.handleGuestBackToLandingPage}
           filterDropdownCategories={this.state.filterDropdownCategories}
           filterCityValue={this.state.filterCityValue}
           filterStateValue={this.state.filterStateValue}
@@ -231,7 +244,7 @@ class App extends React.Component {
     let storage = [];
     //if city is initial value, ignore
     for (let i = 0; i < this.state.calendarEvents.length; i++) {
-      if (this.state.calendarEvents[i].city === this.state.filterCityValue || this.state.filterCityValue === '') {
+      if (this.state.calendarEvents[i].city.toUpperCase() === this.state.filterCityValue.toUpperCase() || this.state.filterCityValue === '') {
         if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
@@ -258,6 +271,10 @@ class App extends React.Component {
     }, () => {
       storage = [];
     });
+  }
+
+  handleGuestBackToLandingPage() {
+    this.setState({ page: 'LandingPage', loginDisplayName: '' });
   }
 
   changePage() {
@@ -333,10 +350,14 @@ class App extends React.Component {
   }
 
   openEventInfoModal(eventId) {
-    const params = {eventId}
-    this.state.userId === '' ? params.userId = 0 : params.userId = this.state.userId;
+    const params = { eventId };
+    if (this.state.userId) {
+      params.userId = 0;
+    } else {
+      params.userId = this.state.userId;
+    }
     axios.get('/eventInfo', {
-      params
+      params,
     })
       .then((res) => {
         //console.log(res.data);
@@ -473,66 +494,67 @@ class App extends React.Component {
       <>
         {this.handlePageRender()}
         {(this.state.page === 'MainPage' || this.state.page === 'Dashboard')
-        && (
-          <>
-            <ModalReuseable
-              body={(
-                <CreateEvent
-                  handleStateChange={this.handleStateChange}
-                  createEventTitle={this.state.createEventTitle}
-                  createEventDescription={this.state.createEventDescription}
-                  createEventCategory={this.state.createEventCategory}
-                  createEventDate={this.state.createEventDate}
-                  createEventTime={this.state.createEventTime}
-                  createEventCost={this.state.createEventCost}
-                  createEventPrivate={this.state.createEventPrivate}
-                  createEventAddress1={this.state.createEventAddress1}
-                  createEventAddress2={this.state.createEventAddress2}
-                  createEventCity={this.state.createEventCity}
-                  createEventState={this.state.createEventState}
-                  createEventZipcode={this.state.createEventZipcode}
-                  createEventMaxPeople={this.state.createEventMaxPeople}
-                  handleCreateEventSubmit={this.handleCreateEventSubmit}
-                />
-              )}
-              title="Create Event"
-              handleShow={this.openCreateEventModal}
-              handleClose={this.closeCreateEventModal}
-              show={this.state.createEventDisplayed}
-            />
+          && (
+            <>
+              <ModalReuseable
+                body={(
+                  <CreateEvent
+                    handleStateChange={this.handleStateChange}
+                    createEventTitle={this.state.createEventTitle}
+                    createEventDescription={this.state.createEventDescription}
+                    createEventCategory={this.state.createEventCategory}
+                    createEventDate={this.state.createEventDate}
+                    createEventTime={this.state.createEventTime}
+                    createEventCost={this.state.createEventCost}
+                    createEventPrivate={this.state.createEventPrivate}
+                    createEventAddress1={this.state.createEventAddress1}
+                    createEventAddress2={this.state.createEventAddress2}
+                    createEventCity={this.state.createEventCity}
+                    createEventState={this.state.createEventState}
+                    createEventZipcode={this.state.createEventZipcode}
+                    createEventMaxPeople={this.state.createEventMaxPeople}
+                    handleCreateEventSubmit={this.handleCreateEventSubmit}
+                  />
+                )}
+                title="Create Event"
+                handleShow={this.openCreateEventModal}
+                handleClose={this.closeCreateEventModal}
+                show={this.state.createEventDisplayed}
+              />
 
-            <ModalReuseable
-              body={(
-                <EventInfo
-                  eventInfoAccess={this.state.eventInfoAccess}
-                  eventInfo={this.state.eventInfo}
-                />
-              )}
-              handleShow={this.openEventInfoModal}
-              handleClose={this.closeEventInfoModal}
-              show={this.state.eventInfoDisplayed}
-            />
-          </>
-        )}
+              <ModalReuseable
+                body={(
+                  <EventInfo
+                    eventInfoAccess={this.state.eventInfoAccess}
+                    eventInfo={this.state.eventInfo}
+                  />
+                )}
+                handleShow={this.openEventInfoModal}
+                handleClose={this.closeEventInfoModal}
+                show={this.state.eventInfoDisplayed}
+              />
+            </>
+          )}
 
         {this.state.page === 'LandingPage'
-        && (
-        <ModalReuseable
-          body={(
-            <Signup
-              signUpDisplayName={this.state.signUpDisplayName}
-              signUpPassword={this.state.signUpPassword}
-              signUpCity={this.state.signUpCity}
-              states={this.state.states}
-              handleSignUpSubmit={this.handleSignUpSubmit}
+          && (
+            <ModalReuseable
+              body={(
+                <Signup
+                  handleStateChange={this.handleStateChange}
+                  signUpDisplayName={this.state.signUpDisplayName}
+                  signUpPassword={this.state.signUpPassword}
+                  signUpCity={this.state.signUpCity}
+                  states={this.state.states}
+                  handleSignUpSubmit={this.handleSignUpSubmit}
+                />
+              )}
+              title="Sign Up!"
+              handleShow={this.openSignUpModal}
+              handleClose={this.closeSignUpModal}
+              show={this.state.signUpDisplayed}
             />
           )}
-          title="Sign Up!"
-          handleShow={this.openSignUpModal}
-          handleClose={this.closeSignUpModal}
-          show={this.state.signUpDisplayed}
-        />
-        )}
       </>
     );
   }

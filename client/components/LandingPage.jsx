@@ -13,11 +13,11 @@ const LandingPage = ({
   handleStateChange,
 }) => (
   <div className="landingPage">
-    <Title buttonText="Continue as Guest" buttonClass="guestButton" onClick={(e) => handleGuestSubmit(e)} />
+    <img className="landingPageImage" src="https://upload.wikimedia.org/wikipedia/commons/d/da/Austin-skyline.jpg" />
+    <span className="landingPageHeader">
+      Wevent
+    </span>
     <div className="landingPageContent">
-      <span className="landingPageHeader">
-        Wevent
-      </span>
       <Form className="login">
         <Form.Group controlId="Username" className="landingPageUsernameField">
           {/* <Form.Label>Welcome to Wevent</Form.Label> */}
@@ -38,6 +38,8 @@ const LandingPage = ({
             <span id="noAccountButton" onClick={openSignUpModal}>Sign Up</span>
           </div>
         </span>
+        <span id="landingPageOr">or</span>
+        <span id="continueAsGuestButton" onClick={(e) => handleGuestSubmit(e)}>Continue as Guest</span>
       </div>
     </div>
   </div>
