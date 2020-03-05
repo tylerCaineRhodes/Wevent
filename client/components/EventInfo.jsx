@@ -10,7 +10,7 @@ eventInfo.attending = []; //Temp variable until changes are pushed
         <p className="eventInfoLocation">{eventInfo.city}, {eventInfo.state}</p>
       </div>
       <div className={`grid-left-${eventInfoAccess}`}>
-        {/* <p className="eventInfo">Host {eventInfoAccess}</p> To Be Removed */}
+        {/* <p className="eventInfo">Host {eventInfoAccess}</p> Displays User Role ***To Be Removed*** */}
         <p className="eventInfo">Time {eventInfo.time}</p>
         {
           eventInfoAccess !== 'limited'
@@ -45,7 +45,7 @@ eventInfo.attending = []; //Temp variable until changes are pushed
         eventInfoAccess === 'host'
           ? (
             <div className="grid-host-pend-accept">
-              <div className="grid-host-pend" style={{ display: 'inline-block' }}>
+              <div className="grid-host-pend">
                 <div className="pend-accept-heading">Pending</div>
                 {eventInfo.pending.map((pend) => (
                   <div>
@@ -54,7 +54,7 @@ eventInfo.attending = []; //Temp variable until changes are pushed
                   </div>
                 ))}
               </div>
-              <div className="grid-host-accept" style={{ display: 'inline-block' }}>
+              <div className="grid-host-accept">
                 <div className="pend-accept-heading">Accepted</div>
                 {eventInfo.attending.map((accept) => (
                   <div>
