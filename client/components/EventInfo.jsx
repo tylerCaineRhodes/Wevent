@@ -11,7 +11,7 @@ export default function EventInfo({eventInfo, eventInfoAccess}) {
         <p className="eventInfoLocation">{eventInfo.city}, {eventInfo.state}</p>
       </div>
       <div className={`grid-left-${eventInfoAccess}`}>
-        {/* <p className="eventInfo">Host {eventInfoAccess}</p> To Be Removed */}
+        <p className="eventInfo">Host {eventInfoAccess}</p> To Be Removed
         <p className="eventInfo">Time {eventInfo.time}</p>
         {
           eventInfoAccess !== 'limited'

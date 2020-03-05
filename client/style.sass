@@ -49,68 +49,52 @@
   grid-row: 1/2
   color: white
 
-.grid-left-host
-  @include basic-styles
+@mixin grid-left
   font-weight: bold
   color: #800d0d
   background-color: #fc6565
-  height: 300px
   grid-column: 1/2
   grid-row: 2/3
   padding: 20px
   margin: 0px 0px 0px 6px
   border-radius: 5px
+
+.grid-left-host
+  @include basic-styles
+  @include grid-left
+  height: 300px
 
 .grid-left-full
   @include basic-styles
-  font-weight: bold
-  color: #800d0d
-  background-color: #fc6565
+  @include grid-left
   height: 482px
-  grid-column: 1/2
-  grid-row: 2/3
-  padding: 20px
-  margin: 0px 0px 0px 6px
-  border-radius: 5px
 
 .grid-left-limited
   @include basic-styles
-  font-weight: bold
-  color: #800d0d
-  background-color: #fc6565
+  @include grid-left
   height: 482px
-  grid-column: 1/2
+
+@mixin grid-right
+  background-color: white
+  grid-column: 2/3
   grid-row: 2/3
+  overflow-y: auto
   padding: 20px
-  margin: 0px 0px 0px 6px
-  border-radius: 5px
 
 .grid-right-host
   @include basic-styles
-  background-color: white
+  @include grid-right
   height: 300px
-  grid-column: 2/3
-  grid-row: 2/3
-  overflow-y: auto
-  padding: 20px
 
 .grid-right-full
   @include basic-styles
-  background-color: white
+  @include grid-right
   height: 450px
-  grid-column: 2/3
-  grid-row: 2/3
-  overflow-y: auto
-  padding: 20px
 
 .grid-right-limited
   @include basic-styles
-  background-color: white
+  @include grid-right
   height: 450px
-  grid-column: 2/3
-  grid-row: 2/3
-  overflow-y: auto
-  padding: 20px
 
 .grid-host-pend-accept 
   @include basic-styles
