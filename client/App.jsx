@@ -207,7 +207,7 @@ class App extends React.Component {
     }
     if (this.state.page === 'Dashboard') {
       return (
-        <Dashboard openCreateEventModal={this.openCreateEventModal} />
+        <Dashboard info={this.state.dashboardInfo} changePage={this.changePage} openEventInfoModal={this.openEventInfoModal} closeEventInfoModal={this.closeEventInfoModal} />
       );
     }
   }
