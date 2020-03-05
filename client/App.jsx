@@ -91,7 +91,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllEvents();
-    this.filterEvents();
     this.getCategories();
   }
 
@@ -102,7 +101,6 @@ class App extends React.Component {
   getAllEvents() {
     axios.get('/GetAllEvents')
       .then((res) => {
-        // console.log(res.data);
         const results = [];
         for (let i = 0; i < res.data.length; i++) {
           const time = res.data[i].time.split(':');
@@ -130,6 +128,9 @@ class App extends React.Component {
           calendarEvents: results,
           filteredEvents: results,
         });
+      })
+      .then((res) => {
+        this.filterEvents();
       })
       .catch((err) => {
         if (err) {
@@ -202,6 +203,9 @@ class App extends React.Component {
           filterEvents={this.filterEvents}
           calendarEvents={this.state.filteredEvents}
           handleCalendarEventClick={this.handleCalendarEventClick}
+
+          loginDisplayName={this.state.loginDisplayName}
+
           filterDropdownCategories={this.state.filterDropdownCategories}
           filterCityValue={this.state.filterCityValue}
           filterStateValue={this.state.filterStateValue}
@@ -233,11 +237,16 @@ class App extends React.Component {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
               if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '') {
-                if (this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) {
-                  storage.push(this.state.calendarEvents[i]);
-                }
-                if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
-                  storage.push(this.state.calendarEvents[i]);
+                const display = moment(this.state.calendarEvents[i].start).format('hh:mm:ss');
+                const timeArray = this.state.filterToDValue.split('-');
+                if ((display >= timeArray[0] && display <= timeArray[1]) || (this.state.filterToDValue.length === 0)) {
+                  //check and see for time of day or empty string
+                  if ((this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) && (this.state.loginDisplayName !== 'Guest')) {
+                    storage.push(this.state.calendarEvents[i]);
+                  }
+                  if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
+                    storage.push(this.state.calendarEvents[i]);
+                  }
                 }
               }
             }
@@ -373,8 +382,6 @@ class App extends React.Component {
             userId: res.data[0].user_id,
             loginPassword: '',
             page: 'MainPage',
-          }, () => {
-            // console.log(this.state.userId);
           });
         }
       })
@@ -388,6 +395,8 @@ class App extends React.Component {
     this.setState({
       loginDisplayName: 'Guest',
       page: 'MainPage',
+    }, () => {
+      this.filterEvents();
     });
   }
 
