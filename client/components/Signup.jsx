@@ -23,8 +23,8 @@ const Signup = ({
         <Form.Label>State:</Form.Label>
         <Form.Control onChange={(e) => handleSignUpStateNameChange(e.target.value)} as="select">
           <option>Select State</option>
-          {states.map((state) => (
-            <option>{state}</option>
+          {states.map((state ,index) => (
+            <option key={state}>{state}</option>
           ))}
         </Form.Control>
       </Form.Group>

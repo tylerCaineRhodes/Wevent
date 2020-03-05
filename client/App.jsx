@@ -256,15 +256,16 @@ class App extends React.Component {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
               if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '') {
-                //add time of day filters
                 const display = moment(this.state.calendarEvents[i].start).format('hh:mm:ss');
-                console.log(display);
-                //check and see for time of day or empty string
-                if ((this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) && (this.state.loginDisplayName !== 'Guest')) {
-                  storage.push(this.state.calendarEvents[i]);
-                }
-                if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
-                  storage.push(this.state.calendarEvents[i]);
+                const timeArray = this.state.filterToDValue.split('-');
+                if ((display >= timeArray[0] && display <= timeArray[1]) || (this.state.filterToDValue.length === 0)) {
+                  //check and see for time of day or empty string
+                  if ((this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) && (this.state.loginDisplayName !== 'Guest')) {
+                    storage.push(this.state.calendarEvents[i]);
+                  }
+                  if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
+                    storage.push(this.state.calendarEvents[i]);
+                  }
                 }
               }
             }
@@ -411,8 +412,6 @@ class App extends React.Component {
             userId: res.data[0].user_id,
             loginPassword: '',
             page: 'MainPage',
-          }, () => {
-            console.log(this.state.userId);
           });
         }
       })
