@@ -3,12 +3,13 @@ import React from 'react';
 const TimeOfDay = ({
   handleStateChange,
   filterToDValue,
+  filterEvents,
 }) => (
   <div>
     <form>
       <label htmlFor="timeofday">
         Time of day:
-        <select value={filterToDValue} onChange={(e) => handleStateChange(e.target.value, 'filterToDValue')}>
+        <select value={filterToDValue} onChange={(e) => handleStateChange(e.target.value, 'filterToDValue', filterEvents)}>
           <option></option>
           <option>05:00-08:00</option>
           <option>08:00-11:00</option>
