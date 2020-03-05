@@ -262,7 +262,7 @@ class App extends React.Component {
   }
 
   handleGuestBackToLandingPage() {
-    this.setState({ page: 'LandingPage' });
+    this.setState({ page: 'LandingPage', loginDisplayName: '' });
   }
 
   changePage() {
