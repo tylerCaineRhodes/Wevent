@@ -256,14 +256,10 @@ class App extends React.Component {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
               if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '') {
-                console.log('login display name -----', this.state.loginDisplayName);
                 if ((this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) && (this.state.loginDisplayName !== 'Guest')) {
-                  // console.log((this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue));
-                  console.log(' filter 1', this.state.loginDisplayName);
                   storage.push(this.state.calendarEvents[i]);
                 }
                 if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
-                  // console.log('filter 2', this.state.calendarEvents[i])
                   storage.push(this.state.calendarEvents[i]);
                 }
               }
