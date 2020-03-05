@@ -16,8 +16,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'LandingPage',
-      userId: '',
+      page: 'MainPage',
+      userId: '11',
       calendarEvents: [],
       filteredEvents: [],
       loginDisplayName: '',
@@ -424,7 +424,7 @@ class App extends React.Component {
   }
 
   handleCalendarEventClick(event) {
-    console.log('POOP :)', event, this.state.calendarEvents);
+    //console.log('POOP :)', event, this.state.calendarEvents);
     this.openEventInfoModal(event.eventId);
 
   }
