@@ -1,116 +1,82 @@
 @mixin basic-styles
   display: block
   font-family: "Trebuchet MS"
-  // justify-content: center
-  // align-items: center
 
-@mixin display-grid 
+@mixin grid-parent
   display: -ms-grid
   display: grid
-
-.grid-parent-full
-  @include display-grid
-  height: 620px
+  height: 650px
   width: 50%
   grid-template-columns: 1fr 1fr
   grid-auto-rows: 2
-  //grid-gap: 5px
-  // padding: 5px
-  border: 3px solid #800d0d
+  border: 6px solid #fc6565
   border-radius: 10px
+  
+.grid-parent-full
+  @include grid-parent
 
 .grid-parent-limited
-  @include display-grid
-  height: 620px
-  width: 50%
-  grid-template-columns: 1fr 1fr
-  grid-auto-rows: 2
-  //grid-gap: 5px
-  // padding: 5px
-  border: 3px solid #800d0d
-  border-radius: 10px
+  @include grid-parent
 
 .grid-parent-host 
-  @include display-grid
-  height: 620px
-  width: 50%
-  grid-template-columns: 1fr 1fr
-  grid-auto-rows: 3
-  //grid-gap: 5px
-  // padding: 5px
-  border: 3px solid #800d0d
-  border-radius: 10px
+  @include grid-parent
 
 .grid-title 
   @include basic-styles
-  background-color: #800d0d
+  background-color: orange
   height: 120px
   grid-column: 1/3
   grid-row: 1/2
   color: white
+  border-bottom: 4px solid #fc6565
+
+@mixin grid-left
+  font-weight: bold
+  background-color: #fc6565
+  grid-column: 1/2
+  grid-row: 2/3
+  padding: 20px
+  margin: 0px 0px 0px 6px
+  border-radius: 5px
+  border: 2px solid #dd3d3d
+  color: white
 
 .grid-left-host
   @include basic-styles
-  font-weight: bold
-  color: #800d0d
-  background-color: #fc6565
-  height: 300px
-  grid-column: 1/2
-  grid-row: 2/3
-  padding: 20px
-  margin: 0px 0px 0px 6px
-  border-radius: 5px
+  @include grid-left
+  height: 330px
 
 .grid-left-full
   @include basic-styles
-  font-weight: bold
-  color: #800d0d
-  background-color: #fc6565
-  height: 482px
-  grid-column: 1/2
-  grid-row: 2/3
-  padding: 20px
-  margin: 0px 0px 0px 6px
-  border-radius: 5px
+  @include grid-left
+  height: 500px
 
 .grid-left-limited
   @include basic-styles
-  font-weight: bold
-  color: #800d0d
-  background-color: #fc6565
-  height: 482px
-  grid-column: 1/2
+  @include grid-left
+  height: 500px
+
+@mixin grid-right
+  background-color: white
+  grid-column: 2/3
   grid-row: 2/3
+  overflow-y: auto
   padding: 20px
-  margin: 0px 0px 0px 6px
-  border-radius: 5px
 
 .grid-right-host
   @include basic-styles
-  background-color: white
+  @include grid-right
   height: 300px
-  grid-column: 2/3
-  grid-row: 2/3
-  overflow-y: auto
-  padding: 20px
 
 .grid-right-full
   @include basic-styles
-  background-color: white
+  @include grid-right
   height: 450px
-  grid-column: 2/3
-  grid-row: 2/3
-  overflow-y: auto
-  padding: 20px
 
 .grid-right-limited
   @include basic-styles
-  background-color: white
+  @include grid-right
   height: 450px
-  grid-column: 2/3
-  grid-row: 2/3
-  overflow-y: auto
-  padding: 20px
 
 .grid-host-pend-accept 
   @include basic-styles
@@ -121,8 +87,8 @@
   grid-row: 3/4
   border-radius: 0px 0px 10px 10px;
 
-.grid-host-pend
-  grid-column: col 1 / span  1
+@mixin grid-host
+  display: inline-block
   grid-row: row 3 / span 1
   height: 180px
   width: 50%
@@ -130,38 +96,82 @@
   position: relative
   top: 2px
   border-radius: 10px;
-  border: 3px solid #800d0d
+  border: 3px solid  #fc6565
   overflow-y: auto
   padding: 20px
+
+.grid-host-pend
+  @include grid-host
+  grid-column: col 1 / span  1
+  float: left
   
 .grid-host-accept
-  background-color: white
+  @include grid-host
   grid-column: col 2 / span  1
-  grid-row: row 3 / span 1
-  height: 180px
-  width: 50%
   float: right
+
+@mixin button
+  display: inline-block
+  float: right
+  border-radius: 5px
+  height: 22px
+  font-size: 12px
+  background-color: #fc6565
+  color: white
+  margin: 2px
+
+.pend-accept-button
+  @include button
+  width: 60px
+
+.attend-delete-button
+  @include button
+  width: 80px
+  box-shadow: #dd3d3d 2px 2px, #dd3d3d -2px -2px, #dd3d3d 2px -2px, #dd3d3d -2px 2px
+  
+.pend-accept-name
+  display: inline-block
+  font-weight: bold
+  color: #dd3d3d
+  margin: 2px
+
+.pend-accept-heading
+  background-color: orange
+  color: white
+  text-align: center
   position: relative
-  top: 2px
-  border-radius: 10px
-  border: 3px solid #800d0d
-  overflow-y: auto
-  padding: 20px
+  top: -20px
+  left: -20px
+  width: 118%
+  border-bottom: 3px solid #fc6565
+  text-shadow: #dd3d3d 0px 0px 3px
+
+.check-x-button
+  float: right
+  border: none
+  margin: -4px
 
 p.eventInfoTitle
   font-size: 40px
   position: relative
   padding-left: 30px
+  text-shadow: #dd3d3d 3px 3px
 
 p.eventInfoLocation
   font-size: 25px
   position: relative
   padding-left: 40px
   top: -10px
+  text-shadow: #fc6565 3px 3px
 
 p.eventInfoDescription
   overflow-wrap: break-word
   overflow-y: auto
+
+p.eventInfo
+  text-shadow: #dd3d3d 1px 1px, #dd3d3d -1px -1px, #dd3d3d 1px -1px, #dd3d3d -1px 1px
+
+//End eventInfo styling
 
 @import 'react-big-calendar/lib/sass/styles'
 
@@ -201,44 +211,6 @@ p.eventInfoDescription
   border-radius: 5px
   border-width: 2px
   border-color: white
-
-.pend-accept-button
-  display: inline-block
-  float: right
-  border-radius: 5px
-  height: 22px
-  width: 70px
-  font-size: 12px
-  background-color: #800d0d
-  color: white
-  margin: 2px
-
-.attend-delete-button
-  display: inline-block
-  float: right
-  border-radius: 5px
-  height: 22px
-  width: 80px
-  font-size: 12px
-  background-color: #800d0d
-  color: white
-  margin: 2px
-  
-
-.pend-accept-name
-  display: inline-block
-  font-weight: bold
-  color: #800d0d
-  margin: 2px
-
-.pend-accept-heading
-  background-color: #800d0d
-  color: white
-  text-align: center
-  position: relative
-  top: -20px
-  left: -20px
-  width: 118%
 
 .event-info-button
   position: relative
