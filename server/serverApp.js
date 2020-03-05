@@ -204,17 +204,14 @@ app.delete('/pending', (req, res) => {
   });
 });
 
-  //for testing pending routes
-//   app.get('/pending', (req, res) => {
-//     db.getPendingForTesting(req.query.displayName, req.query.eventId, (err, data) => {
-//       if (err) {
-//         console.log(err);
-//         res.sendStatus(500);
-//         return;
-//       }
-//       res.send(data);
-//     });
-// });
+app.get('/getallstates', (req, res) => {
+  db.getAllStates((err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
 
 module.exports.app = app;
 module.exports.connection = db.connection; 

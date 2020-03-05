@@ -1,8 +1,9 @@
 import React from 'react';
 
 export default function EventInfo({ eventInfo, eventInfoAccess }) {
-  // eventInfo.attending = []; //Temp variable until changes are pushed
-  console.log(eventInfo);
+  
+  //console.log('Attending' + eventInfo.attending)
+  eventInfo.attending = []; //Temp variable until changes are pushed
   return (
     <div className={`grid-parent-${eventInfoAccess}`}>
       <div className="grid-title">
@@ -10,7 +11,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
         <p className="eventInfoLocation">{eventInfo.city}, {eventInfo.state}</p>
       </div>
       <div className={`grid-left-${eventInfoAccess}`}>
-        {/* <p className="eventInfo">Host {eventInfoAccess}</p> To Be Removed */}
+        {/* <p className="eventInfo">Host {eventInfoAccess}</p> Displays User Role ***To Be Removed*** */}
         <p className="eventInfo">Time {eventInfo.time}</p>
         {
           eventInfoAccess !== 'limited'
@@ -19,7 +20,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
             ) : null
         }
         <p className="eventInfo">{eventInfo.city}, {eventInfo.state}<br />{eventInfo.zipcode}</p>
-        <p className="eventInfo">Price: ${eventInfo.price}</p>
+        <p className="eventInfo">Price: ${eventInfo.price.toFixed(2)}</p>
         {
           eventInfo.attendance_max !== null
             ? (
@@ -29,7 +30,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
         <div>
           {
             // eslint-disable-next-line no-nested-ternary
-            eventInfoAccess === 'host' ? (<button type="button" className="attend-delete-button">Delete</button>
+            eventInfoAccess === 'host' ? (<button type="button" className="attend-delete-button">DELETE</button>
             ) : eventInfoAccess === 'full' ? (
               <button type="button" className="attend-delete-button">Un-attend</button>
             ) : (
@@ -45,19 +46,20 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
         eventInfoAccess === 'host'
           ? (
             <div className="grid-host-pend-accept">
-              <div className="grid-host-pend" style={{ display: 'inline-block' }}>
+              <div className="grid-host-pend">
                 <div className="pend-accept-heading">Pending</div>
-                {eventInfo.pending.map((pend) => (
-                  <div>
+                {eventInfo.pending.map((pend, index) => (
+                  <div key={index}>
                     <p className="pend-accept-name">{pend}</p>
-                    <button type="button" className="pend-accept-button">Accept</button>
+                    <button type="button" className="check-x-button">&#x274C;</button>
+                    <button type="button" className="check-x-button">&#9989;</button>
                   </div>
                 ))}
               </div>
-              <div className="grid-host-accept" style={{ display: 'inline-block' }}>
+              <div className="grid-host-accept">
                 <div className="pend-accept-heading">Accepted</div>
-                {eventInfo.attending.map((accept) => (
-                  <div>
+                {eventInfo.attending.map((accept, index) => (
+                  <div key={index}>
                     <p className="pend-accept-name">{accept}</p>
                     <button type="button" className="pend-accept-button">Remove</button>
                   </div>
