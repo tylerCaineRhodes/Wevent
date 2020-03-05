@@ -11,13 +11,14 @@ const useStyles = makeStyles({
 const Cost = ({
   handleStateChange,
   filterCostValue,
+  filterEvents,
 }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <span>Cost</span>
-      <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={filterCostValue} onChange={(e, v) => handleStateChange(v, 'filterCostValue')} />
+      <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={filterCostValue} onChange={(e, v) => handleStateChange(v, 'filterCostValue', filterEvents)} />
     </div>
   );
 };
