@@ -232,7 +232,7 @@ class App extends React.Component {
     let storage = [];
     //if city is initial value, ignore
     for (let i = 0; i < this.state.calendarEvents.length; i++) {
-      if (this.state.calendarEvents[i].city === this.state.filterCityValue || this.state.filterCityValue === '') {
+      if (this.state.calendarEvents[i].city.toUpperCase() === this.state.filterCityValue.toUpperCase() || this.state.filterCityValue === '') {
         if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
@@ -479,66 +479,66 @@ class App extends React.Component {
       <>
         {this.handlePageRender()}
         {(this.state.page === 'MainPage' || this.state.page === 'Dashboard')
-        && (
-          <>
-            <ModalReuseable
-              body={(
-                <CreateEvent
-                  handleStateChange={this.handleStateChange}
-                  createEventTitle={this.state.createEventTitle}
-                  createEventDescription={this.state.createEventDescription}
-                  createEventCategory={this.state.createEventCategory}
-                  createEventDate={this.state.createEventDate}
-                  createEventTime={this.state.createEventTime}
-                  createEventCost={this.state.createEventCost}
-                  createEventPrivate={this.state.createEventPrivate}
-                  createEventAddress1={this.state.createEventAddress1}
-                  createEventAddress2={this.state.createEventAddress2}
-                  createEventCity={this.state.createEventCity}
-                  createEventState={this.state.createEventState}
-                  createEventZipcode={this.state.createEventZipcode}
-                  createEventMaxPeople={this.state.createEventMaxPeople}
-                  handleCreateEventSubmit={this.handleCreateEventSubmit}
-                />
-              )}
-              title="Create Event"
-              handleShow={this.openCreateEventModal}
-              handleClose={this.closeCreateEventModal}
-              show={this.state.createEventDisplayed}
-            />
+          && (
+            <>
+              <ModalReuseable
+                body={(
+                  <CreateEvent
+                    handleStateChange={this.handleStateChange}
+                    createEventTitle={this.state.createEventTitle}
+                    createEventDescription={this.state.createEventDescription}
+                    createEventCategory={this.state.createEventCategory}
+                    createEventDate={this.state.createEventDate}
+                    createEventTime={this.state.createEventTime}
+                    createEventCost={this.state.createEventCost}
+                    createEventPrivate={this.state.createEventPrivate}
+                    createEventAddress1={this.state.createEventAddress1}
+                    createEventAddress2={this.state.createEventAddress2}
+                    createEventCity={this.state.createEventCity}
+                    createEventState={this.state.createEventState}
+                    createEventZipcode={this.state.createEventZipcode}
+                    createEventMaxPeople={this.state.createEventMaxPeople}
+                    handleCreateEventSubmit={this.handleCreateEventSubmit}
+                  />
+                )}
+                title="Create Event"
+                handleShow={this.openCreateEventModal}
+                handleClose={this.closeCreateEventModal}
+                show={this.state.createEventDisplayed}
+              />
 
-            <ModalReuseable
-              body={(
-                <EventInfo
-                  eventInfoAccess={this.state.eventInfoAccess}
-                  eventInfo={this.state.eventInfo}
-                />
-              )}
-              handleShow={this.openEventInfoModal}
-              handleClose={this.closeEventInfoModal}
-              show={this.state.eventInfoDisplayed}
-            />
-          </>
-        )}
+              <ModalReuseable
+                body={(
+                  <EventInfo
+                    eventInfoAccess={this.state.eventInfoAccess}
+                    eventInfo={this.state.eventInfo}
+                  />
+                )}
+                handleShow={this.openEventInfoModal}
+                handleClose={this.closeEventInfoModal}
+                show={this.state.eventInfoDisplayed}
+              />
+            </>
+          )}
 
         {this.state.page === 'LandingPage'
-        && (
-        <ModalReuseable
-          body={(
-            <Signup
-              signUpDisplayName={this.state.signUpDisplayName}
-              signUpPassword={this.state.signUpPassword}
-              signUpCity={this.state.signUpCity}
-              states={this.state.states}
-              handleSignUpSubmit={this.handleSignUpSubmit}
+          && (
+            <ModalReuseable
+              body={(
+                <Signup
+                  signUpDisplayName={this.state.signUpDisplayName}
+                  signUpPassword={this.state.signUpPassword}
+                  signUpCity={this.state.signUpCity}
+                  states={this.state.states}
+                  handleSignUpSubmit={this.handleSignUpSubmit}
+                />
+              )}
+              title="Sign Up!"
+              handleShow={this.openSignUpModal}
+              handleClose={this.closeSignUpModal}
+              show={this.state.signUpDisplayed}
             />
           )}
-          title="Sign Up!"
-          handleShow={this.openSignUpModal}
-          handleClose={this.closeSignUpModal}
-          show={this.state.signUpDisplayed}
-        />
-        )}
       </>
     );
   }
