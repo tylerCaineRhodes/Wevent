@@ -9,10 +9,10 @@ const PrivateOrPublic = ({
 }) => (
   <>
     <FormControl>
-      <FormControlLabel labelPlacement="start" control={<Switch size="medium" label="Public" checked={filterPublicValue} onChange={(e, v) => handleStateChange(v, 'filterPublicValue', filterEvents)} />} label="Public" />
+      <FormControlLabel labelPlacement="start" control={<Switch size="medium" label="Public" checked={filterPublicValue} onChange={(e, v) => handleStateChange(v, 'filterPublicValue', filterEvents)} style={{ color: 'orange' }} />} label="Public" />
     </FormControl>
     <FormControl>
-      <FormControlLabel labelPlacement="start" control={<Switch size="medium" label="Private" checked={filterPrivateValue} onChange={(e, v) => handleStateChange(v, 'filterPrivateValue', filterEvents)} />} label="Private" />
+      <FormControlLabel labelPlacement="start" control={<Switch size="medium" label="Private" checked={filterPrivateValue} onChange={(e, v) => handleStateChange(v, 'filterPrivateValue', filterEvents)} style={{ color: '#fc6565' }} />} label="Private" />
     </FormControl>
   </>
 );

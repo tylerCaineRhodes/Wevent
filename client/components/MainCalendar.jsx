@@ -20,7 +20,8 @@ const MainCalendar = ({
       style: {
         backgroundColor: event.private === 0
           ? 'orange'
-          : 'red',
+          : '#fc6565',
+        color: 'white',
       },
     })}
 
