@@ -193,6 +193,7 @@ class App extends React.Component {
 
           loginDisplayName={this.state.loginDisplayName}
 
+
           filterDropdownCategories={this.state.filterDropdownCategories}
           filterCityValue={this.state.filterCityValue}
           filterStateValue={this.state.filterStateValue}
@@ -247,10 +248,10 @@ class App extends React.Component {
     });
   }
 
-  handleStateChange(newValue, stateToChange) {
+  handleStateChange(newValue, stateToChange, cb) {
     const newState = {};
     newState[stateToChange] = newValue;
-    this.setState(newState);
+    this.setState(newState, cb);
   }
 
   handleSignUpSubmit(event) {

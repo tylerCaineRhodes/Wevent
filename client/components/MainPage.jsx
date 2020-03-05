@@ -19,6 +19,7 @@ const MainPage = ({
   handleFilterSubmit,
   filterDropdownCategories,
   loginDisplayName,
+  filterEvents,
 }) => (
   <>
     <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} />
@@ -26,6 +27,7 @@ const MainPage = ({
       <Filter
         loginDisplayName={loginDisplayName}
         handleStateChange={handleStateChange}
+        filterEvents={filterEvents}
         filterCityValue={filterCityValue}
         filterStateValue={filterStateValue}
         filterCategoryValue={filterCategoryValue}
