@@ -85,6 +85,7 @@ class App extends React.Component {
     this.filterEvents = this.filterEvents.bind(this);
     this.getCategories = this.getCategories.bind(this);
     this.handleGuestSubmit = this.handleGuestSubmit.bind(this);
+    this.openCreateEventModal = this.openCreateEventModal.bind(this);
   }
 
   componentDidMount() {
@@ -200,6 +201,7 @@ class App extends React.Component {
           filterToDValue={this.state.filterToDValue}
           handleFilterSubmit={this.handleFilterSubmit}
           openCreateEventModal={this.openCreateEventModal}
+          changePage={this.changePage}
         />
       );
     }
@@ -236,6 +238,13 @@ class App extends React.Component {
     }, () => {
       storage = [];
     });
+  }
+  changePage(){
+    if (this.state.page === 'MainPage'){
+      this.setState( { page : 'Dashboard' } )
+    } else {
+      this.setState( { page : 'MainPage' } )
+    }
   }
 
   handleStateChange(newValue, stateToChange) {
