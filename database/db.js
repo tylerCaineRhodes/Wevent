@@ -204,6 +204,19 @@ module.exports.getAllEvents = (callback) => {
   });
 };
 
+// Incomplete query to get all state
+module.exports.getAllStates = (callback) => {
+  // eslint-disable-next-line sql/no-unsafe-query
+  const query = 'SELECT * from states order by state_id;';
+  db.query(query, (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 module.exports.getCategories = (callback) => {
   const query = 'Select * from categories order by category_id;';
 

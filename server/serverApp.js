@@ -171,5 +171,14 @@ app.delete('/event', (req, res) => {
   });
 });
 
+app.get('/getallstates', (req, res) => {
+  db.getAllStates((err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
 module.exports.app = app;
 module.exports.connection = db.connection;

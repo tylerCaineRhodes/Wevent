@@ -45,9 +45,7 @@ class App extends React.Component {
       filterPublicValue: true,
       filterPrivateValue: true,
       filterToDValue: '',
-      states: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA',
-        'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT',
-        'VT', 'VA', 'WA', 'WV', 'WI', 'WY'],
+      states: [],
 
       eventInfoAccess: '',
       eventInfo: '',
@@ -88,11 +86,25 @@ class App extends React.Component {
     this.openCreateEventModal = this.openCreateEventModal.bind(this);
     this.changePage = this.changePage.bind(this);
     this.getEventsForDashboard = this.getEventsForDashboard.bind(this);
+    this.getAllStates = this.getAllStates.bind(this);
   }
 
   componentDidMount() {
     this.getAllEvents();
     this.getCategories();
+    this.getAllStates();
+  }
+
+  getAllStates() {
+    axios.get('/getallstates')
+      .then((response) => {
+        this.setState({
+          states: response.data,
+        });
+      })
+      .catch((err) => {
+        console.log('getAllStates error', err);
+      });
   }
 
 
