@@ -9,7 +9,6 @@ const Category = ({
   <div>
     <form>
       <label htmlFor="category">
-        Category:
         <select value={filterCategoryValue.name} data-id={filterCategoryValue.id} onChange={(e) => handleStateChange({ name: e.target.value, id: e.target.selectedIndex }, 'filterCategoryValue', filterEvents)}>
           <option> </option>
           {filterDropdownCategories.map((category) => (
