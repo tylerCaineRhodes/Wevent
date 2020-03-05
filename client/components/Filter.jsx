@@ -8,21 +8,14 @@ import NumberOfPeople from './NumberOfPeople.jsx';
 import TimeOfDay from './TimeOfDay.jsx';
 
 const Filter = ({
-  handleFilterCityChange,
+  handleStateChange,
   filterCityValue,
-  handleFilterStateChange,
   filterStateValue,
-  handleFilterCategoryChange,
   filterCategoryValue,
-  handleFilterNumOfPeopleChange,
   filterNumOfPeopleValues,
-  handleFilterCostChange,
   filterCostValue,
-  handleFilterPublicChange,
   filterPublicValue,
-  handleFilterPrivateChange,
   filterPrivateValue,
-  handleFilterToDChange,
   filterToDValue,
   handleFilterSubmit,
   filterDropdownCategories,
@@ -40,9 +33,8 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="0"> */}
         <Card.Body>
           <Location
-            handleFilterCityChange={handleFilterCityChange}
+            handleStateChange={handleStateChange}
             filterCityValue={filterCityValue}
-            handleFilterStateChange={handleFilterStateChange}
             filterStateValue={filterStateValue}
           />
         </Card.Body>
@@ -58,7 +50,7 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="1"> */}
         <Card.Body>
           <Category
-            handleFilterCategoryChange={handleFilterCategoryChange}
+            handleStateChange={handleStateChange}
             filterCategoryValue={filterCategoryValue}
             filterDropdownCategories={filterDropdownCategories}
           />
@@ -75,7 +67,7 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="2"> */}
         <Card.Body>
           <NumberOfPeople
-            handleFilterNumOfPeopleChange={handleFilterNumOfPeopleChange}
+            handleStateChange={handleStateChange}
             filterNumOfPeopleValues={filterNumOfPeopleValues}
           />
         </Card.Body>
@@ -93,7 +85,7 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="3"> */}
         <Card.Body>
           <Cost
-            handleFilterCostChange={handleFilterCostChange}
+            handleStateChange={handleStateChange}
             filterCostValue={filterCostValue}
           />
         </Card.Body>
@@ -110,9 +102,8 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="4"> */}
         <Card.Body>
           <PrivateOrPublic
-            handleFilterPublicChange={handleFilterPublicChange}
+            handleStateChange={handleStateChange}
             filterPublicValue={filterPublicValue}
-            handleFilterPrivateChange={handleFilterPrivateChange}
             filterPrivateValue={filterPrivateValue}
           />
         </Card.Body>
@@ -129,7 +120,7 @@ const Filter = ({
         </Card.Header>
         {/* <Accordion.Collapse eventKey="5"> */}
         <Card.Body>
-          <TimeOfDay handleFilterToDChange={handleFilterToDChange} filterToDValue={filterToDValue} />
+          <TimeOfDay handleStateChange={handleStateChange} filterToDValue={filterToDValue} />
         </Card.Body>
         {/* </Accordion.Collapse> */}
       </Card>
