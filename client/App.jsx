@@ -16,8 +16,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'MainPage',
-      userId: '11',
+      page: 'LandingPage',
+      userId: '',
       calendarEvents: [],
       filteredEvents: [],
       loginDisplayName: '',
@@ -351,7 +351,7 @@ class App extends React.Component {
 
   openEventInfoModal(eventId) {
     const params = { eventId };
-    if (this.state.userId) {
+    if (!this.state.userId) {
       params.userId = 0;
     } else {
       params.userId = this.state.userId;
