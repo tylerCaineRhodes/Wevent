@@ -87,6 +87,7 @@ class App extends React.Component {
     this.handleGuestSubmit = this.handleGuestSubmit.bind(this);
     this.openCreateEventModal = this.openCreateEventModal.bind(this);
     this.changePage = this.changePage.bind(this);
+    this.getEventsForDashboard = this.getEventsForDashboard.bind(this);
   }
 
   componentDidMount() {
@@ -94,9 +95,6 @@ class App extends React.Component {
     this.getCategories();
   }
 
-  componentDidUpdate() {
-    this.getEventsForDashboard();
-  }
 
   getAllEvents() {
     axios.get('/GetAllEvents')
@@ -139,11 +137,11 @@ class App extends React.Component {
       });
   }
 
-  getEventsForDashboard(){
+  getEventsForDashboard() {
     const userId = this.state.userId;
-    axios.get('/dashboard', { params : {userId} })
+    axios.get('/dashboard', { params : { userId } })
     .then((data) =>{
-      this.setState({dashboardInfo : data.data})
+      this.setState({ dashboardInfo : data.data });
     });
   };
   
@@ -382,7 +380,7 @@ class App extends React.Component {
             userId: res.data[0].user_id,
             loginPassword: '',
             page: 'MainPage',
-          });
+          }, this.getEventsForDashboard);
         }
       })
       .catch((error) => {
