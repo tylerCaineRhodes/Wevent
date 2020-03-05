@@ -161,13 +161,46 @@ app.get('/getCategories', (req, res) => {
 });
 
 app.delete('/event', (req, res) => {
-  db.deleteEvent(parseInt(req.query.eventId, 0), (err, data) => {
+  db.deleteEvent(parseInt(req.query.eventId, 10), (err, data) => {
     if (err) {
       console.log(err);
       res.sendStatus(500);
       return;
     }
     res.sendStatus(200);
+  });
+});
+
+app.post('/pending', (req, res) => {
+  db.askToJoinEvent(req.body.userId, req.body.eventId, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    res.sendStatus(200);
+  });
+});
+
+app.put('/pending', (req, res) => {
+  db.approvePending(req.body.displayName, req.body.eventId, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    res.send(data);
+  });
+});
+
+app.delete('/pending', (req, res) => {
+  db.rejectPending(req.body.displayName, req.body.eventId, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    res.send(data);
   });
 });
 

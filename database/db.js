@@ -215,4 +215,53 @@ module.exports.getCategories = (callback) => {
     }
   });
 };
+
+module.exports.askToJoinEvent = (userId, eventId, callback) => {
+  const query = 'INSERT INTO users_events_attending(user_id, event_id, pending) VALUES (?,?,1)';
+  db.query(query, [userId, eventId], (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+module.exports.approvePending = (displayName, eventId, callback) => {
+  const query = 'SELECT user_id from users WHERE display_name = ?';
+  db.query(query, [displayName, eventId], (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      const innerQuery = 'UPDATE users_events_attending SET pending = 0 WHERE event_id = ? AND user_id = ?';
+      db.query(innerQuery, [eventId, results[0].user_id], (error, findings) => {
+        if (error) {
+          callback(error);
+        } else {
+          callback(null, findings);
+        }
+      });
+    }
+  });
+};
+
+module.exports.rejectPending = (displayName, eventId, callback) => {
+  const query = 'SELECT user_id from users WHERE display_name = ?';
+  db.query(query, [displayName, eventId], (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      const innerQuery = 'DELETE FROM users_events_attending WHERE event_id = ? AND user_id = ?';
+      db.query(innerQuery, [eventId, results[0].user_id], (predicament, answers) => {
+        if (predicament) {
+          callback(predicament);
+        } else {
+          callback(null, answers);
+        }
+      });
+    }
+  });
+};
+
+
 module.exports.connection = db;
