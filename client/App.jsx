@@ -338,10 +338,11 @@ class App extends React.Component {
   }
 
   openEventInfoModal(eventId) {
-    const params = {eventId}
+    const params = { eventId };
+    // eslint-disable-next-line no-unused-expressions
     this.state.userId === '' ? params.userId = 0 : params.userId = this.state.userId;
     axios.get('/eventInfo', {
-      params
+      params,
     })
       .then((res) => {
         //console.log(res.data);
