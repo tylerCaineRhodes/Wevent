@@ -17,6 +17,7 @@ const Filter = ({
   filterPublicValue,
   filterPrivateValue,
   filterToDValue,
+  filterEvents,
   handleFilterSubmit,
   filterDropdownCategories,
   loginDisplayName,
@@ -33,6 +34,7 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="0"> */}
         <Card.Body>
           <Location
+            filterEvents={filterEvents}
             handleStateChange={handleStateChange}
             filterCityValue={filterCityValue}
             filterStateValue={filterStateValue}
@@ -50,6 +52,7 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="1"> */}
         <Card.Body>
           <Category
+            filterEvents={filterEvents}
             handleStateChange={handleStateChange}
             filterCategoryValue={filterCategoryValue}
             filterDropdownCategories={filterDropdownCategories}
@@ -67,6 +70,7 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="2"> */}
         <Card.Body>
           <NumberOfPeople
+            filterEvents={filterEvents}
             handleStateChange={handleStateChange}
             filterNumOfPeopleValues={filterNumOfPeopleValues}
           />
@@ -85,6 +89,7 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="3"> */}
         <Card.Body>
           <Cost
+            filterEvents={filterEvents}
             handleStateChange={handleStateChange}
             filterCostValue={filterCostValue}
           />
@@ -102,6 +107,7 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="4"> */}
         <Card.Body>
           <PrivateOrPublic
+            filterEvents={filterEvents}
             handleStateChange={handleStateChange}
             filterPublicValue={filterPublicValue}
             filterPrivateValue={filterPrivateValue}
@@ -120,12 +126,16 @@ const Filter = ({
         </Card.Header>
         {/* <Accordion.Collapse eventKey="5"> */}
         <Card.Body>
-          <TimeOfDay handleStateChange={handleStateChange} filterToDValue={filterToDValue} />
+          <TimeOfDay
+            filterEvents={filterEvents}
+            handleStateChange={handleStateChange}
+            filterToDValue={filterToDValue}
+          />
         </Card.Body>
         {/* </Accordion.Collapse> */}
       </Card>
 
-      <Button onClick={() => handleFilterSubmit()}>Submit Filters</Button>
+      {/* <Button onClick={() => handleFilterSubmit()}>Submit Filters</Button> */}
 
     </Accordion>
   </div>
