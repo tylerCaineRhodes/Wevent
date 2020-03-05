@@ -9,7 +9,7 @@ const useStyles = makeStyles({
 });
 
 const NumberOfPeople = ({
-  handleFilterNumOfPeopleChange,
+  handleStateChange,
   filterNumOfPeopleValues,
 }) => {
   const classes = useStyles();
@@ -17,7 +17,7 @@ const NumberOfPeople = ({
   return (
     <div className={classes.root}>
       <span>Number of People</span>
-      <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={filterNumOfPeopleValues} onChange={(e, v) => handleFilterNumOfPeopleChange(v)} />
+      <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={filterNumOfPeopleValues} onChange={(e, v) => handleStateChange(v, 'filterNumOfPeopleValues')} />
     </div>
   );
 };
