@@ -32,13 +32,18 @@ class App extends React.Component {
       signUpDisplayed: false,
       eventInfoDisplayed: false,
 
+      filterDropdownCategories: [],
+
       filterCityValue: '',
       filterStateValue: '',
-      filterCategoryValue: '',
-      filterNumOfPeopleValues: [15, 40],
+      filterCategoryValue: {
+        name: '',
+        id: '',
+      },
+      filterNumOfPeopleValues: [0, 100],
       filterCostValue: 100,
-      filterPublicValue: false,
-      filterPrivateValue: false,
+      filterPublicValue: true,
+      filterPrivateValue: true,
       filterToDValue: '',
       states: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA',
         'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT',
@@ -61,8 +66,9 @@ class App extends React.Component {
       createEventZipcode: 0,
       createEventMaxPeople: 50,
     };
-    this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
-    this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
+
+    this.handleStateChange = this.handleStateChange.bind(this);
+
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     this.handlePageRender = this.handlePageRender.bind(this);
     this.openCreateEventModal = this.openCreateEventModal.bind(this);
@@ -71,50 +77,25 @@ class App extends React.Component {
     this.closeSignUpModal = this.closeSignUpModal.bind(this);
     this.openEventInfoModal = this.openEventInfoModal.bind(this);
     this.closeEventInfoModal = this.closeEventInfoModal.bind(this);
-    this.handleFilterCityChange = this.handleFilterCityChange.bind(this);
-    this.handleFilterStateChange = this.handleFilterStateChange.bind(this);
-    this.handleFilterCategoryChange = this.handleFilterCategoryChange.bind(this);
-    this.handleFilterNumOfPeopleChange = this.handleFilterNumOfPeopleChange.bind(this);
-    this.handleFilterCostChange = this.handleFilterCostChange.bind(this);
-    this.handleFilterPublicChange = this.handleFilterPublicChange.bind(this);
-    this.handleFilterPrivateChange = this.handleFilterPrivateChange.bind(this);
-    this.handleFilterToDChange = this.handleFilterToDChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.handleCalendarEventClick = this.handleCalendarEventClick.bind(this);
-    this.handleCreateEventTitleChange = this.handleCreateEventTitleChange.bind(this);
-    this.handleCreateEventDescriptionChange = this.handleCreateEventDescriptionChange.bind(this);
-    this.handleCreateEventCategoryChange = this.handleCreateEventCategoryChange.bind(this);
-    this.handleCreateEventDateChange = this.handleCreateEventDateChange.bind(this);
-    this.handleCreateEventTimeChange = this.handleCreateEventTimeChange.bind(this);
-    this.handleCreateEventCostChange = this.handleCreateEventCostChange.bind(this);
-    this.handleCreateEventPrivateChange = this.handleCreateEventPrivateChange.bind(this);
-    this.handleCreateEventAddress1Change = this.handleCreateEventAddress1Change.bind(this);
-    this.handleCreateEventAddress2Change = this.handleCreateEventAddress2Change.bind(this);
-    this.handleCreateEventCityChange = this.handleCreateEventCityChange.bind(this);
-    this.handleCreateEventStateChange = this.handleCreateEventStateChange.bind(this);
-    this.handleCreateEventZipcodeChange = this.handleCreateEventZipcodeChange.bind(this);
-    this.handleCreateEventMaxPeopleChange = this.handleCreateEventMaxPeopleChange.bind(this);
     this.handleCreateEventSubmit = this.handleCreateEventSubmit.bind(this);
-    this.handleSignUpDisplaynameChange = this.handleSignUpDisplaynameChange.bind(this);
-    this.handleSignUpPasswordChange = this.handleSignUpPasswordChange.bind(this);
-    this.handleSignUpCityNameChange = this.handleSignUpCityNameChange.bind(this);
-    this.handleSignUpStateNameChange = this.handleSignUpStateNameChange.bind(this);
     this.handleSignUpSubmit = this.handleSignUpSubmit.bind(this);
     this.getAllEvents = this.getAllEvents.bind(this);
     this.filterEvents = this.filterEvents.bind(this);
+    this.getCategories = this.getCategories.bind(this);
     this.handleGuestSubmit = this.handleGuestSubmit.bind(this);
   }
 
   componentDidMount() {
     this.getAllEvents();
-    this.filterEvents();
+    this.getCategories();
   }
 
 
   getAllEvents() {
     axios.get('/GetAllEvents')
       .then((res) => {
-        console.log(res.data);
         const results = [];
         for (let i = 0; i < res.data.length; i++) {
           const time = res.data[i].time.split(':');
@@ -135,12 +116,16 @@ class App extends React.Component {
             attendance_max: res.data[i].attendance_max,
             attendance_current: res.data[i].attendance_current,
             private: res.data[i].private,
+            category_ids: res.data[i].category_ids.split(','),
           });
         }
         this.setState({
           calendarEvents: results,
           filteredEvents: results,
         });
+      })
+      .then((res) => {
+        this.filterEvents();
       })
       .catch((err) => {
         if (err) {
@@ -149,88 +134,14 @@ class App extends React.Component {
       });
   }
 
-  filterEvents() {
-    let storage = [];
-    for (let i = 0; i < this.state.calendarEvents.length; i++) {
-      if (this.state.calendarEvents[i].city === this.state.filterCityValue) {
-        if (this.state.calendarEvents[i].state === this.state.filterStateValue) {
-          if ((this.state.calendarEvents[i].attendance_current > this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) {
-            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
-              storage.push(this.state.calendarEvents[i]);
-              //add filter for public/private
-            }
-          }
-        }
-      }
-    }
-    this.setState({
-      filteredEvents: storage,
-    }, () => {
-      storage = [];
-    });
-  }
-
-  handlePageRender() {
-    if (this.state.page === 'LandingPage') {
-      return (
-        <LandingPage
-          loginDisplayName={this.state.loginDisplayName}
-          loginPassword={this.state.loginPassword}
-          handleLoginDisplaynameChange={this.handleLoginDisplaynameChange}
-          handleLoginPasswordChange={this.handleLoginPasswordChange}
-          handleLoginSubmit={this.handleLoginSubmit}
-          openSignUpModal={this.openSignUpModal}
-          closeSignUpModal={this.closeSignUpModal}
-          handleGuestSubmit={this.handleGuestSubmit}
-        />
-      );
-    }
-    if (this.state.page === 'MainPage') {
-      return (
-        <MainPage
-          filterEvents={this.filterEvents}
-          calendarEvents={this.state.filteredEvents}
-          handleCalendarEventClick={this.handleCalendarEventClick}
-
-          handleFilterCityChange={this.handleFilterCityChange}
-          filterCityValue={this.state.filterCityValue}
-          handleFilterStateChange={this.handleFilterStateChange}
-          filterStateValue={this.state.filterStateValue}
-          handleFilterCategoryChange={this.handleFilterCategoryChange}
-          filterCategoryValue={this.state.filterCategoryValue}
-          handleFilterNumOfPeopleChange={this.handleFilterNumOfPeopleChange}
-          filterNumOfPeopleValues={this.state.filterNumOfPeopleValues}
-          handleFilterCostChange={this.handleFilterCostChange}
-          filterCostValue={this.state.filterCostValue}
-          handleFilterPublicChange={this.handleFilterPublicChange}
-          filterPublicValue={this.state.filterPublicValue}
-          handleFilterPrivateChange={this.handleFilterPrivateChange}
-          filterPrivateValue={this.state.filterPrivateValue}
-          handleFilterToDChange={this.handleFilterToDChange}
-          filterToDValue={this.state.filterToDValue}
-          handleFilterSubmit={this.handleFilterSubmit}
-
-          openCreateEventModal={this.openCreateEventModal}
-        />
-      );
-    }
-    if (this.state.page === 'Dashboard') {
-      return (
-        <Dashboard openCreateEventModal={this.openCreateEventModal} />
-      );
-    }
-  }
-
-  openCreateEventModal() {
-    this.setState({
-      createEventDisplayed: true,
-    });
-  }
-
-  closeCreateEventModal() {
-    this.setState({
-      createEventDisplayed: false,
-    });
+  getCategories() {
+    axios.get('/getCategories')
+      .then((res) => {
+        this.setState({ filterDropdownCategories: res.data });
+      })
+      .catch((err) => {
+        console.log('nope for the categories from front end', err);
+      });
   }
 
   openSignUpModal() {
@@ -245,20 +156,101 @@ class App extends React.Component {
     });
   }
 
-  handleSignUpDisplaynameChange(newValue) {
-    this.setState({ signUpDisplayName: newValue });
+
+  closeCreateEventModal() {
+    this.setState({
+      createEventDisplayed: false,
+    });
   }
 
-  handleSignUpPasswordChange(newValue) {
-    this.setState({ signUpPassword: newValue });
+  openCreateEventModal() {
+    this.setState({
+      createEventDisplayed: true,
+    });
   }
 
-  handleSignUpCityNameChange(newValue) {
-    this.setState({ signUpCity: newValue });
+  handlePageRender() {
+    if (this.state.page === 'LandingPage') {
+      return (
+        <LandingPage
+          handleStateChange={this.handleStateChange}
+          loginDisplayName={this.state.loginDisplayName}
+          loginPassword={this.state.loginPassword}
+          handleLoginSubmit={this.handleLoginSubmit}
+          openSignUpModal={this.openSignUpModal}
+          closeSignUpModal={this.closeSignUpModal}
+          handleGuestSubmit={this.handleGuestSubmit}
+        />
+      );
+    }
+    if (this.state.page === 'MainPage') {
+      return (
+        <MainPage
+          handleStateChange={this.handleStateChange}
+          filterEvents={this.filterEvents}
+          calendarEvents={this.state.filteredEvents}
+          handleCalendarEventClick={this.handleCalendarEventClick}
+
+          loginDisplayName={this.state.loginDisplayName}
+
+          filterDropdownCategories={this.state.filterDropdownCategories}
+          filterCityValue={this.state.filterCityValue}
+          filterStateValue={this.state.filterStateValue}
+          filterCategoryValue={this.state.filterCategoryValue}
+          filterNumOfPeopleValues={this.state.filterNumOfPeopleValues}
+          filterCostValue={this.state.filterCostValue}
+          filterPublicValue={this.state.filterPublicValue}
+          filterPrivateValue={this.state.filterPrivateValue}
+          filterToDValue={this.state.filterToDValue}
+          handleFilterSubmit={this.handleFilterSubmit}
+          openCreateEventModal={this.openCreateEventModal}
+        />
+      );
+    }
+    if (this.state.page === 'Dashboard') {
+      return (
+        <Dashboard openCreateEventModal={this.openCreateEventModal} />
+      );
+    }
   }
 
-  handleSignUpStateNameChange(newValue) {
-    this.setState({ signUpState: newValue });
+  filterEvents() {
+    let storage = [];
+    //if city is initial value, ignore
+    for (let i = 0; i < this.state.calendarEvents.length; i++) {
+      if (this.state.calendarEvents[i].city === this.state.filterCityValue || this.state.filterCityValue === '') {
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
+          if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
+            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
+              if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '') {
+                const display = moment(this.state.calendarEvents[i].start).format('hh:mm:ss');
+                const timeArray = this.state.filterToDValue.split('-');
+                if ((display >= timeArray[0] && display <= timeArray[1]) || (this.state.filterToDValue.length === 0)) {
+                  //check and see for time of day or empty string
+                  if ((this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) && (this.state.loginDisplayName !== 'Guest')) {
+                    storage.push(this.state.calendarEvents[i]);
+                  }
+                  if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
+                    storage.push(this.state.calendarEvents[i]);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    this.setState({
+      filteredEvents: storage,
+    }, () => {
+      storage = [];
+    });
+  }
+
+  handleStateChange(newValue, stateToChange) {
+    const newState = {};
+    newState[stateToChange] = newValue;
+    this.setState(newState);
   }
 
   handleSignUpSubmit(event) {
@@ -327,8 +319,8 @@ class App extends React.Component {
       },
     })
       .then((res) => {
-        console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
-        console.log(res.data);
+        // console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
+        // console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
@@ -346,14 +338,6 @@ class App extends React.Component {
     this.setState({
       eventInfoDisplayed: false,
     });
-  }
-
-  handleLoginDisplaynameChange(newValue) {
-    this.setState({ loginDisplayName: newValue });
-  }
-
-  handleLoginPasswordChange(newValue) {
-    this.setState({ loginPassword: newValue });
   }
 
   handleLoginSubmit(event) {
@@ -377,8 +361,6 @@ class App extends React.Component {
             userId: res.data[0].user_id,
             loginPassword: '',
             page: 'MainPage',
-          }, () => {
-            console.log(this.state.userId);
           });
         }
       })
@@ -392,101 +374,19 @@ class App extends React.Component {
     this.setState({
       loginDisplayName: 'Guest',
       page: 'MainPage',
+    }, () => {
+      this.filterEvents();
     });
   }
 
-  handleFilterCityChange(newValue) {
-    this.setState({ filterCityValue: newValue });
-  }
-
-  handleFilterStateChange(newValue) {
-    this.setState({ filterStateValue: newValue });
-  }
-
-  handleFilterCategoryChange(newValue) {
-    this.setState({ filterCategoryValue: newValue });
-  }
-
-  handleFilterNumOfPeopleChange(newValue) {
-    this.setState({ filterNumOfPeopleValues: newValue });
-  }
-
-  handleFilterCostChange(newValue) {
-    this.setState({ filterCostValue: newValue });
-  }
-
-  handleFilterPublicChange(newValue) {
-    this.setState({ filterPublicValue: newValue });
-  }
-
-  handleFilterPrivateChange(newValue) {
-    this.setState({ filterPrivateValue: newValue });
-  }
-
-  handleFilterToDChange(newValue) {
-    this.setState({ filterToDValue: newValue });
-  }
-
   handleFilterSubmit() {
-    console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
+    // console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
     this.filterEvents();
   }
 
   handleCalendarEventClick(event) {
-    console.log('POOP :)', event, this.state.calendarEvents);
+    //console.log('POOP :)', event, this.state.calendarEvents);
     this.openEventInfoModal(event.eventId);
-  }
-
-  handleCreateEventTitleChange(newValue) {
-    this.setState({ createEventTitle: newValue });
-  }
-
-  handleCreateEventDescriptionChange(newValue) {
-    this.setState({ createEventDescription: newValue });
-  }
-
-  handleCreateEventCategoryChange(newValue) {
-    this.setState({ createEventCategory: newValue });
-  }
-
-  handleCreateEventDateChange(newValue) {
-    this.setState({ createEventDate: newValue });
-  }
-
-  handleCreateEventTimeChange(newValue) {
-    this.setState({ createEventTime: newValue });
-  }
-
-  handleCreateEventCostChange(newValue) {
-    this.setState({ createEventCost: newValue });
-  }
-
-  handleCreateEventPrivateChange(newValue) {
-    this.setState({ createEventPrivate: newValue });
-  }
-
-  handleCreateEventAddress1Change(newValue) {
-    this.setState({ createEventAddress1: newValue });
-  }
-
-  handleCreateEventAddress2Change(newValue) {
-    this.setState({ createEventAddress2: newValue });
-  }
-
-  handleCreateEventCityChange(newValue) {
-    this.setState({ createEventCity: newValue });
-  }
-
-  handleCreateEventStateChange(newValue) {
-    this.setState({ createEventState: newValue });
-  }
-
-  handleCreateEventZipcodeChange(newValue) {
-    this.setState({ createEventZipcode: newValue });
-  }
-
-  handleCreateEventMaxPeopleChange(newValue) {
-    this.setState({ createEventMaxPeople: newValue });
   }
 
   handleCreateEventSubmit(event) {
@@ -559,6 +459,7 @@ class App extends React.Component {
             <ModalReuseable
               body={(
                 <CreateEvent
+                  handleStateChange={this.handleStateChange}
                   createEventTitle={this.state.createEventTitle}
                   createEventDescription={this.state.createEventDescription}
                   createEventCategory={this.state.createEventCategory}
@@ -572,19 +473,6 @@ class App extends React.Component {
                   createEventState={this.state.createEventState}
                   createEventZipcode={this.state.createEventZipcode}
                   createEventMaxPeople={this.state.createEventMaxPeople}
-                  handleCreateEventTitleChange={this.handleCreateEventTitleChange}
-                  handleCreateEventDescriptionChange={this.handleCreateEventDescriptionChange}
-                  handleCreateEventCategoryChange={this.handleCreateEventCategoryChange}
-                  handleCreateEventDateChange={this.handleCreateEventDateChange}
-                  handleCreateEventTimeChange={this.handleCreateEventTimeChange}
-                  handleCreateEventCostChange={this.handleCreateEventCostChange}
-                  handleCreateEventPrivateChange={this.handleCreateEventPrivateChange}
-                  handleCreateEventAddress1Change={this.handleCreateEventAddress1Change}
-                  handleCreateEventAddress2Change={this.handleCreateEventAddress2Change}
-                  handleCreateEventCityChange={this.handleCreateEventCityChange}
-                  handleCreateEventStateChange={this.handleCreateEventStateChange}
-                  handleCreateEventZipcodeChange={this.handleCreateEventZipcodeChange}
-                  handleCreateEventMaxPeopleChange={this.handleCreateEventMaxPeopleChange}
                   handleCreateEventSubmit={this.handleCreateEventSubmit}
                 />
               )}
@@ -619,10 +507,6 @@ class App extends React.Component {
               signUpPassword={this.state.signUpPassword}
               signUpCity={this.state.signUpCity}
               states={this.state.states}
-              handleSignUpDisplaynameChange={this.handleSignUpDisplaynameChange}
-              handleSignUpPasswordChange={this.handleSignUpPasswordChange}
-              handleSignUpCityNameChange={this.handleSignUpCityNameChange}
-              handleSignUpStateNameChange={this.handleSignUpStateNameChange}
               handleSignUpSubmit={this.handleSignUpSubmit}
             />
           )}

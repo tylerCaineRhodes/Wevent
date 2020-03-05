@@ -43,7 +43,7 @@ app.get('/dashboard', (req, res) => {
 
 app.get('/eventInfo', (req, res) => {
   // req.query.userId = parseInt(req.query.userId);
-  console.log(req.query.userId);
+  // console.log(req.query.userId);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
     if (err || info[0] === undefined) {
       console.error(err);
@@ -144,6 +144,15 @@ app.post('/createEvent', (req, res) => {
 
 app.get('/GetAllEvents', (req, res) => {
   db.getAllEvents((err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
+app.get('/getCategories', (req, res) => {
+  db.getCategories((err, data) => {
     if (err) {
       throw err;
     }
