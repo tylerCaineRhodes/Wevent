@@ -17,7 +17,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 'LandingPage',
-      userId: '0',
+      userId: '',
       calendarEvents: [],
       filteredEvents: [],
       loginDisplayName: '',
@@ -333,11 +333,10 @@ class App extends React.Component {
   }
 
   openEventInfoModal(eventId) {
+    const params = {eventId}
+    this.state.userId === '' ? params.userId = 0 : params.userId = this.state.usedId;
     axios.get('/eventInfo', {
-      params: {
-        userId: this.state.userId,
-        eventId,
-      },
+      params
     })
       .then((res) => {
         //console.log(res.data);
