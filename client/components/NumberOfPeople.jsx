@@ -17,7 +17,6 @@ const NumberOfPeople = ({
 
   return (
     <div className={classes.root}>
-      <span>Number of People</span>
       <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={filterNumOfPeopleValues} onChange={(e, v) => handleStateChange(v, 'filterNumOfPeopleValues', filterEvents)} />
     </div>
   );
