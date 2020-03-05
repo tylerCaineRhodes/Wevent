@@ -541,6 +541,7 @@ class App extends React.Component {
             <ModalReuseable
               body={(
                 <Signup
+                  handleStateChange={this.handleStateChange}
                   signUpDisplayName={this.state.signUpDisplayName}
                   signUpPassword={this.state.signUpPassword}
                   signUpCity={this.state.signUpCity}
