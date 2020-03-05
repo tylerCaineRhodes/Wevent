@@ -542,12 +542,6 @@ class App extends React.Component {
               show={this.state.signUpDisplayed}
             />
           )}
-        title="Sign Up"
-          handleShow={this.openSignUpModal}
-        handleClose={this.closeSignUpModal}
-        show={this.state.signUpDisplayed}
-        />
-        )}
       </>
     );
   }
