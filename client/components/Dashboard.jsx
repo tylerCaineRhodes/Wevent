@@ -24,14 +24,18 @@ class Dashboard extends React.Component {
           <div className="hostingDash">
             <h4>Hosting</h4>
             <>{this.props.info.hosting.map( (event, i) => {
-                return (<div data-eventid={event.event_id} key = {i} pending = {event.pending} onClick = {this.onClick.bind(this)}>{event.title}</div>)
+              let pending;
+              if (event.pending >= 1) {
+                pending = 1;
+              }
+                return (<div data-eventid={event.event_id} key = {i} className={`hosting-dash-pending${pending}`} onClick = {this.onClick.bind(this)}>{event.title}</div>)
               }
             )}</>
           </div>
           <div className="attendingDash">
             <h4>Attending</h4>
             <>{this.props.info.attending.map( (event, i) => {
-                return (<div data-eventid={event.event_id} key={i} pending = {event.pending} onClick = {this.onClick.bind(this)}>{event.title}</div>)
+                return (<div data-eventid={event.event_id} key={i} className={`attending-dash-pending${event.pending}`} onClick = {this.onClick.bind(this)}>{event.title}</div>)
               }
             )}</>
           </div>
