@@ -71,4 +71,26 @@ test('adds 1 + 2 to equal 3', () => {
 //     });
 //   });
 // });
-  
+
+// describe('Test the pending event path', () => {
+//   test('Requesting to join an event should change that event to pending', (done) => {
+//     request(app).post('/pending').send({ eventId: 1, userId: 13 }).then((response) => {
+//       expect(response.statusCode).toBe(200);
+//       request(app).get('/pending').query({ eventId: 1, userId: 13 }).then((response) => {
+//         console.log('RESPONSE',response.body);
+//         expect(response.body.pending).toBe(1);
+//         done();
+//       });
+//     });
+//   });
+  // test('Accepting a pending request should change it to accepted', (done) => {
+  //   request(app).post('/pending').send({ eventId: 1, userId: 12 }).then((response) => {
+  //     expect(response.statusCode).toBe(200);
+  //     request(app).get('/eventInfo').query({ eventId: 1, userId: 12 }).then((response) => {
+  //       console.log(response.body);
+  //       expect(response.body.eventInfo[0].pending).toBe(0);
+  //       done();
+  //     });
+  //   });
+//   // });
+// });
