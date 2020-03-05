@@ -333,15 +333,17 @@ class App extends React.Component {
   }
 
   openEventInfoModal(eventId) {
+    const params = { eventId };
+    if (this.state.userId) {
+      params.userId = 0;
+    } else {
+      params.userId = this.state.userId;
+    }
     axios.get('/eventInfo', {
-      params: {
-        userId: this.state.userId,
-        eventId,
-      },
+      params,
     })
       .then((res) => {
-        // console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
-        // console.log(res.data);
+        //console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
