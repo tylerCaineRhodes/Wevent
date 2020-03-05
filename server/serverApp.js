@@ -41,16 +41,16 @@ app.get('/dashboard', (req, res) => {
   });
 });
 
+//Get the pending variable
 app.get('/eventInfo', (req, res) => {
-  // req.query.userId = parseInt(req.query.userId);
-  // console.log(req.query.userId);
+  req.query.userId = parseInt(req.query.userId, 10);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
     if (err || info[0] === undefined) {
       console.error(err);
       res.sendStatus(500);
       return;
     }
-    if (info[0].host_id === req.query.userId) { //Removed strict equality to handle num vs. str comparison
+    if (info[0].host_id === req.query.userId) {
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
           console.error(error);
@@ -172,6 +172,7 @@ app.delete('/event', (req, res) => {
 });
 
 app.post('/pending', (req, res) => {
+  console.log(req.body);
   db.askToJoinEvent(req.body.userId, req.body.eventId, (err, data) => {
     if (err) {
       console.log(err);
@@ -181,7 +182,6 @@ app.post('/pending', (req, res) => {
     res.sendStatus(200);
   });
 });
-
 app.put('/pending', (req, res) => {
   db.approvePending(req.body.displayName, req.body.eventId, (err, data) => {
     if (err) {
@@ -189,20 +189,32 @@ app.put('/pending', (req, res) => {
       res.sendStatus(500);
       return;
     }
-    res.send(data);
+    res.sendStatus(200);
   });
 });
 
 app.delete('/pending', (req, res) => {
-  db.rejectPending(req.body.displayName, req.body.eventId, (err, data) => {
+  db.rejectPending(req.query.displayName, req.query.eventId, (err, data) => {
     if (err) {
       console.log(err);
       res.sendStatus(500);
       return;
     }
-    res.send(data);
+    res.sendStatus(200);
   });
 });
 
+  //for testing pending routes
+//   app.get('/pending', (req, res) => {
+//     db.getPendingForTesting(req.query.displayName, req.query.eventId, (err, data) => {
+//       if (err) {
+//         console.log(err);
+//         res.sendStatus(500);
+//         return;
+//       }
+//       res.send(data);
+//     });
+// });
+
 module.exports.app = app;
-module.exports.connection = db.connection;
+module.exports.connection = db.connection; 
