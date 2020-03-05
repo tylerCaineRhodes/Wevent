@@ -20,7 +20,7 @@ module.exports.prettifyHostingEventsForDashboard = (hosting) => {
 
 module.exports.prettifyHostingForEventInfo = (info) => {
   const newInfo = [];
-  const newEvent = { pending: [] };
+  const newEvent = { pending: [], attending: [] };
   info.forEach((event) => {
     if (newEvent.title !== event.title) {
       if (newEvent.title) {
@@ -28,8 +28,11 @@ module.exports.prettifyHostingForEventInfo = (info) => {
       }
       Object.assign(newEvent, event);
       newEvent.pending = [];
+      newEvent.attending = [];
     } else if (event.pending) {
       newEvent.pending.push(event.display_name);
+    } else if (event.pending === 0) {
+      newEvent.attending.push(event.display_name);
     }
   });
   delete newEvent.display_name;
