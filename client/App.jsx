@@ -32,13 +32,18 @@ class App extends React.Component {
       signUpDisplayed: false,
       eventInfoDisplayed: false,
 
+      filterDropdownCategories: [],
+
       filterCityValue: '',
       filterStateValue: '',
-      filterCategoryValue: '',
-      filterNumOfPeopleValues: [15, 40],
+      filterCategoryValue: {
+        name: '',
+        id: '',
+      },
+      filterNumOfPeopleValues: [0, 100],
       filterCostValue: 100,
-      filterPublicValue: false,
-      filterPrivateValue: false,
+      filterPublicValue: true,
+      filterPrivateValue: true,
       filterToDValue: '',
       states: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA',
         'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT',
@@ -46,7 +51,7 @@ class App extends React.Component {
 
       eventInfoAccess: '',
       eventInfo: '',
-      
+
       createEventTitle: '',
       createEventDescription: '',
       createEventCategory: '',
@@ -102,11 +107,14 @@ class App extends React.Component {
     this.handleSignUpSubmit = this.handleSignUpSubmit.bind(this);
     this.getAllEvents = this.getAllEvents.bind(this);
     this.filterEvents = this.filterEvents.bind(this);
+    this.getCategories = this.getCategories.bind(this);
+    this.handleGuestSubmit = this.handleGuestSubmit.bind(this);
   }
 
   componentDidMount() {
     this.getAllEvents();
     this.filterEvents();
+    this.getCategories();
   }
 
 
@@ -134,6 +142,7 @@ class App extends React.Component {
             attendance_max: res.data[i].attendance_max,
             attendance_current: res.data[i].attendance_current,
             private: res.data[i].private,
+            category_ids: res.data[i].category_ids.split(','),
           });
         }
         this.setState({
@@ -148,24 +157,38 @@ class App extends React.Component {
       });
   }
 
-  filterEvents() {
-    let storage = [];
-    for (let i = 0; i < this.state.calendarEvents.length; i++) {
-      if (this.state.calendarEvents[i].city === this.state.filterCityValue) {
-        if (this.state.calendarEvents[i].state === this.state.filterStateValue) {
-          if ((this.state.calendarEvents[i].attendance_current > this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) {
-            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
-              storage.push(this.state.calendarEvents[i]);
-              //add filter for public/private
-            }
-          }
-        }
-      }
-    }
+  getCategories() {
+    axios.get('/getCategories')
+      .then((res) => {
+        this.setState({ filterDropdownCategories: res.data });
+      })
+      .catch((err) => {
+        console.log('nope for the categories from front end', err);
+      });
+  }
+
+  openSignUpModal() {
     this.setState({
-      filteredEvents: storage,
-    }, () => {
-      storage = [];
+      signUpDisplayed: true,
+    });
+  }
+
+  closeSignUpModal() {
+    this.setState({
+      signUpDisplayed: false,
+    });
+  }
+
+
+  closeCreateEventModal() {
+    this.setState({
+      createEventDisplayed: false,
+    });
+  }
+
+  openCreateEventModal() {
+    this.setState({
+      createEventDisplayed: true,
     });
   }
 
@@ -180,6 +203,7 @@ class App extends React.Component {
           handleLoginSubmit={this.handleLoginSubmit}
           openSignUpModal={this.openSignUpModal}
           closeSignUpModal={this.closeSignUpModal}
+          handleGuestSubmit={this.handleGuestSubmit}
         />
       );
     }
@@ -190,6 +214,8 @@ class App extends React.Component {
           calendarEvents={this.state.filteredEvents}
           handleCalendarEventClick={this.handleCalendarEventClick}
 
+
+          filterDropdownCategories={this.state.filterDropdownCategories}
           handleFilterCityChange={this.handleFilterCityChange}
           filterCityValue={this.state.filterCityValue}
           handleFilterStateChange={this.handleFilterStateChange}
@@ -219,27 +245,31 @@ class App extends React.Component {
     }
   }
 
-  openCreateEventModal() {
+  filterEvents() {
+    let storage = [];
+    //if city is initial value, ignore
+    for (let i = 0; i < this.state.calendarEvents.length; i++) {
+      if (this.state.calendarEvents[i].city === this.state.filterCityValue || this.state.filterCityValue === '') {
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
+          if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
+            if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
+              if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '') {
+                if (this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) {
+                  storage.push(this.state.calendarEvents[i]);
+                }
+                if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
+                  storage.push(this.state.calendarEvents[i]);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     this.setState({
-      createEventDisplayed: true,
-    });
-  }
-
-  closeCreateEventModal() {
-    this.setState({
-      createEventDisplayed: false,
-    });
-  }
-
-  openSignUpModal() {
-    this.setState({
-      signUpDisplayed: true,
-    });
-  }
-
-  closeSignUpModal() {
-    this.setState({
-      signUpDisplayed: false,
+      filteredEvents: storage,
+    }, () => {
+      storage = [];
     });
   }
 
@@ -319,25 +349,25 @@ class App extends React.Component {
 
   openEventInfoModal(eventId) {
     axios.get('/eventInfo', {
-      params: { 
+      params: {
         userId: this.state.userId,
         eventId,
       },
     })
-    .then((res) => {
-      console.log('Clicking Calendar - openEventInfoModal retrieving from DB')
-      console.log(res.data) 
-      this.setState({
-        eventInfoAccess: res.data.access,
-        eventInfo: res.data.eventInfo[0],
-        eventInfoDisplayed: true,
+      .then((res) => {
+        console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
+        console.log(res.data);
+        this.setState({
+          eventInfoAccess: res.data.access,
+          eventInfo: res.data.eventInfo[0],
+          eventInfoDisplayed: true,
+        });
+      })
+      .catch((err) => {
+        if (err) {
+          console.log('openEventInfoModal - Error retrieving from DB');
+        }
       });
-    })
-    .catch((err) => {
-      if (err) {
-        console.log('openEventInfoModal - Error retrieving from DB');
-      }
-    });
   }
 
   closeEventInfoModal() {
@@ -386,6 +416,13 @@ class App extends React.Component {
     // DO ALL THE API CALLS TO VERIFY USER THEN SET PAGE STATE TO PAGE OR WHATEVER
   }
 
+  handleGuestSubmit(event) {
+    this.setState({
+      loginDisplayName: 'Guest',
+      page: 'MainPage',
+    });
+  }
+
   handleFilterCityChange(newValue) {
     this.setState({ filterCityValue: newValue });
   }
@@ -426,7 +463,6 @@ class App extends React.Component {
   handleCalendarEventClick(event) {
     //console.log('POOP :)', event, this.state.calendarEvents);
     this.openEventInfoModal(event.eventId);
-
   }
 
   handleCreateEventTitleChange(newValue) {
@@ -483,48 +519,62 @@ class App extends React.Component {
 
   handleCreateEventSubmit(event) {
     event.preventDefault();
-    const createEventData = {
-      userId: this.state.userId,
-      title: this.state.createEventTitle,
-      description: this.state.createEventDescription,
-      category: this.state.createEventCategory,
-      date: this.state.createEventDate,
-      time: this.state.createEventTime,
-      cost: this.state.createEventCost,
-      privateEvent: this.state.createEventPrivate,
-      address1: this.state.createEventAddress1,
-      address2: this.state.createEventAddress2,
-      city: this.state.createEventCity,
-      state: this.state.createEventState,
-      zipcode: this.state.createEventZipcode,
-      maxPeople: this.state.createEventMaxPeople,
-    };
-    axios.post('/createEvent', createEventData)
-      .then(() => {
-        this.setState({
-          createEventDisplayed: false,
-          createEventTitle: '',
-          createEventDescription: '',
-          createEventCategory: '',
-          createEventDate: moment().format('YYYY-MM-DD'),
-          createEventTime: moment().format('hh:mm'),
-          createEventCost: 0,
-          createEventPrivate: false,
-          createEventAddress1: '',
-          createEventAddress2: '',
-          createEventCity: '',
-          createEventState: '',
-          createEventZipcode: 0,
-          createEventMaxPeople: 50,
-        }, () => {
-          this.getAllEvents();
-          // eslint-disable-next-line no-alert
-          alert('Event Created!');
+    if (
+      this.state.createEventTitle === ''
+      || this.state.createEventState === ''
+      || this.state.createEventDescription === ''
+      || this.state.createEventCategory === ''
+      || this.state.createEventDate === ''
+      || this.state.createEventTime === ''
+      || this.state.createEventCity === ''
+      || this.state.userId === ''
+    ) {
+      // eslint-disable-next-line no-alert
+      alert('Please fill out all fields.');
+    } else {
+      const createEventData = {
+        userId: this.state.userId,
+        title: this.state.createEventTitle,
+        description: this.state.createEventDescription,
+        category: this.state.createEventCategory,
+        date: this.state.createEventDate,
+        time: this.state.createEventTime,
+        cost: this.state.createEventCost,
+        privateEvent: this.state.createEventPrivate,
+        address1: this.state.createEventAddress1,
+        address2: this.state.createEventAddress2,
+        city: this.state.createEventCity,
+        state: this.state.createEventState,
+        zipcode: this.state.createEventZipcode,
+        maxPeople: this.state.createEventMaxPeople,
+      };
+      axios.post('/createEvent', createEventData)
+        .then(() => {
+          this.setState({
+            createEventDisplayed: false,
+            createEventTitle: '',
+            createEventDescription: '',
+            createEventCategory: '',
+            createEventDate: moment().format('YYYY-MM-DD'),
+            createEventTime: moment().format('hh:mm'),
+            createEventCost: 0,
+            createEventPrivate: false,
+            createEventAddress1: '',
+            createEventAddress2: '',
+            createEventCity: '',
+            createEventState: '',
+            createEventZipcode: 0,
+            createEventMaxPeople: 50,
+          }, () => {
+            this.getAllEvents();
+            // eslint-disable-next-line no-alert
+            alert('Event Created!');
+          });
+        })
+        .catch((error) => {
+          console.error(error);
         });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    }
   }
 
   render() {
@@ -575,10 +625,12 @@ class App extends React.Component {
             <button className="event-info-button" type="submit" onClick={this.openEventInfoModal}>See eventInfo</button>
 
             <ModalReuseable
-              body={<EventInfo 
-                eventInfoAccess={this.state.eventInfoAccess}
-                eventInfo={this.state.eventInfo}
-              />}
+              body={(
+                <EventInfo
+                  eventInfoAccess={this.state.eventInfoAccess}
+                  eventInfo={this.state.eventInfo}
+                />
+              )}
               handleShow={this.openEventInfoModal}
               handleClose={this.closeEventInfoModal}
               show={this.state.eventInfoDisplayed}

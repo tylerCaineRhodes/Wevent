@@ -50,7 +50,7 @@ app.get('/eventInfo', (req, res) => {
       res.sendStatus(500);
       return;
     }
-    if (info[0].host_id == req.query.userId) { //Removed strict equality to handle num vs. str comparison
+    if (info[0].host_id === req.query.userId) { //Removed strict equality to handle num vs. str comparison
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
           console.error(error);
@@ -144,6 +144,15 @@ app.post('/createEvent', (req, res) => {
 
 app.get('/GetAllEvents', (req, res) => {
   db.getAllEvents((err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
+app.get('/getCategories', (req, res) => {
+  db.getCategories((err, data) => {
     if (err) {
       throw err;
     }
