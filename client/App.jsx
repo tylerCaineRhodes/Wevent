@@ -86,12 +86,14 @@ class App extends React.Component {
     this.getCategories = this.getCategories.bind(this);
     this.handleGuestSubmit = this.handleGuestSubmit.bind(this);
     this.openCreateEventModal = this.openCreateEventModal.bind(this);
+    this.changePage = this.changePage.bind(this);
   }
 
   componentDidMount() {
     this.getAllEvents();
     this.filterEvents();
     this.getCategories();
+    this.getEventsForDashboard();
   }
 
 
