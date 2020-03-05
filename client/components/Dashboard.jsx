@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        {/* <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} /> */}
+        <Title buttonText="Back" buttonClass="createNewEvent-button" onClick={this.props.changePage} />
         <div className="outerDash">
           <p>{this.props.info.nameAndLocation[0].display_name}</p>
           <p>{this.props.info.nameAndLocation[0].location_state}</p>
