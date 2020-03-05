@@ -138,13 +138,13 @@ class App extends React.Component {
   }
 
   getEventsForDashboard() {
-    const userId = this.state.userId;
-    axios.get('/dashboard', { params : { userId } })
-    .then((data) =>{
-      this.setState({ dashboardInfo : data.data });
-    });
-  };
-  
+    const { userId } = this.state;
+    axios.get('/dashboard', { params: { userId } })
+      .then((data) => {
+        this.setState({ dashboardInfo: data.data });
+      });
+  }
+
   getCategories() {
     axios.get('/getCategories')
       .then((res) => {
@@ -258,11 +258,12 @@ class App extends React.Component {
       storage = [];
     });
   }
-  changePage(){
-    if (this.state.page === 'MainPage'){
-      this.setState( { page : 'Dashboard' } )
+
+  changePage() {
+    if (this.state.page === 'MainPage') {
+      this.setState({ page: 'Dashboard' });
     } else {
-      this.setState( { page : 'MainPage' } )
+      this.setState({ page: 'MainPage' });
     }
   }
 
