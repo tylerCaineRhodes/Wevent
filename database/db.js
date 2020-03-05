@@ -90,8 +90,8 @@ module.exports.getEventInfoForHost = (eventId, cb) => {
 
 module.exports.getEventInfoForNonHost = (eventId, userId, hasAccess, cb) => {
   if (hasAccess) {
-    const query = 'select e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, e.host_id, (SELECT pending from users_events_attending where event_id = ? and user_id = ?) AS pending from events e where event_id = ?';
-    db.query(query, [eventId], (err, data) => {
+    const query = 'select e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, e.host_id, (SELECT pending from users_events_attending where event_id = ? and user_id = ? LIMIT 1) AS pending from events e where event_id = ?';
+    db.query(query, [eventId, userId, eventId], (err, data) => {
       if (err) {
         cb(err);
         return;
@@ -99,8 +99,8 @@ module.exports.getEventInfoForNonHost = (eventId, userId, hasAccess, cb) => {
       cb(null, data);
     });
   } else {
-    const query = 'select e.title, e.description, e.date, e.time, e.price, e.private, e.city, e.state, e.attendance_max, e.attendance_current, e.host_id, (SELECT pending from users_events_attending where event_id = ? and user_id = ?) AS pending from events e where event_id = ?';
-    db.query(query, [eventId], (err, data) => {
+    const query = 'select e.title, e.description, e.date, e.time, e.price, e.private, e.city, e.state, e.attendance_max, e.attendance_current, e.host_id, (SELECT pending from users_events_attending where event_id = ? and user_id = ? LIMIT 1) AS pending from events e where event_id = ?';
+    db.query(query, [eventId, userId, eventId], (err, data) => {
       if (err) {
         cb(err);
         return;

@@ -61,7 +61,7 @@ app.get('/eventInfo', (req, res) => {
         res.send({ access: 'host', eventInfo });
       });
     } else if (info[0].private === 0 || info[0].pending === 0) {
-      db.getEventInfoForNonHost(req.query.eventId, true, (goofUp, eventInfo) => {
+      db.getEventInfoForNonHost(req.query.eventId, req.query.userId, true, (goofUp, eventInfo) => {
         if (goofUp) {
           console.error(goofUp);
           res.sendStatus(500);
@@ -70,7 +70,7 @@ app.get('/eventInfo', (req, res) => {
         res.send({ access: 'full', eventInfo });
       });
     } else {
-      db.getEventInfoForNonHost(req.query.eventId, false, (quandary, eventInfo) => {
+      db.getEventInfoForNonHost(req.query.eventId, req.query.userId, false, (quandary, eventInfo) => {
         if (quandary) {
           console.error(quandary);
           res.sendStatus(500);
