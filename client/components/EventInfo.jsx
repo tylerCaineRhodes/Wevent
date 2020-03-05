@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function EventInfo({ eventInfo, eventInfoAccess }) {
-  eventInfo.attending = []; //Temp variable until changes are pushed
+  eventInfo.attending = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']; //Temp variable until changes are pushed
   return (
     <div className={`grid-parent-${eventInfoAccess}`}>
       <div className="grid-title">
