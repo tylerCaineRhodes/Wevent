@@ -204,6 +204,7 @@ class App extends React.Component {
 
           loginDisplayName={this.state.loginDisplayName}
 
+
           filterDropdownCategories={this.state.filterDropdownCategories}
           filterCityValue={this.state.filterCityValue}
           filterStateValue={this.state.filterStateValue}
@@ -234,7 +235,7 @@ class App extends React.Component {
         if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
-              if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '') {
+              if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '' || this.state.filterCategoryValue.id === 0) {
                 const display = moment(this.state.calendarEvents[i].start).format('hh:mm:ss');
                 const timeArray = this.state.filterToDValue.split('-');
                 if ((display >= timeArray[0] && display <= timeArray[1]) || (this.state.filterToDValue.length === 0)) {
@@ -267,10 +268,10 @@ class App extends React.Component {
     }
   }
 
-  handleStateChange(newValue, stateToChange) {
+  handleStateChange(newValue, stateToChange, cb) {
     const newState = {};
     newState[stateToChange] = newValue;
-    this.setState(newState);
+    this.setState(newState, cb);
   }
 
   handleSignUpSubmit(event) {
@@ -501,8 +502,6 @@ class App extends React.Component {
               handleClose={this.closeCreateEventModal}
               show={this.state.createEventDisplayed}
             />
-
-            <button className="event-info-button" type="submit" onClick={this.openEventInfoModal}>See eventInfo</button>
 
             <ModalReuseable
               body={(
