@@ -214,4 +214,4 @@ app.get('/getallstates', (req, res) => {
 });
 
 module.exports.app = app;
-module.exports.connection = db.connection; 
+module.exports.connection = db.connection;
