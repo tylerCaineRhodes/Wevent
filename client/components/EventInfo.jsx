@@ -1,8 +1,7 @@
 import React from 'react';
 
-export default function EventInfo({eventInfo, eventInfoAccess}) {
-
-  eventInfo.attending = []; //Temp variable until changes are pushed
+export default function EventInfo({ eventInfo, eventInfoAccess }) {
+eventInfo.attending = []; //Temp variable until changes are pushed
 
   return (
     <div className={`grid-parent-${eventInfoAccess}`}>
@@ -11,7 +10,7 @@ export default function EventInfo({eventInfo, eventInfoAccess}) {
         <p className="eventInfoLocation">{eventInfo.city}, {eventInfo.state}</p>
       </div>
       <div className={`grid-left-${eventInfoAccess}`}>
-        <p className="eventInfo">Host {eventInfoAccess}</p> To Be Removed
+        {/* <p className="eventInfo">Host {eventInfoAccess}</p> To Be Removed */}
         <p className="eventInfo">Time {eventInfo.time}</p>
         {
           eventInfoAccess !== 'limited'
@@ -20,24 +19,23 @@ export default function EventInfo({eventInfo, eventInfoAccess}) {
             ) : null
         }
         <p className="eventInfo">{eventInfo.city}, {eventInfo.state}<br />{eventInfo.zipcode}</p>
-        <p className="eventInfo">Price: ${eventInfo.price}</p>
+        <p className="eventInfo">Price: ${eventInfo.price.toFixed(2)}</p>
         {
-          eventInfo.attendance_max !== null 
+          eventInfo.attendance_max !== null
             ? (
-            <p className="eventInfo">Attendance: {eventInfo.attendance_current} / {eventInfo.attendance_max}</p>
+              <p className="eventInfo">Attendance: {eventInfo.attendance_current} / {eventInfo.attendance_max}</p>
             ) : null
         }
         <div>
-        {
-          eventInfoAccess === 'host'
-            ? (
-              <button type="button" className="attend-delete-button">Delete</button>
+          {
+            // eslint-disable-next-line no-nested-ternary
+            eventInfoAccess === 'host' ? (<button type="button" className="attend-delete-button">Delete</button>
             ) : eventInfoAccess === 'full' ? (
               <button type="button" className="attend-delete-button">Un-attend</button>
             ) : (
               <button type="button" className="attend-delete-button">Attend</button>
             )
-        }
+          }
         </div>
       </div>
       <div className={`grid-right-${eventInfoAccess}`}>
