@@ -43,7 +43,7 @@ app.get('/dashboard', (req, res) => {
 
 app.get('/eventInfo', (req, res) => {
   // req.query.userId = parseInt(req.query.userId);
-  console.log(req.query.userId);
+  // console.log(req.query.userId);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
     if (err || info[0] === undefined) {
       console.error(err);

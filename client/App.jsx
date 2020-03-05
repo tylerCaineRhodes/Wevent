@@ -17,7 +17,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 'LandingPage',
-      userId: '',
+      userId: '11',
       calendarEvents: [],
       filteredEvents: [],
       loginDisplayName: '',
@@ -97,7 +97,7 @@ class App extends React.Component {
   getAllEvents() {
     axios.get('/GetAllEvents')
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         const results = [];
         for (let i = 0; i < res.data.length; i++) {
           const time = res.data[i].time.split(':');
@@ -310,8 +310,8 @@ class App extends React.Component {
       },
     })
       .then((res) => {
-        console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
-        console.log(res.data);
+        // console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
+        // console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
@@ -353,7 +353,7 @@ class App extends React.Component {
             loginPassword: '',
             page: 'MainPage',
           }, () => {
-            console.log(this.state.userId);
+            // console.log(this.state.userId);
           });
         }
       })
@@ -371,12 +371,12 @@ class App extends React.Component {
   }
 
   handleFilterSubmit() {
-    console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
+    // console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
     this.filterEvents();
   }
 
   handleCalendarEventClick(event) {
-    console.log('POOP :)', event, this.state.calendarEvents);
+    //console.log('POOP :)', event, this.state.calendarEvents);
     this.openEventInfoModal(event.eventId);
   }
 
