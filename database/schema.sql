@@ -4,7 +4,7 @@ USE Wevent;
 CREATE TABLE users (
 	user_id int NOT NULL AUTO_INCREMENT UNIQUE,
 	display_name varchar(255) NOT NULL UNIQUE,
-	password_hash varchar(255) NOT NULL UNIQUE,
+	password_hash varchar(255) NOT NULL,
 	location_state varchar(255) NOT NULL,
 	location_city varchar(255) NOT NULL,
 	PRIMARY KEY (user_id)
