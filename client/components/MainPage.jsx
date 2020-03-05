@@ -18,10 +18,11 @@ const MainPage = ({
   filterToDValue,
   handleFilterSubmit,
   filterDropdownCategories,
+  changePage,
   loginDisplayName,
 }) => (
   <>
-    <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} />
+    <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} changePage={changePage} page="MainPage" />
     <div style={{ width: '33%', display: 'inline-block' }}>
       <Filter
         loginDisplayName={loginDisplayName}
