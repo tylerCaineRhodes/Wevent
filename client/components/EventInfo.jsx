@@ -10,7 +10,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
         <p className="eventInfoLocation">{eventInfo.city}, {eventInfo.state}</p>
       </div>
       <div className={`grid-left-${eventInfoAccess}`}>
-        <p className="eventInfo">Host {eventInfoAccess}</p> {/* Displays User Role ***To Be Removed*** */}
+        {/* <p className="eventInfo">Host {eventInfoAccess}</p> Displays User Role ***To Be Removed*** */}
         <p className="eventInfo">Time {eventInfo.time}</p>
         {
           eventInfoAccess !== 'limited'
@@ -29,7 +29,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
         <div>
           {
             // eslint-disable-next-line no-nested-ternary
-            eventInfoAccess === 'host' ? (<button type="button" className="attend-delete-button">Delete</button>
+            eventInfoAccess === 'host' ? (<button type="button" className="attend-delete-button">DELETE</button>
             ) : eventInfoAccess === 'full' ? (
               <button type="button" className="attend-delete-button">Un-attend</button>
             ) : (
@@ -50,7 +50,8 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
                 {eventInfo.pending.map((pend, index) => (
                   <div key={index}>
                     <p className="pend-accept-name">{pend}</p>
-                    <button type="button" className="pend-accept-button">Accept</button>
+                    <button type="button" className="check-x-button">&#x274C;</button>
+                    <button type="button" className="check-x-button">&#9989;</button>
                   </div>
                 ))}
               </div>

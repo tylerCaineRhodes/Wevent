@@ -319,7 +319,6 @@ class App extends React.Component {
       },
     })
       .then((res) => {
-        // console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
         console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
