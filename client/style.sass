@@ -258,8 +258,8 @@ p.eventInfoDescription
   height: 150px
 
 .landingPageContent
+  background-color: #ffffff3a
   width: 30%
-  height: 25%
   text-align: center
   border-width: 1px
   border-style: solid
@@ -267,8 +267,7 @@ p.eventInfoDescription
   border-radius: 10px
   margin-left: 35%
   margin-right: 35%
-  margin-top: 5%
-  // filter: drop-shadow(0 0 0.75rem)
+  margin-top: 1%
 
 .landingPageUsernameField, .landingPagePasswordField
   width: 45%
@@ -281,16 +280,17 @@ p.eventInfoDescription
   margin: 2%
   width: 45%
   background-color: orange
-  border-color: white
+  border-color: gray
 .loginButton:hover
-  background-color: red
-  border-color: white
+  background-color: #ff8d00
+  border-color: gray
+.loginButton:active
+  background-color: #ffb255
 
 #noAccountText, #noAccountButton
   display: inline-block
   color: grey
   margin: 1%
-  margin-bottom: 2.5%
 
 #noAccountButton
   margin-left: .5%
@@ -308,6 +308,27 @@ p.eventInfoDescription
   font-size: 50px
   font-weight: bold
   margin-top: 2.5%
+  text-align: center
+
+.landingPage
+  margin-top: 0
+  width: 100%
+  height: 100vh
+
+.landingPageImage
+  z-index: -1000
+  filter: blur(8px)
+  position: fixed
+  top: 0
+
+#continueAsGuestButton
+  color: gray
+  text-decoration: underline
+  margin-bottom: 2.5%
+  cursor: pointer
+
+#landingPageOr
+  color: gray
 
 #signup
   // padding: 1%
