@@ -19,6 +19,7 @@ const Filter = ({
   filterToDValue,
   handleFilterSubmit,
   filterDropdownCategories,
+  loginDisplayName,
 }) => (
   <div className="filter-container">
     <h3>Filter Events:</h3>
@@ -56,7 +57,7 @@ const Filter = ({
         </Card.Body>
         {/* </Accordion.Collapse> */}
       </Card>
-
+      {loginDisplayName !== 'Guest' && (
       <Card>
         <Card.Header>
           {/* <Accordion.Toggle as={Button} variant={Card.Header} eventKey="2"> */}
@@ -72,6 +73,8 @@ const Filter = ({
         </Card.Body>
         {/* </Accordion.Collapse> */}
       </Card>
+      )}
+
 
       <Card>
         <Card.Header>
@@ -89,6 +92,7 @@ const Filter = ({
         {/* </Accordion.Collapse> */}
       </Card>
 
+      {loginDisplayName !== 'Guest' && (
       <Card>
         <Card.Header>
           {/* <Accordion.Toggle as={Button} variant={Card.Header} eventKey="4"> */}
@@ -105,6 +109,8 @@ const Filter = ({
         </Card.Body>
         {/* </Accordion.Collapse> */}
       </Card>
+      )}
+
 
       <Card>
         <Card.Header>
