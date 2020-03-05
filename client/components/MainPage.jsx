@@ -21,9 +21,10 @@ const MainPage = ({
   changePage,
   loginDisplayName,
   filterEvents,
+  handleGuestBackToLandingPage,
 }) => (
   <>
-    <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} changePage={changePage} page="MainPage" />
+    <Title buttonText={loginDisplayName === 'Guest' ? 'Login/Signup' : 'Create Event'} buttonClass="createNewEvent-button" onClick={loginDisplayName === 'Guest' ? handleGuestBackToLandingPage : openCreateEventModal} changePage={changePage} page="MainPage" />
     <div style={{ width: '33%', display: 'inline-block' }}>
       <Filter
         loginDisplayName={loginDisplayName}
