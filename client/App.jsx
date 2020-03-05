@@ -88,6 +88,7 @@ class App extends React.Component {
     this.openCreateEventModal = this.openCreateEventModal.bind(this);
     this.changePage = this.changePage.bind(this);
     this.getEventsForDashboard = this.getEventsForDashboard.bind(this);
+    this.handleGuestBackToLandingPage = this.handleGuestBackToLandingPage.bind(this);
   }
 
   componentDidMount() {
@@ -204,7 +205,7 @@ class App extends React.Component {
 
           loginDisplayName={this.state.loginDisplayName}
 
-
+          handleGuestBackToLandingPage={this.handleGuestBackToLandingPage}
           filterDropdownCategories={this.state.filterDropdownCategories}
           filterCityValue={this.state.filterCityValue}
           filterStateValue={this.state.filterStateValue}
@@ -258,6 +259,10 @@ class App extends React.Component {
     }, () => {
       storage = [];
     });
+  }
+
+  handleGuestBackToLandingPage() {
+    this.setState({ page: 'LandingPage' });
   }
 
   changePage() {
@@ -333,10 +338,11 @@ class App extends React.Component {
   }
 
   openEventInfoModal(eventId) {
-    const params = {eventId}
+    const params = { eventId };
+    // eslint-disable-next-line no-unused-expressions
     this.state.userId === '' ? params.userId = 0 : params.userId = this.state.userId;
     axios.get('/eventInfo', {
-      params
+      params,
     })
       .then((res) => {
         //console.log(res.data);
