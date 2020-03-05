@@ -9,8 +9,8 @@ class Dashboard extends React.Component {
   }
 
   onClick (e) {
-    //this.props.openEventInfoModal(e.target.getAttribute('data-eventid'));
-    console.log((e.target.getAttribute('data-eventid')))
+    this.props.openEventInfoModal(e.target.getAttribute('data-eventid'));
+    // console.log((e.target.getAttribute('data-eventid')))
   }
 
   render () {

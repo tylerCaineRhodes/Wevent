@@ -9,6 +9,7 @@ module.exports.prettifyHostingEventsForDashboard = (hosting) => {
       }
       newEvent.title = event.title;
       newEvent.pending = event.pending;
+      newEvent.event_id = event.event_id;
     } else {
       newEvent.pending += event.pending;
     }
