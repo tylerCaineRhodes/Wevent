@@ -339,8 +339,11 @@ class App extends React.Component {
 
   openEventInfoModal(eventId) {
     const params = { eventId };
-    // eslint-disable-next-line no-unused-expressions
-    this.state.userId === '' ? params.userId = 0 : params.userId = this.state.userId;
+    if (this.state.userId) {
+      params.userId = 0;
+    } else {
+      params.userId = this.state.userId;
+    }
     axios.get('/eventInfo', {
       params,
     })
@@ -539,6 +542,12 @@ class App extends React.Component {
               show={this.state.signUpDisplayed}
             />
           )}
+        title="Sign Up"
+          handleShow={this.openSignUpModal}
+        handleClose={this.closeSignUpModal}
+        show={this.state.signUpDisplayed}
+        />
+        )}
       </>
     );
   }
