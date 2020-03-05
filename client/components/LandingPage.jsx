@@ -4,18 +4,24 @@ import Button from 'react-bootstrap/Button';
 import Title from './Title.jsx';
 
 const LandingPage = ({
-  loginDisplayName, loginPassword, handleLoginDisplaynameChange, handleLoginPasswordChange, handleLoginSubmit, openSignUpModal, closeSignUpModal, handleGuestSubmit,
+  loginDisplayName,
+  loginPassword,
+  handleLoginSubmit,
+  openSignUpModal,
+  closeSignUpModal,
+  handleGuestSubmit,
+  handleStateChange,
 }) => (
   <div className="landingPage">
     <Title buttonText="signup" buttonClass="createNewEvent-button" onClick={openSignUpModal} />
     <Form className="login">
       <Form.Group controlId="Username">
         {/* <Form.Label>Welcome to Wevent</Form.Label> */}
-        <Form.Control type="username" placeholder="Enter Username" value={loginDisplayName} onChange={(e) => handleLoginDisplaynameChange(e.target.value)} />
+        <Form.Control type="username" placeholder="Enter Username" value={loginDisplayName} onChange={(e) => handleStateChange(e.target.value, 'loginDisplayName')} />
       </Form.Group>
 
       <Form.Group controlId="Password">
-        <Form.Control type="password" placeholder="Enter Password" value={loginPassword} onChange={(e) => handleLoginPasswordChange(e.target.value, 'loginPassword')} />
+        <Form.Control type="password" placeholder="Enter Password" value={loginPassword} onChange={(e) => handleStateChange(e.target.value, 'loginPassword')} />
       </Form.Group>
       <Button variant="primary" type="submit" className="loginButton" onClick={handleLoginSubmit}>
         Login

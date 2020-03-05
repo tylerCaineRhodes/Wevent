@@ -1,19 +1,18 @@
 import React from 'react';
 
 const Location = ({
-  handleFilterCityChange,
+  handleStateChange,
   filterCityValue,
-  handleFilterStateChange,
   filterStateValue,
 }) => (
   <form>
     <label htmlFor="city">
       City:
-      <input type="text" value={filterCityValue} onChange={(e) => handleFilterCityChange(e.target.value)} />
+      <input type="text" value={filterCityValue} onChange={(e) => handleStateChange(e.target.value, 'filterCityValue')} />
     </label>
     <label htmlFor="state">
       State:
-      <select value={filterStateValue} onChange={(e) => handleFilterStateChange(e.target.value)}>
+      <select value={filterStateValue} onChange={(e) => handleStateChange(e.target.value, 'filterStateValue')}>
         <option> </option>
         <option>TX</option>
         <option>AZ</option>
