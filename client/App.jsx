@@ -16,8 +16,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'MainPage',
-      userId: '11',
+      page: 'LandingPage',
+      userId: '0',
       calendarEvents: [],
       filteredEvents: [],
       loginDisplayName: '',
@@ -340,7 +340,7 @@ class App extends React.Component {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
