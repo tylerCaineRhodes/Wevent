@@ -17,7 +17,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 'LandingPage',
-      userId: '11',
+      userId: '',
       calendarEvents: [],
       filteredEvents: [],
       loginDisplayName: '',
