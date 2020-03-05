@@ -9,7 +9,8 @@ class Dashboard extends React.Component {
   }
 
   onClick (e) {
-    this.props.openEventInfoModal(1);
+    //this.props.openEventInfoModal(e.target.getAttribute('data-eventid'));
+    console.log((e.target.getAttribute('data-eventid')))
   }
 
   render () {
@@ -23,14 +24,14 @@ class Dashboard extends React.Component {
           <div className="hostingDash">
             <h4>Hosting</h4>
             <>{this.props.info.hosting.map( (event, i) => {
-                return (<div key = {i} pending = {event.pending} onClick = {this.onClick.bind(this)}>{event.title}</div>)
+                return (<div data-eventid={event.event_id} key = {i} pending = {event.pending} onClick = {this.onClick.bind(this)}>{event.title}</div>)
               }
             )}</>
           </div>
           <div className="attendingDash">
             <h4>Attending</h4>
             <>{this.props.info.attending.map( (event, i) => {
-                return (<div key = {i} pending = {event.pending} onClick = {this.onClick.bind(this)}>{event.title}</div>)
+                return (<div data-eventid={event.event_id} key={i} pending = {event.pending} onClick = {this.onClick.bind(this)}>{event.title}</div>)
               }
             )}</>
           </div>
