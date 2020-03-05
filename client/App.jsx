@@ -85,6 +85,9 @@ class App extends React.Component {
     this.filterEvents = this.filterEvents.bind(this);
     this.getCategories = this.getCategories.bind(this);
     this.handleGuestSubmit = this.handleGuestSubmit.bind(this);
+    this.openCreateEventModal = this.openCreateEventModal.bind(this);
+    this.changePage = this.changePage.bind(this);
+    this.getEventsForDashboard = this.getEventsForDashboard.bind(this);
   }
 
   componentDidMount() {
@@ -131,6 +134,14 @@ class App extends React.Component {
         if (err) {
           console.log('didn\'t work from front');
         }
+      });
+  }
+
+  getEventsForDashboard() {
+    const { userId } = this.state;
+    axios.get('/dashboard', { params: { userId } })
+      .then((data) => {
+        this.setState({ dashboardInfo: data.data });
       });
   }
 
@@ -205,12 +216,13 @@ class App extends React.Component {
           filterToDValue={this.state.filterToDValue}
           handleFilterSubmit={this.handleFilterSubmit}
           openCreateEventModal={this.openCreateEventModal}
+          changePage={this.changePage}
         />
       );
     }
     if (this.state.page === 'Dashboard') {
       return (
-        <Dashboard openCreateEventModal={this.openCreateEventModal} />
+        <Dashboard info={this.state.dashboardInfo} changePage={this.changePage} openEventInfoModal={this.openEventInfoModal} closeEventInfoModal={this.closeEventInfoModal} />
       );
     }
   }
@@ -246,6 +258,14 @@ class App extends React.Component {
     }, () => {
       storage = [];
     });
+  }
+
+  changePage() {
+    if (this.state.page === 'MainPage') {
+      this.setState({ page: 'Dashboard' });
+    } else {
+      this.setState({ page: 'MainPage' });
+    }
   }
 
   handleStateChange(newValue, stateToChange, cb) {
@@ -362,7 +382,7 @@ class App extends React.Component {
             userId: res.data[0].user_id,
             loginPassword: '',
             page: 'MainPage',
-          });
+          }, this.getEventsForDashboard);
         }
       })
       .catch((error) => {
