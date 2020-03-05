@@ -351,7 +351,7 @@ class App extends React.Component {
 
   openEventInfoModal(eventId) {
     const params = { eventId };
-    if (this.state.userId) {
+    if (!this.state.userId) {
       params.userId = 0;
     } else {
       params.userId = this.state.userId;
