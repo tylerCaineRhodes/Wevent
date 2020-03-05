@@ -24,12 +24,14 @@ const MainPage = ({
   handleFilterToDChange,
   filterToDValue,
   handleFilterSubmit,
-  filterDropdownCategories
+  filterDropdownCategories,
+  loginDisplayName,
 }) => (
   <>
     <Title buttonText="Create New Event" buttonClass="createNewEvent-button" onClick={openCreateEventModal} />
     <div style={{ width: '33%', display: 'inline-block' }}>
       <Filter
+        loginDisplayName={loginDisplayName}
         handleFilterCityChange={handleFilterCityChange}
         filterCityValue={filterCityValue}
         handleFilterStateChange={handleFilterStateChange}
