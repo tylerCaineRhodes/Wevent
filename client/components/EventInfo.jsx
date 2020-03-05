@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default function EventInfo({ eventInfo, eventInfoAccess }) {
-eventInfo.attending = []; //Temp variable until changes are pushed
-
+  console.log('Attending' + eventInfo.attending)
+  eventInfo.attending = []; //Temp variable until changes are pushed
   return (
     <div className={`grid-parent-${eventInfoAccess}`}>
       <div className="grid-title">
@@ -10,7 +10,7 @@ eventInfo.attending = []; //Temp variable until changes are pushed
         <p className="eventInfoLocation">{eventInfo.city}, {eventInfo.state}</p>
       </div>
       <div className={`grid-left-${eventInfoAccess}`}>
-        {/* <p className="eventInfo">Host {eventInfoAccess}</p> Displays User Role ***To Be Removed*** */}
+        <p className="eventInfo">Host {eventInfoAccess}</p> {/* Displays User Role ***To Be Removed*** */}
         <p className="eventInfo">Time {eventInfo.time}</p>
         {
           eventInfoAccess !== 'limited'
@@ -47,8 +47,8 @@ eventInfo.attending = []; //Temp variable until changes are pushed
             <div className="grid-host-pend-accept">
               <div className="grid-host-pend">
                 <div className="pend-accept-heading">Pending</div>
-                {eventInfo.pending.map((pend) => (
-                  <div>
+                {eventInfo.pending.map((pend, index) => (
+                  <div key={index}>
                     <p className="pend-accept-name">{pend}</p>
                     <button type="button" className="pend-accept-button">Accept</button>
                   </div>
@@ -56,8 +56,8 @@ eventInfo.attending = []; //Temp variable until changes are pushed
               </div>
               <div className="grid-host-accept">
                 <div className="pend-accept-heading">Accepted</div>
-                {eventInfo.attending.map((accept) => (
-                  <div>
+                {eventInfo.attending.map((accept, index) => (
+                  <div key={index}>
                     <p className="pend-accept-name">{accept}</p>
                     <button type="button" className="pend-accept-button">Remove</button>
                   </div>

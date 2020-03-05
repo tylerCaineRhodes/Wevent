@@ -17,7 +17,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 'MainPage',
-      userId: 11,
+      userId: '11',
       calendarEvents: [],
       filteredEvents: [],
       loginDisplayName: '',
@@ -311,7 +311,7 @@ class App extends React.Component {
     })
       .then((res) => {
         // console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
-        // console.log(res.data);
+        console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
