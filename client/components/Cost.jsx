@@ -9,7 +9,7 @@ const useStyles = makeStyles({
 });
 
 const Cost = ({
-  handleFilterCostChange,
+  handleStateChange,
   filterCostValue,
 }) => {
   const classes = useStyles();
@@ -17,7 +17,7 @@ const Cost = ({
   return (
     <div className={classes.root}>
       <span>Cost</span>
-      <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={filterCostValue} onChange={(e, v) => handleFilterCostChange(v)} />
+      <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={filterCostValue} onChange={(e, v) => handleStateChange(v, 'filterCostValue')} />
     </div>
   );
 };

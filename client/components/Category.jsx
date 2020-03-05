@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Category = ({
-  handleFilterCategoryChange,
+  handleStateChange,
   filterCategoryValue,
   filterDropdownCategories,
 }) => (
@@ -9,7 +9,7 @@ const Category = ({
     <form>
       <label htmlFor="category">
         Category:
-        <select value={filterCategoryValue.name} data-id={filterCategoryValue.id} onChange={(e) => handleFilterCategoryChange({ name: e.target.value, id: e.target.selectedIndex })}>
+        <select value={filterCategoryValue.name} data-id={filterCategoryValue.id} onChange={(e) => handleStateChange({ name: e.target.value, id: e.target.selectedIndex }, 'filterCategoryValue')}>
           <option> </option>
           {filterDropdownCategories.map((category) => (
             <option key={category.category_id}>{category.category_name}</option>

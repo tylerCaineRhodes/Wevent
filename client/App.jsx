@@ -66,8 +66,9 @@ class App extends React.Component {
       createEventZipcode: 0,
       createEventMaxPeople: 50,
     };
-    this.handleLoginDisplaynameChange = this.handleLoginDisplaynameChange.bind(this);
-    this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
+
+    this.handleStateChange = this.handleStateChange.bind(this);
+
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     this.handlePageRender = this.handlePageRender.bind(this);
     this.openCreateEventModal = this.openCreateEventModal.bind(this);
@@ -76,34 +77,9 @@ class App extends React.Component {
     this.closeSignUpModal = this.closeSignUpModal.bind(this);
     this.openEventInfoModal = this.openEventInfoModal.bind(this);
     this.closeEventInfoModal = this.closeEventInfoModal.bind(this);
-    this.handleFilterCityChange = this.handleFilterCityChange.bind(this);
-    this.handleFilterStateChange = this.handleFilterStateChange.bind(this);
-    this.handleFilterCategoryChange = this.handleFilterCategoryChange.bind(this);
-    this.handleFilterNumOfPeopleChange = this.handleFilterNumOfPeopleChange.bind(this);
-    this.handleFilterCostChange = this.handleFilterCostChange.bind(this);
-    this.handleFilterPublicChange = this.handleFilterPublicChange.bind(this);
-    this.handleFilterPrivateChange = this.handleFilterPrivateChange.bind(this);
-    this.handleFilterToDChange = this.handleFilterToDChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.handleCalendarEventClick = this.handleCalendarEventClick.bind(this);
-    this.handleCreateEventTitleChange = this.handleCreateEventTitleChange.bind(this);
-    this.handleCreateEventDescriptionChange = this.handleCreateEventDescriptionChange.bind(this);
-    this.handleCreateEventCategoryChange = this.handleCreateEventCategoryChange.bind(this);
-    this.handleCreateEventDateChange = this.handleCreateEventDateChange.bind(this);
-    this.handleCreateEventTimeChange = this.handleCreateEventTimeChange.bind(this);
-    this.handleCreateEventCostChange = this.handleCreateEventCostChange.bind(this);
-    this.handleCreateEventPrivateChange = this.handleCreateEventPrivateChange.bind(this);
-    this.handleCreateEventAddress1Change = this.handleCreateEventAddress1Change.bind(this);
-    this.handleCreateEventAddress2Change = this.handleCreateEventAddress2Change.bind(this);
-    this.handleCreateEventCityChange = this.handleCreateEventCityChange.bind(this);
-    this.handleCreateEventStateChange = this.handleCreateEventStateChange.bind(this);
-    this.handleCreateEventZipcodeChange = this.handleCreateEventZipcodeChange.bind(this);
-    this.handleCreateEventMaxPeopleChange = this.handleCreateEventMaxPeopleChange.bind(this);
     this.handleCreateEventSubmit = this.handleCreateEventSubmit.bind(this);
-    this.handleSignUpDisplaynameChange = this.handleSignUpDisplaynameChange.bind(this);
-    this.handleSignUpPasswordChange = this.handleSignUpPasswordChange.bind(this);
-    this.handleSignUpCityNameChange = this.handleSignUpCityNameChange.bind(this);
-    this.handleSignUpStateNameChange = this.handleSignUpStateNameChange.bind(this);
     this.handleSignUpSubmit = this.handleSignUpSubmit.bind(this);
     this.getAllEvents = this.getAllEvents.bind(this);
     this.filterEvents = this.filterEvents.bind(this);
@@ -113,7 +89,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllEvents();
-    this.filterEvents();
     this.getCategories();
   }
 
@@ -121,7 +96,6 @@ class App extends React.Component {
   getAllEvents() {
     axios.get('/GetAllEvents')
       .then((res) => {
-        console.log(res.data);
         const results = [];
         for (let i = 0; i < res.data.length; i++) {
           const time = res.data[i].time.split(':');
@@ -149,6 +123,9 @@ class App extends React.Component {
           calendarEvents: results,
           filteredEvents: results,
         });
+      })
+      .then((res) => {
+        this.filterEvents();
       })
       .catch((err) => {
         if (err) {
@@ -196,10 +173,9 @@ class App extends React.Component {
     if (this.state.page === 'LandingPage') {
       return (
         <LandingPage
+          handleStateChange={this.handleStateChange}
           loginDisplayName={this.state.loginDisplayName}
           loginPassword={this.state.loginPassword}
-          handleLoginDisplaynameChange={this.handleLoginDisplaynameChange}
-          handleLoginPasswordChange={this.handleLoginPasswordChange}
           handleLoginSubmit={this.handleLoginSubmit}
           openSignUpModal={this.openSignUpModal}
           closeSignUpModal={this.closeSignUpModal}
@@ -210,30 +186,23 @@ class App extends React.Component {
     if (this.state.page === 'MainPage') {
       return (
         <MainPage
+          handleStateChange={this.handleStateChange}
           filterEvents={this.filterEvents}
           calendarEvents={this.state.filteredEvents}
           handleCalendarEventClick={this.handleCalendarEventClick}
 
+          loginDisplayName={this.state.loginDisplayName}
 
           filterDropdownCategories={this.state.filterDropdownCategories}
-          handleFilterCityChange={this.handleFilterCityChange}
           filterCityValue={this.state.filterCityValue}
-          handleFilterStateChange={this.handleFilterStateChange}
           filterStateValue={this.state.filterStateValue}
-          handleFilterCategoryChange={this.handleFilterCategoryChange}
           filterCategoryValue={this.state.filterCategoryValue}
-          handleFilterNumOfPeopleChange={this.handleFilterNumOfPeopleChange}
           filterNumOfPeopleValues={this.state.filterNumOfPeopleValues}
-          handleFilterCostChange={this.handleFilterCostChange}
           filterCostValue={this.state.filterCostValue}
-          handleFilterPublicChange={this.handleFilterPublicChange}
           filterPublicValue={this.state.filterPublicValue}
-          handleFilterPrivateChange={this.handleFilterPrivateChange}
           filterPrivateValue={this.state.filterPrivateValue}
-          handleFilterToDChange={this.handleFilterToDChange}
           filterToDValue={this.state.filterToDValue}
           handleFilterSubmit={this.handleFilterSubmit}
-
           openCreateEventModal={this.openCreateEventModal}
         />
       );
@@ -254,11 +223,16 @@ class App extends React.Component {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
               if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '') {
-                if (this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) {
-                  storage.push(this.state.calendarEvents[i]);
-                }
-                if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
-                  storage.push(this.state.calendarEvents[i]);
+                const display = moment(this.state.calendarEvents[i].start).format('hh:mm:ss');
+                const timeArray = this.state.filterToDValue.split('-');
+                if ((display >= timeArray[0] && display <= timeArray[1]) || (this.state.filterToDValue.length === 0)) {
+                  //check and see for time of day or empty string
+                  if ((this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) && (this.state.loginDisplayName !== 'Guest')) {
+                    storage.push(this.state.calendarEvents[i]);
+                  }
+                  if (this.state.calendarEvents[i].private === 0 && this.state.filterPublicValue) {
+                    storage.push(this.state.calendarEvents[i]);
+                  }
                 }
               }
             }
@@ -273,20 +247,10 @@ class App extends React.Component {
     });
   }
 
-  handleSignUpDisplaynameChange(newValue) {
-    this.setState({ signUpDisplayName: newValue });
-  }
-
-  handleSignUpPasswordChange(newValue) {
-    this.setState({ signUpPassword: newValue });
-  }
-
-  handleSignUpCityNameChange(newValue) {
-    this.setState({ signUpCity: newValue });
-  }
-
-  handleSignUpStateNameChange(newValue) {
-    this.setState({ signUpState: newValue });
+  handleStateChange(newValue, stateToChange) {
+    const newState = {};
+    newState[stateToChange] = newValue;
+    this.setState(newState);
   }
 
   handleSignUpSubmit(event) {
@@ -355,8 +319,8 @@ class App extends React.Component {
       },
     })
       .then((res) => {
-        console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
-        console.log(res.data);
+        // console.log('Clicking Calendar - openEventInfoModal retrieving from DB');
+        // console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
@@ -374,14 +338,6 @@ class App extends React.Component {
     this.setState({
       eventInfoDisplayed: false,
     });
-  }
-
-  handleLoginDisplaynameChange(newValue) {
-    this.setState({ loginDisplayName: newValue });
-  }
-
-  handleLoginPasswordChange(newValue) {
-    this.setState({ loginPassword: newValue });
   }
 
   handleLoginSubmit(event) {
@@ -405,8 +361,6 @@ class App extends React.Component {
             userId: res.data[0].user_id,
             loginPassword: '',
             page: 'MainPage',
-          }, () => {
-            console.log(this.state.userId);
           });
         }
       })
@@ -420,101 +374,19 @@ class App extends React.Component {
     this.setState({
       loginDisplayName: 'Guest',
       page: 'MainPage',
+    }, () => {
+      this.filterEvents();
     });
   }
 
-  handleFilterCityChange(newValue) {
-    this.setState({ filterCityValue: newValue });
-  }
-
-  handleFilterStateChange(newValue) {
-    this.setState({ filterStateValue: newValue });
-  }
-
-  handleFilterCategoryChange(newValue) {
-    this.setState({ filterCategoryValue: newValue });
-  }
-
-  handleFilterNumOfPeopleChange(newValue) {
-    this.setState({ filterNumOfPeopleValues: newValue });
-  }
-
-  handleFilterCostChange(newValue) {
-    this.setState({ filterCostValue: newValue });
-  }
-
-  handleFilterPublicChange(newValue) {
-    this.setState({ filterPublicValue: newValue });
-  }
-
-  handleFilterPrivateChange(newValue) {
-    this.setState({ filterPrivateValue: newValue });
-  }
-
-  handleFilterToDChange(newValue) {
-    this.setState({ filterToDValue: newValue });
-  }
-
   handleFilterSubmit() {
-    console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
+    // console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
     this.filterEvents();
   }
 
   handleCalendarEventClick(event) {
-    console.log('POOP :)', event, this.state.calendarEvents);
+    //console.log('POOP :)', event, this.state.calendarEvents);
     this.openEventInfoModal(event.eventId);
-  }
-
-  handleCreateEventTitleChange(newValue) {
-    this.setState({ createEventTitle: newValue });
-  }
-
-  handleCreateEventDescriptionChange(newValue) {
-    this.setState({ createEventDescription: newValue });
-  }
-
-  handleCreateEventCategoryChange(newValue) {
-    this.setState({ createEventCategory: newValue });
-  }
-
-  handleCreateEventDateChange(newValue) {
-    this.setState({ createEventDate: newValue });
-  }
-
-  handleCreateEventTimeChange(newValue) {
-    this.setState({ createEventTime: newValue });
-  }
-
-  handleCreateEventCostChange(newValue) {
-    this.setState({ createEventCost: newValue });
-  }
-
-  handleCreateEventPrivateChange(newValue) {
-    this.setState({ createEventPrivate: newValue });
-  }
-
-  handleCreateEventAddress1Change(newValue) {
-    this.setState({ createEventAddress1: newValue });
-  }
-
-  handleCreateEventAddress2Change(newValue) {
-    this.setState({ createEventAddress2: newValue });
-  }
-
-  handleCreateEventCityChange(newValue) {
-    this.setState({ createEventCity: newValue });
-  }
-
-  handleCreateEventStateChange(newValue) {
-    this.setState({ createEventState: newValue });
-  }
-
-  handleCreateEventZipcodeChange(newValue) {
-    this.setState({ createEventZipcode: newValue });
-  }
-
-  handleCreateEventMaxPeopleChange(newValue) {
-    this.setState({ createEventMaxPeople: newValue });
   }
 
   handleCreateEventSubmit(event) {
@@ -587,6 +459,7 @@ class App extends React.Component {
             <ModalReuseable
               body={(
                 <CreateEvent
+                  handleStateChange={this.handleStateChange}
                   createEventTitle={this.state.createEventTitle}
                   createEventDescription={this.state.createEventDescription}
                   createEventCategory={this.state.createEventCategory}
@@ -600,19 +473,6 @@ class App extends React.Component {
                   createEventState={this.state.createEventState}
                   createEventZipcode={this.state.createEventZipcode}
                   createEventMaxPeople={this.state.createEventMaxPeople}
-                  handleCreateEventTitleChange={this.handleCreateEventTitleChange}
-                  handleCreateEventDescriptionChange={this.handleCreateEventDescriptionChange}
-                  handleCreateEventCategoryChange={this.handleCreateEventCategoryChange}
-                  handleCreateEventDateChange={this.handleCreateEventDateChange}
-                  handleCreateEventTimeChange={this.handleCreateEventTimeChange}
-                  handleCreateEventCostChange={this.handleCreateEventCostChange}
-                  handleCreateEventPrivateChange={this.handleCreateEventPrivateChange}
-                  handleCreateEventAddress1Change={this.handleCreateEventAddress1Change}
-                  handleCreateEventAddress2Change={this.handleCreateEventAddress2Change}
-                  handleCreateEventCityChange={this.handleCreateEventCityChange}
-                  handleCreateEventStateChange={this.handleCreateEventStateChange}
-                  handleCreateEventZipcodeChange={this.handleCreateEventZipcodeChange}
-                  handleCreateEventMaxPeopleChange={this.handleCreateEventMaxPeopleChange}
                   handleCreateEventSubmit={this.handleCreateEventSubmit}
                 />
               )}
@@ -647,10 +507,6 @@ class App extends React.Component {
               signUpPassword={this.state.signUpPassword}
               signUpCity={this.state.signUpCity}
               states={this.state.states}
-              handleSignUpDisplaynameChange={this.handleSignUpDisplaynameChange}
-              handleSignUpPasswordChange={this.handleSignUpPasswordChange}
-              handleSignUpCityNameChange={this.handleSignUpCityNameChange}
-              handleSignUpStateNameChange={this.handleSignUpStateNameChange}
               handleSignUpSubmit={this.handleSignUpSubmit}
             />
           )}

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { Slider, Switch } from '@material-ui/core';
 
 const CreateEvent = ({
+  handleStateChange,
   createEventTitle,
   createEventDescription,
   createEventCategory,
@@ -16,29 +17,16 @@ const CreateEvent = ({
   createEventState,
   createEventZipcode,
   createEventMaxPeople,
-  handleCreateEventTitleChange,
-  handleCreateEventDescriptionChange,
-  handleCreateEventCategoryChange,
-  handleCreateEventDateChange,
-  handleCreateEventTimeChange,
-  handleCreateEventCostChange,
-  handleCreateEventPrivateChange,
-  handleCreateEventAddress1Change,
-  handleCreateEventAddress2Change,
-  handleCreateEventCityChange,
-  handleCreateEventStateChange,
-  handleCreateEventZipcodeChange,
-  handleCreateEventMaxPeopleChange,
   handleCreateEventSubmit,
 }) => (
   <div id="createEventDiv">
     <form id="createEventForm">
       <span>Event Title:</span>
-      <input required type="text" id="createEventTitle" name="Event Title" defaultValue={createEventTitle} onChange={(e) => handleCreateEventTitleChange(e.target.value)} />
+      <input required type="text" id="createEventTitle" name="Event Title" defaultValue={createEventTitle} onChange={(e) => handleStateChange(e.target.value, 'createEventTitle')} />
       <span>Event Description:</span>
-      <textarea required id="createEventDescription" name="Event Description" defaultValue={createEventDescription} onChange={(e) => handleCreateEventDescriptionChange(e.target.value)} />
+      <textarea required id="createEventDescription" name="Event Description" defaultValue={createEventDescription} onChange={(e) => handleStateChange(e.target.value, 'createEventDescription')} />
       <span>Event Category:</span>
-      <select required id="createEventCategory" name="Event Category" defaultValue={createEventCategory} onChange={(e) => handleCreateEventCategoryChange(e.target.value)}>
+      <select required id="createEventCategory" name="Event Category" defaultValue={createEventCategory} onChange={(e) => handleStateChange(e.target.value, 'createEventCategory')}>
         <option>  </option>
         <option>TX</option>
         <option>AZ</option>
@@ -49,21 +37,21 @@ const CreateEvent = ({
         <option>MA</option>
       </select>
       <span>Event Date:</span>
-      <input required type="date" id="createEventDate" name="Event Date" defaultValue={moment().format('YYYY-MM-DD')} onChange={(e) => handleCreateEventDateChange(e.target.value)} />
+      <input required type="date" id="createEventDate" name="Event Date" defaultValue={moment().format('YYYY-MM-DD')} onChange={(e) => handleStateChange(e.target.value, 'createEventDate')} />
       <span>Event Time:</span>
-      <input required type="time" id="createEventTime" name="Event Time" defaultValue={moment().format('hh:mm')} onChange={(e) => handleCreateEventTimeChange(e.target.value)} />
+      <input required type="time" id="createEventTime" name="Event Time" defaultValue={moment().format('hh:mm')} onChange={(e) => handleStateChange(e.target.value, 'createEventTime')} />
       <span>Event Cost:</span>
-      <Slider id="createEventCost" name="Event Cost" valueLabelDisplay="auto" aria-labelledby="range-slider" value={createEventCost} onChange={(e, v) => handleCreateEventCostChange(v)} />
+      <Slider id="createEventCost" name="Event Cost" valueLabelDisplay="auto" aria-labelledby="range-slider" value={createEventCost} onChange={(e, v) => handleStateChange(v, 'createEventCost')} />
       <span>Event Private?</span>
-      <Switch id="createEventPrivate" name="Event Private" size="medium" label="Private" checked={createEventPrivate} onChange={(e, v) => handleCreateEventPrivateChange(v)} />
+      <Switch id="createEventPrivate" name="Event Private" size="medium" label="Private" checked={createEventPrivate} onChange={(e, v) => handleStateChange(v, 'createEventPrivate')} />
       <span>Event Address 1:</span>
-      <input required type="text" id="createEventAddress1" name="Event Address 1" defaultValue={createEventAddress1} onChange={(e) => handleCreateEventAddress1Change(e.target.value)} />
+      <input required type="text" id="createEventAddress1" name="Event Address 1" defaultValue={createEventAddress1} onChange={(e) => handleStateChange(e.target.value, 'createEventAddress1')} />
       <span>Event Address 2:</span>
-      <input required type="text" id="createEventAddress2" name="Event Address 2" defaultValue={createEventAddress2} onChange={(e) => handleCreateEventAddress2Change(e.target.value)} />
+      <input required type="text" id="createEventAddress2" name="Event Address 2" defaultValue={createEventAddress2} onChange={(e) => handleStateChange(e.target.value, 'createEventAddress2')} />
       <span>Event City:</span>
-      <input required type="text" id="createEventCity" name="Event City" defaultValue={createEventCity} onChange={(e) => handleCreateEventCityChange(e.target.value)} />
+      <input required type="text" id="createEventCity" name="Event City" defaultValue={createEventCity} onChange={(e) => handleStateChange(e.target.value, 'createEventCity')} />
       <span>Event State:</span>
-      <select required id="createEventState" name="Event State" defaultValue={createEventState} onChange={(e) => handleCreateEventStateChange(e.target.value)}>
+      <select required id="createEventState" name="Event State" defaultValue={createEventState} onChange={(e) => handleStateChange(e.target.value, 'createEventState')}>
         <option>TX</option>
         <option>AZ</option>
         <option>TN</option>
@@ -72,9 +60,9 @@ const CreateEvent = ({
         <option>MA</option>
       </select>
       <span>Event Zipcode:</span>
-      <input required type="number" id="createEventZipcode" name="Event Zipcode" defaultValue={createEventZipcode} onChange={(e) => handleCreateEventZipcodeChange(e.target.value)} />
+      <input required type="number" id="createEventZipcode" name="Event Zipcode" defaultValue={createEventZipcode} onChange={(e) => handleStateChange(e.target.value, 'createEventZipcode')} />
       <span>Event Max People:</span>
-      <Slider id="createEventMaxPeople" name="Event Max People" valueLabelDisplay="auto" aria-labelledby="range-slider" value={createEventMaxPeople} onChange={(e, v) => handleCreateEventMaxPeopleChange(v)} />
+      <Slider id="createEventMaxPeople" name="Event Max People" valueLabelDisplay="auto" aria-labelledby="range-slider" value={createEventMaxPeople} onChange={(e, v) => handleStateChange(v, 'createEventMaxPeople')} />
     </form>
     <button type="submit" id="createEventSubmit" name="Event Submit" onClick={(e) => handleCreateEventSubmit(e)}>Create Event</button>
   </div>
