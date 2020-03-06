@@ -351,7 +351,7 @@ class App extends React.Component {
 
   openEventInfoModal(eventId) {
     const params = { eventId };
-    if (this.state.userId) {
+    if (!this.state.userId) {
       params.userId = 0;
     } else {
       params.userId = this.state.userId;
@@ -403,6 +403,9 @@ class App extends React.Component {
             page: 'MainPage',
           }, this.getEventsForDashboard);
         }
+      })
+      .then(() => {
+        this.filterEvents();
       })
       .catch((error) => {
         console.error(error);

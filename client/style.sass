@@ -185,18 +185,67 @@ p.eventInfo
   top: 0
 
 .outerDash  
+
   text-align: center
+  border-width: 1px
+  width: 70%
+  margin: auto
+  height: 80vh
+  border-style: solid
+  border-color: black
+  margin-top: 5%
+  border-radius: 10px  
+  #displayName
+    color: orange
+    font-size: xx-large 
+
+
+
 
 .hostingDash 
-  margin-left: 20%
-  margin-top: 40px
+  box-shadow: -1px 1px 10px grey;
+  position: absolute
   font-family: apple
+  text-align: center
+  border-width: 1px
+  width: 31%
+  height: 58vh
+  border-style: solid
+  border-color: #fc6565 
+  border-radius: 5px
+  left: 50%
+  margin: 2% 
+  margin-top: 5%
+  display: flex;
+  flex-direction: column;
+  .h4
+    background-color: #fc6565 
+    color: white
+    padding: 20px
+
 
 .attendingDash 
-  float: right
-  margin-right: 20%
-  margin-top: 40px
+  box-shadow: -1px 1px 10px grey;
+  position: absolute
   font-family: apple
+  text-align: center
+  border-width: 1px
+  width: 31%
+  height: 58vh
+  border-style: solid
+  border-color: orange
+  margin-top: 5%
+  border-radius: 5px
+  margin: 2%
+  margin-top: 5%
+  display: flex;
+  flex-direction: column;
+  .h4
+    background-color: orange
+    color: white
+    padding: 20px
+
+    
  
 .modalStyles
   width: fit-content
@@ -320,7 +369,7 @@ p.eventInfo
 .guestButton
   background-color: orange
   color: white
-  border-radius: 5px
+  border-radius: 5px2
   border-width: 2px
   border-color: white
 
@@ -360,3 +409,64 @@ p.eventInfo
 
 .attending-dash-pending1
   color: grey
+
+.dashboardListItem
+  display: flex
+  border-width: 1px
+  border-style: solid
+  border-color: orange
+  border-radius: 3px
+  position: relative
+  height: 7vh;
+  width: 94%;
+  align-items: center;
+  justify-content: center;
+  margin: 3% 0 3% 0
+  left: 3%
+  overflow: scroll
+#mainCalendar
+  width: 72%
+  display: inline-block
+  float: right
+  margin-right: 2.5%
+  margin-top: 2.5%
+  margin-bottom: 2.5%
+  padding: 1.25%
+  background-color: white
+  border-radius: 15px
+  filter: drop-shadow(0 0 0.15rem black)
+
+#mainFilter
+  width: 20%
+  display: inline-block
+  margin-left: 2.5%
+  margin-top: 2.5%
+  margin-bottom: 2.5%
+  padding: 1.25%
+  background-color: white
+  border-radius: 15px
+  filter: drop-shadow(0 0 0.15rem black)
+
+#mainPage
+  background-color: #fffbf3
+
+.navbar
+  filter: drop-shadow(0 0 0.1rem black)
+  height: 75px
+
+.rbc-agenda-date-cell
+  background-color: white
+  color: black
+
+.rbc-toolbar-label
+  font-size: 25px
+  font-weight: 200
+
+.dashboardButton
+  position: relative
+  right: -35%
+  background-color: orange
+  color: white
+  border-radius: 5px
+  border-width: 2px
+  border-color: white

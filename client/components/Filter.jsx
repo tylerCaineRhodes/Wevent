@@ -23,7 +23,6 @@ const Filter = ({
   loginDisplayName,
 }) => (
   <div className="filter-container">
-    <h3>Filter Events:</h3>
     <Accordion>
       <Card>
         <Card.Header>
@@ -64,7 +63,7 @@ const Filter = ({
       <Card>
         <Card.Header>
           {/* <Accordion.Toggle as={Button} variant={Card.Header} eventKey="2"> */}
-          # Attending
+          Number Attending
           {/* </Accordion.Toggle> */}
         </Card.Header>
         {/* <Accordion.Collapse eventKey="2"> */}
