@@ -78,7 +78,7 @@ module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
 };
 
 module.exports.getEventInfoForHost = (eventId, cb) => {
-  const query = 'select e.title, e.description, e.date, e.time, e.price, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, u_e.pending, u.display_name from events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id INNER JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = ?';
+  const query = 'select e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, u_e.pending, u.display_name from events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id INNER JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = ?';
   db.query(query, [eventId], (err, data) => {
     if (err) {
       cb(err);
@@ -88,10 +88,10 @@ module.exports.getEventInfoForHost = (eventId, cb) => {
   });
 };
 
-module.exports.getEventInfoForNonHost = (eventId, hasAccess, cb) => {
+module.exports.getEventInfoForNonHost = (eventId, userId, hasAccess, cb) => {
   if (hasAccess) {
-    const query = 'select title, description, date, time, price, address_1, address_2, zipcode, city, state, attendance_max, attendance_current FROM events WHERE event_id = ?';
-    db.query(query, [eventId], (err, data) => {
+    const query = 'select e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, e.host_id, (SELECT pending from users_events_attending where event_id = ? and user_id = ? LIMIT 1) AS pending from events e where event_id = ?';
+    db.query(query, [eventId, userId, eventId], (err, data) => {
       if (err) {
         cb(err);
         return;
@@ -99,8 +99,8 @@ module.exports.getEventInfoForNonHost = (eventId, hasAccess, cb) => {
       cb(null, data);
     });
   } else {
-    const query = 'select title, description, date, time, price, city, state, attendance_max, attendance_current FROM events WHERE event_id = ?';
-    db.query(query, [eventId], (err, data) => {
+    const query = 'select e.title, e.description, e.date, e.time, e.price, e.private, e.city, e.state, e.attendance_max, e.attendance_current, e.host_id, (SELECT pending from users_events_attending where event_id = ? and user_id = ? LIMIT 1) AS pending from events e where event_id = ?';
+    db.query(query, [eventId, userId, eventId], (err, data) => {
       if (err) {
         cb(err);
         return;
@@ -109,6 +109,8 @@ module.exports.getEventInfoForNonHost = (eventId, hasAccess, cb) => {
     });
   }
 };
+
+// select e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, group_concat(u.display_name ORDER BY u_e.pending asc separator ","), e.attendance_max, e.attendance_current, u_e.pending from events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id INNER JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = 1 group by u_e.pending;
 
 module.exports.loginCheck = (id, pass, callback) => {
   //console.log(id, pass);
@@ -204,6 +206,19 @@ module.exports.getAllEvents = (callback) => {
   });
 };
 
+// Incomplete query to get all state
+module.exports.getAllStates = (callback) => {
+  // eslint-disable-next-line sql/no-unsafe-query
+  const query = 'SELECT * from states order by state_id;';
+  db.query(query, (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 module.exports.getCategories = (callback) => {
   const query = 'Select * from categories order by category_id;';
 
@@ -215,4 +230,62 @@ module.exports.getCategories = (callback) => {
     }
   });
 };
+
+module.exports.askToJoinEvent = (userId, eventId, callback) => {
+  const query = 'INSERT INTO users_events_attending(user_id, event_id, pending) VALUES (?, ?, 1)';
+  db.query(query, [userId, eventId], (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+module.exports.approvePending = (displayName, eventId, callback) => {
+  const query = 'SELECT user_id from users WHERE display_name = ?';
+  db.query(query, [displayName], (err, results) => {
+    if (err) {
+      callback(err);
+    }
+    console.log('RESULTS', results[0].user_id);
+    const innerQuery = 'UPDATE users_events_attending SET pending = 0 WHERE event_id = ? AND user_id = ?';
+    db.query(innerQuery, [eventId, results[0].user_id], (error, findings) => {
+      if (error) {
+        callback(error);
+      } else {
+        callback(null, findings);
+      }
+    });
+  });
+};
+
+module.exports.rejectPending = (displayName, eventId, callback) => {
+  const query = 'SELECT user_id from users WHERE display_name = ?';
+  db.query(query, [displayName], (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      const innerQuery = 'DELETE FROM users_events_attending WHERE event_id = ? AND user_id = ?';
+      db.query(innerQuery, [eventId, results[0].user_id], (predicament, answers) => {
+        if (predicament) {
+          callback(predicament);
+        } else {
+          callback(null, answers);
+        }
+      });
+    }
+  });
+};
+
+module.exports.getPendingForTesting = (userId, eventId, callback) => {
+  const query = 'SELECT * from users_events_attending WHERE event_id = ? AND user_id = ?';
+  db.query(query, [userId, eventId], (err, results) => {
+    if (err) {
+      callback(err);
+    }
+    callback(null, results);
+  });
+};
+
 module.exports.connection = db;

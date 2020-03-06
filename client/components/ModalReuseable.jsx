@@ -10,11 +10,7 @@ const ModalReuseable = ({
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body dialogClassName="modal-body">{body}</Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose} style={{ backgroundColor: 'orange' }}>
-          Close Modal
-        </Button>
-      </Modal.Footer>
+      <Modal.Footer />
     </Modal>
   </div>
 );

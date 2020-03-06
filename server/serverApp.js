@@ -41,16 +41,16 @@ app.get('/dashboard', (req, res) => {
   });
 });
 
+//Get the pending variable
 app.get('/eventInfo', (req, res) => {
-  // req.query.userId = parseInt(req.query.userId);
-  // console.log(req.query.userId);
+  req.query.userId = parseInt(req.query.userId, 10);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
     if (err || info[0] === undefined) {
       console.error(err);
       res.sendStatus(500);
       return;
     }
-    if (info[0].host_id === req.query.userId) { //Removed strict equality to handle num vs. str comparison
+    if (info[0].host_id === req.query.userId) {
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
           console.error(error);
@@ -61,7 +61,7 @@ app.get('/eventInfo', (req, res) => {
         res.send({ access: 'host', eventInfo });
       });
     } else if (info[0].private === 0 || info[0].pending === 0) {
-      db.getEventInfoForNonHost(req.query.eventId, true, (goofUp, eventInfo) => {
+      db.getEventInfoForNonHost(req.query.eventId, req.query.userId, true, (goofUp, eventInfo) => {
         if (goofUp) {
           console.error(goofUp);
           res.sendStatus(500);
@@ -70,7 +70,7 @@ app.get('/eventInfo', (req, res) => {
         res.send({ access: 'full', eventInfo });
       });
     } else {
-      db.getEventInfoForNonHost(req.query.eventId, false, (quandary, eventInfo) => {
+      db.getEventInfoForNonHost(req.query.eventId, req.query.userId, false, (quandary, eventInfo) => {
         if (quandary) {
           console.error(quandary);
           res.sendStatus(500);
@@ -161,13 +161,55 @@ app.get('/getCategories', (req, res) => {
 });
 
 app.delete('/event', (req, res) => {
-  db.deleteEvent(parseInt(req.query.eventId, 0), (err, data) => {
+  db.deleteEvent(parseInt(req.query.eventId, 10), (err, data) => {
     if (err) {
       console.log(err);
       res.sendStatus(500);
       return;
     }
     res.sendStatus(200);
+  });
+});
+
+app.post('/pending', (req, res) => {
+  console.log(req.body);
+  db.askToJoinEvent(req.body.userId, req.body.eventId, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    res.sendStatus(200);
+  });
+});
+app.put('/pending', (req, res) => {
+  db.approvePending(req.body.displayName, req.body.eventId, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    res.sendStatus(200);
+  });
+});
+
+app.delete('/pending', (req, res) => {
+  db.rejectPending(req.query.displayName, req.query.eventId, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    res.sendStatus(200);
+  });
+});
+
+app.get('/getallstates', (req, res) => {
+  db.getAllStates((err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
   });
 });
 
