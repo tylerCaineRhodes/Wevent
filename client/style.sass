@@ -220,7 +220,6 @@ p.eventInfo
   margin-top: 5%
   display: flex;
   flex-direction: column;
-  overflow: scroll
   .h4
     background-color: #fc6565 
     color: white
@@ -245,11 +244,13 @@ p.eventInfo
   margin-top: 5%
   display: flex;
   flex-direction: column;
-  overflow: scroll
   .h4
     background-color: orange
     color: white
     padding: 20px
+
+.scroll
+  overflow: scroll
  
 .modalStyles
   width: fit-content
@@ -487,6 +488,8 @@ p.eventInfo
   justify-content: center;
   margin: 3% 0 3% 0
   left: 3%
+  cursor: pointer
+
   
 
 #mainCalendar
@@ -554,3 +557,9 @@ p.eventInfo
   border-radius: 5px
   border-width: 2px
   border-color: white
+
+.MuiSlider-root
+  color: orange !important
+.MuiSlider-rail 
+  background-color: grey !important
+

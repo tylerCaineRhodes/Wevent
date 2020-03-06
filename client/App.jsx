@@ -92,6 +92,8 @@ class App extends React.Component {
     this.handleRemoveGuest = this.handleRemoveGuest.bind(this);
     this.handleAttendEvent = this.handleAttendEvent.bind(this);
     this.handleAcceptPending = this.handleAcceptPending.bind(this);
+    this.handleDeleteHostEvent = this.handleDeleteHostEvent.bind(this);
+    //finish this path for deleting event
   }
 
   componentDidMount() {
@@ -474,6 +476,21 @@ class App extends React.Component {
     // DO ALL THE API CALLS TO VERIFY USER THEN SET PAGE STATE TO PAGE OR WHATEVER
   }
 
+  handleDeleteHostEvent(uniqueId) {
+    const params = { uniqueId };
+    axios.delete('/event', {
+      params,
+    })
+      .then((response) => {
+        this.getAllEvents();
+        this.closeEventInfoModal();
+        this.getEventsForDashboard();
+      })
+      .catch((err) => {
+        console.log('didn\'t work from axios', err);
+      });
+  }
+
   handleGuestSubmit(event) {
     this.setState({
       loginDisplayName: 'Guest',
@@ -495,6 +512,10 @@ class App extends React.Component {
       this.openEventInfoModal(event.eventId);
     });
   }
+<<<<<<< HEAD
+=======
+  //console.log('POOP :)', event, this.state.calendarEvents);
+>>>>>>> 86171e8ef86fcb601d23f5dc3ed17ea008bc0aff
 
 
   handleCreateEventSubmit(event) {
@@ -596,6 +617,8 @@ class App extends React.Component {
               <ModalReuseable
                 body={(
                   <EventInfo
+                    eventId={this.state.eventId}
+                    handleDeleteHostEvent={this.handleDeleteHostEvent}
                     eventInfoAccess={this.state.eventInfoAccess}
                     eventInfo={this.state.eventInfo}
                     handleRemoveGuest={this.handleRemoveGuest}
