@@ -11,6 +11,7 @@
   grid-auto-rows: 2
   border: 6px solid #fc6565
   border-radius: 10px
+  min-width: 520px;
   
 .grid-parent-full
   @include grid-parent
@@ -44,7 +45,8 @@
 .grid-left-host
   @include basic-styles
   @include grid-left
-  height: 330px
+  margin: 3px 0px 1px 3px;
+  height: 335px
 
 .grid-left-full
   @include basic-styles
@@ -82,7 +84,6 @@
   @include basic-styles
   height: 180px
   position: relative
-  top: 5px
   grid-column: 1/3
   grid-row: 3/4
   border-radius: 0px 0px 10px 10px;
@@ -95,22 +96,22 @@
   float: left
   position: relative
   top: 2px
-  border-radius: 10px;
   border: 3px solid  #fc6565
-  overflow-y: auto
-  padding: 20px
+  overflow-x: hidden
+  padding: 20px 15px
 
 .grid-host-pend
   @include grid-host
   grid-column: col 1 / span  1
   float: left
+
   
 .grid-host-accept
   @include grid-host
   grid-column: col 2 / span  1
   float: right
 
-@mixin button
+@mixin button 
   display: inline-block
   float: right
   border-radius: 5px
@@ -119,6 +120,8 @@
   background-color: #fc6565
   color: white
   margin: 2px
+  &:hover
+    cursor: pointer
 
 .pend-accept-button
   @include button
@@ -142,14 +145,18 @@
   position: relative
   top: -20px
   left: -20px
-  width: 118%
+  width: 119%
   border-bottom: 3px solid #fc6565
   text-shadow: #dd3d3d 0px 0px 3px
 
 .check-x-button
   float: right
   border: none
-  margin: -4px
+  margin: 2px 0px;
+  font-size: 13px
+
+.check-x-button:hover
+  cursor: pointer
 
 p.eventInfoTitle
   font-size: 40px
@@ -185,25 +192,20 @@ p.eventInfo
   top: 0
 
 .outerDash  
-
   text-align: center
-  border-width: 1px
   width: 70%
   margin: auto
   height: 80vh
-  border-style: solid
-  border-color: black
-  margin-top: 5%
-  border-radius: 10px  
+  margin-top: 5% 
   #displayName
-    color: orange
     font-size: xx-large 
 
 
 
 
 .hostingDash 
-  box-shadow: -1px 1px 10px grey;
+  background-color: white
+  box-shadow: -1px 1px 10px black
   position: absolute
   font-family: apple
   text-align: center
@@ -216,8 +218,8 @@ p.eventInfo
   left: 50%
   margin: 2% 
   margin-top: 5%
-  display: flex;
-  flex-direction: column;
+  display: flex
+  flex-direction: column
   .h4
     background-color: #fc6565 
     color: white
@@ -225,7 +227,8 @@ p.eventInfo
 
 
 .attendingDash 
-  box-shadow: -1px 1px 10px grey;
+  background-color: white
+  box-shadow: -1px 1px 10px black;
   position: absolute
   font-family: apple
   text-align: center
@@ -348,29 +351,29 @@ p.eventInfo
 .loginButton
   margin: 2%
   width: 45%
-  background-color: #644a6f
-  border-color: #644a6f
+  background-color: #e99f41
+  border-color: #e99f41
   border-radius: 5px
 .loginButton:hover
-  background-color: #644a6f
+  background-color: #e99f41
   border-color: gray
   border-radius: 5px
 .loginButton:active
   border-radius: 5px
-  background-color: #644a6f !important
-  border-color: #644a6f !important
+  background-color: #e99f41 !important
+  border-color: #e99f41 !important
 .loginButton:focus
-  box-shadow: 0 0 0 0.2rem rgba(100,74,111, .7) !important
+  box-shadow: 0 0 0 0.2rem rgba(233,159,65, .7) !important
 
 #signupButton
   background-color: orange
   border-color: gray
   width: 100%
 #signupButton:hover
-  background-color: #644a6f
-  border-color: gray
+  background-color: #e99f41
+  border-color: #e99f41
 #signupButton:active
-  background-color: #644a6f
+  background-color: #e99f41
 
 #noAccountText, #noAccountButton
   display: inline-block
@@ -402,9 +405,12 @@ p.eventInfo
 
 .landingPageImage
   z-index: -1000
-  filter: blur(8px)
+  filter: blur(5px)
   position: fixed
   top: 0
+  width: 100%
+  height: 100%
+  opacity: .8
 
 #continueAsGuestButton
   color: gray
@@ -501,7 +507,7 @@ p.eventInfo
   margin-top: 2.5%
   margin-bottom: 2.5%
   padding: 1.25%
-  background-color: rgba(42, 46, 65, 0.8)
+  background-color:  rgba(42, 46, 65, 0.8)
   border-radius: 15px
 
 .rbc-toolbar button
@@ -530,6 +536,8 @@ p.eventInfo
 
 .rbc-header
   border-bottom: none
+  filter: drop-shadow(0 0 0.15rem black)
+  cursor: pointer
 
 #mainFilter
   width: 20%
@@ -544,6 +552,8 @@ p.eventInfo
 .navbar
   filter: drop-shadow(0 0 0.1rem black)
   height: 75px
+  background-color: transparent
+  color: white
 
 .rbc-agenda-date-cell
   background-color: rgba(42, 46, 65, 0.7) !important
@@ -553,6 +563,24 @@ p.eventInfo
   font-size: 25px
   font-weight: 200
 
+.dashboard-main
+  z-index: -1000
+  filter: blur(8px)
+  position: fixed
+  top: 0
+.rbc-toolbar
+  .rbc-btn-group
+    &:last-child
+      button
+        &:last-child
+          color: white
+          font-size: 0
+          &:after
+            font: 400 15px system-ui
+            color: black
+            float: left
+            content: "Event List"
+
 .dashboardButton
   position: relative
   right: -35%
@@ -561,10 +589,3 @@ p.eventInfo
   border-radius: 5px
   border-width: 2px
   border-color: white
-  
-// .logoutButton
-//   background-color: orange
-//   color: white
-//   border-radius: 5px
-//   border-width: 2px
-//   border-color: white
