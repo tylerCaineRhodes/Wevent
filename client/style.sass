@@ -6,7 +6,7 @@
   display: -ms-grid
   display: grid
   height: 650px
-  width: 50%
+  // width: 50%
   grid-template-columns: 1fr 1fr
   grid-auto-rows: 2
   border: 6px solid #fc6565
@@ -192,24 +192,72 @@ p.eventInfo
   top: 0
 
 .outerDash  
+
   text-align: center
+  border-width: 1px
+  width: 70%
+  margin: auto
+  height: 80vh
+  border-style: solid
+  border-color: black
+  margin-top: 5%
+  border-radius: 10px  
+  #displayName
+    color: orange
+    font-size: xx-large 
+
+
+
 
 .hostingDash 
-  margin-left: 20%
-  margin-top: 40px
+  box-shadow: -1px 1px 10px grey;
+  position: absolute
   font-family: apple
+  text-align: center
+  border-width: 1px
+  width: 31%
+  height: 58vh
+  border-style: solid
+  border-color: #fc6565 
+  border-radius: 5px
+  left: 50%
+  margin: 2% 
+  margin-top: 5%
+  display: flex;
+  flex-direction: column;
+  .h4
+    background-color: #fc6565 
+    color: white
+    padding: 20px
+
 
 .attendingDash 
-  float: right
-  margin-right: 20%
-  margin-top: 40px
+  box-shadow: -1px 1px 10px grey;
+  position: absolute
   font-family: apple
+  text-align: center
+  border-width: 1px
+  width: 31%
+  height: 58vh
+  border-style: solid
+  border-color: orange
+  margin-top: 5%
+  border-radius: 5px
+  margin: 2%
+  margin-top: 5%
+  display: flex;
+  flex-direction: column;
+  .h4
+    background-color: orange
+    color: white
+    padding: 20px
  
 .modalStyles
   width: fit-content
   max-width: 100%
   .modal-body
     height: 100%
+    width: 700px
 
 .createNewEvent-button
   position: relative
@@ -219,21 +267,68 @@ p.eventInfo
   border-width: 2px
   border-color: white
 
+// .importantButton
+//   position: relative
+//   background-color: orange
+//   color: white
+//   border-radius: 5px
+//   border-width: 2px
+//   border-color: white
+//   right: -15.25%
+
+
 .event-info-button
   position: relative
   background-color: orange
   color: white
   border-radius: 5px
   border-width: 2px
-  border-color: white
+  border-color: white  
 
 #createEventForm > input, span, select,
   display: block
 
+#createEventDate
+  width: 150px
+  margin-bottom: 10px
+
+#createEventTitle 
+  width: 100%
+  margin-bottom: 10px
+
+#createEventCategory 
+  width: 100%
+  margin-bottom: 10px 
+
+#createEventTime
+  margin-bottom: 10px 
+
 #createEventCost, #createEventMaxPeople
-  width: 15%
+  width: 50%
+
+#createEventAddress1  
+  width: 100%
+  margin-bottom: 10px
+
+#createEventAddress2  
+  width: 100%
+  margin-bottom: 10px
+
+#createEventCity 
+  width: 100%
+  margin-bottom: 10px
+
+#createEventState  
+  width: 100%
+  margin-bottom: 10px
+
+#createEventZipcode  
+  width: 100%
+  margin-bottom: 10px
 
 #createEventDescription
+  width: 100%
+  margin-bottom: 10px
   height: 150px
 
 .landingPageContent
@@ -242,11 +337,11 @@ p.eventInfo
   text-align: center
   border-width: 1px
   border-style: solid
-  border-color: grey
+  border-color: transparent
   border-radius: 10px
   margin-left: 35%
   margin-right: 35%
-  margin-top: 1%
+  margin-top: 4%
 
 .landingPageUsernameField, .landingPagePasswordField
   width: 45%
@@ -254,27 +349,35 @@ p.eventInfo
   margin-top: 2.5%
   margin-left: 27.5%
   margin-right: 27.5%
+  border-radius: 10px
+
 
 .loginButton
   margin: 2%
   width: 45%
-  background-color: orange
-  border-color: gray
+  background-color: #644a6f
+  border-color: #644a6f
+  border-radius: 5px
 .loginButton:hover
-  background-color: #ff8d00
+  background-color: #644a6f
   border-color: gray
+  border-radius: 5px
 .loginButton:active
-  background-color: #ffb255
+  border-radius: 5px
+  background-color: #644a6f !important
+  border-color: #644a6f !important
+.loginButton:focus
+  box-shadow: 0 0 0 0.2rem rgba(100,74,111, .7) !important
 
 #signupButton
   background-color: orange
   border-color: gray
   width: 100%
 #signupButton:hover
-  background-color: #ff8d00
+  background-color: #644a6f
   border-color: gray
 #signupButton:active
-  background-color: #ffb255
+  background-color: #644a6f
 
 #noAccountText, #noAccountButton
   display: inline-block
@@ -289,7 +392,7 @@ p.eventInfo
 .guestButton
   background-color: orange
   color: white
-  border-radius: 5px
+  border-radius: 5px2
   border-width: 2px
   border-color: white
 
@@ -329,3 +432,114 @@ p.eventInfo
 
 .attending-dash-pending1
   color: grey
+
+.card-body
+  .MuiFormControl-root
+    &:first-child
+      .MuiFormControlLabel-root
+        &.MuiFormControlLabel-labelPlacementStart
+          .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track
+            background-color: orange !important
+
+.card-body
+  .MuiFormControl-root
+    &:last-child
+      .MuiFormControlLabel-root
+        &.MuiFormControlLabel-labelPlacementStart
+          .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track
+            background-color: #fc6565 !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiSwitch-track
+    background-color: orange !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track 
+    background-color: #fc6565 !important
+
+#eventPrivate + .MuiSwitch-root
+ .MuiButtonBase-root 
+    &.MuiIconButton-root 
+      &.PrivateSwitchBase-root-50 
+        &.MuiSwitch-switchBase 
+          &.MuiSwitch-colorSecondary
+            color: orange !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiButtonBase-root 
+    &.MuiIconButton-root 
+      &.PrivateSwitchBase-root-50 
+        &.MuiSwitch-switchBase 
+          &.MuiSwitch-colorSecondary 
+            &.PrivateSwitchBase-checked-51 
+              &.Mui-checked
+                color: #fc6565 !important
+                
+.dashboardListItem
+  display: flex
+  border-width: 1px
+  border-style: solid
+  border-color: orange
+  border-radius: 3px
+  position: relative
+  height: 7vh;
+  width: 94%;
+  align-items: center;
+  justify-content: center;
+  margin: 3% 0 3% 0
+  left: 3%
+  overflow: scroll
+
+#mainCalendar
+  width: 72%
+  display: inline-block
+  float: right
+  margin-right: 2.5%
+  margin-top: 2.5%
+  margin-bottom: 2.5%
+  padding: 1.25%
+  background-color: white
+  border-radius: 15px
+  filter: drop-shadow(0 0 0.15rem black)
+
+#mainFilter
+  width: 20%
+  display: inline-block
+  margin-left: 2.5%
+  margin-top: 2.5%
+  margin-bottom: 2.5%
+  padding: 1.25%
+  background-color: white
+  border-radius: 15px
+  filter: drop-shadow(0 0 0.15rem black)
+
+#mainPage
+  background-color: #fffbf3
+
+.navbar
+  filter: drop-shadow(0 0 0.1rem black)
+  height: 75px
+
+.rbc-agenda-date-cell
+  background-color: white
+  color: black
+
+.rbc-toolbar-label
+  font-size: 25px
+  font-weight: 200
+
+.dashboardButton
+  position: relative
+  right: -35%
+  background-color: orange
+  color: white
+  border-radius: 5px
+  border-width: 2px
+  border-color: white
+  
+// .logoutButton
+//   background-color: orange
+//   color: white
+//   border-radius: 5px
+//   border-width: 2px
+//   border-color: white

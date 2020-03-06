@@ -22,11 +22,21 @@ const MainPage = ({
   loginDisplayName,
   filterEvents,
   handleGuestBackToLandingPage,
+  states,
 }) => (
-  <>
-    <Title loginDisplayName={loginDisplayName} buttonText={loginDisplayName === 'Guest' ? 'Login/Signup' : 'Create Event'} buttonClass="createNewEvent-button" onClick={loginDisplayName === 'Guest' ? handleGuestBackToLandingPage : openCreateEventModal} changePage={changePage} page="MainPage" />
-    <div style={{ width: '33%', display: 'inline-block' }}>
+  <div id="mainPage">
+    <Title
+      handleGuestBackToLandingPage={handleGuestBackToLandingPage}
+      loginDisplayName={loginDisplayName}
+      buttonText={loginDisplayName === 'Guest' ? 'Login/Signup' : 'Create Event'}
+      buttonClass="createNewEvent-button"
+      onClick={loginDisplayName === 'Guest' ? handleGuestBackToLandingPage : openCreateEventModal}
+      changePage={changePage}
+      page="MainPage"
+    />
+    <div id="mainFilter">
       <Filter
+        states={states}
         loginDisplayName={loginDisplayName}
         handleStateChange={handleStateChange}
         filterEvents={filterEvents}
@@ -42,13 +52,13 @@ const MainPage = ({
         filterDropdownCategories={filterDropdownCategories}
       />
     </div>
-    <div style={{ width: '66%', float: 'right' }}>
+    <div id="mainCalendar">
       <MainCalendar
         calendarEvents={calendarEvents}
         handleCalendarEventClick={handleCalendarEventClick}
       />
     </div>
-  </>
+  </div>
 );
 
 export default MainPage;
