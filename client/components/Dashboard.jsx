@@ -14,6 +14,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
+        <img src = "https://www.roterrucksack.com/wp-content/uploads/2016/09/Badlands-Nationalpark-South-Dakota-USA-Head.jpg" className="dashboard-main" />
         <Title buttonText="Back" buttonClass="createNewEvent-button" onClick={this.props.changePage} />
         <div className="outerDash">
           <span id="displayName">{this.props.info.nameAndLocation[0].display_name}</span>
