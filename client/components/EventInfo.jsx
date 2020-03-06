@@ -4,7 +4,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess, handleRemoveGues
 
   let button = '';
 
-  if (eventInfoAccess === 'full') {button = (<button type="button" className="attend-delete-button">Un-attend</button>)}
+  // if (eventInfoAccess === 'full') {button = (<button type="button" className="attend-delete-button">Un-attend</button>)}
   if (eventInfoAccess === 'limited'){eventInfo.pending !== 1 ? button = <button type="button" className="attend-delete-button" onClick={handleAttendEvent}>Attend</button> : button = <button type="button" className="attend-delete-button">Pending</button>}
   if (eventInfo.private === 0) {button = null}
   if (eventInfoAccess === 'host') {button = (<button type="button" className="attend-delete-button">DELETE</button>)}
