@@ -552,7 +552,7 @@ class App extends React.Component {
                   handleSignUpSubmit={this.handleSignUpSubmit}
                 />
               )}
-              title="Sign Up!"
+              // title="Sign Up!"
               handleShow={this.openSignUpModal}
               handleClose={this.closeSignUpModal}
               show={this.state.signUpDisplayed}
