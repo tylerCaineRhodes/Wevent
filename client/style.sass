@@ -96,7 +96,6 @@
   float: left
   position: relative
   top: 2px
-  border-radius: 10px;
   border: 3px solid  #fc6565
   overflow-x: hidden
   padding: 20px 15px
@@ -105,13 +104,14 @@
   @include grid-host
   grid-column: col 1 / span  1
   float: left
+
   
 .grid-host-accept
   @include grid-host
   grid-column: col 2 / span  1
   float: right
 
-@mixin button
+@mixin button 
   display: inline-block
   float: right
   border-radius: 5px
@@ -120,6 +120,8 @@
   background-color: #fc6565
   color: white
   margin: 2px
+  &:hover
+    cursor: pointer
 
 .pend-accept-button
   @include button
@@ -152,6 +154,9 @@
   border: none
   margin: -4px
   font-size: 13px
+
+.check-x-button:hover
+  cursor: pointer
 
 p.eventInfoTitle
   font-size: 40px

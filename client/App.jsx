@@ -16,8 +16,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'LandingPage',
-      userId: '',
+      page: 'MainPage',
+      userId: '11',
       calendarEvents: [],
       filteredEvents: [],
       loginDisplayName: '',
@@ -88,6 +88,7 @@ class App extends React.Component {
     this.getEventsForDashboard = this.getEventsForDashboard.bind(this);
     this.getAllStates = this.getAllStates.bind(this);
     this.handleGuestBackToLandingPage = this.handleGuestBackToLandingPage.bind(this);
+    this.handleRemoveGuest = this.handleRemoveGuest.bind(this);
   }
 
   componentDidMount() {
@@ -360,7 +361,7 @@ class App extends React.Component {
       params,
     })
       .then((res) => {
-        //console.log(res.data);
+        console.log(res.data); //<-------------------------Remove
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
@@ -378,6 +379,12 @@ class App extends React.Component {
     this.setState({
       eventInfoDisplayed: false,
     });
+  }
+
+  handleRemoveGuest(event) {
+    let id = (event.target.id.substring(0, event.target.id.length - 1));
+    let userName = (document.getElementById(id).childNodes[0].innerHTML);
+    console.log(userName);
   }
 
   handleLoginSubmit(event) {
@@ -527,6 +534,7 @@ class App extends React.Component {
                   <EventInfo
                     eventInfoAccess={this.state.eventInfoAccess}
                     eventInfo={this.state.eventInfo}
+                    handleRemoveGuest={this.handleRemoveGuest}
                   />
                 )}
                 handleShow={this.openEventInfoModal}
