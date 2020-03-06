@@ -3,8 +3,12 @@ import React from 'react';
 export default function EventInfo({
   eventInfo,
   eventInfoAccess,
+  eventRequestApproval,
+  eventAcceptRequest,
+  eventRejectRequest,
+  loginDisplayName,
 }) {
-  // console.log(eventInfoAccess);
+  console.log(eventInfoAccess);
   console.log(eventInfo);
   const pendingViewable = (access) => {
     if (access === 'host') {
@@ -14,8 +18,8 @@ export default function EventInfo({
             Attending
             <div id="eventInfoAttending">
               <ul>
-                {eventInfo.attending.map((user, index) => {
-                  return (<li key={index}>{user}</li>);
+                {eventInfo.attending.map((user, index) =>{
+                  return (<li key={index}>{user} <button onClick={() => eventRejectRequest(eventInfo.eventId, user)}>Remove</button></li>);
                 })}
               </ul>
             </div>
@@ -25,7 +29,7 @@ export default function EventInfo({
             <div id="eventInfoPending">
               <ul>
                 {eventInfo.pending.map((user, index) => {
-                  return (<li key={index}>{user}</li>);
+                  return (<li key={index}>{user} <button onClick={() => eventAcceptRequest(eventInfo.eventId, user)}>Accept</button><button onClick={() => eventRejectRequest(eventInfo.eventId, loginDisplayName)}>Reject</button></li>);
                 })}
               </ul>
             </div>
@@ -33,13 +37,15 @@ export default function EventInfo({
         </div>
       );
     }
-    // else if (access === 'full') {
-
-    // }
-    // else if (access === 'limited') {
-
-    // }
-  }
+  };
+  const limitedButton = () => {
+    if (eventInfoAccess === 'limited' && eventInfo.pending === null) {
+      return (<button onClick={() => eventRequestApproval(eventInfo.eventId)}>Request to Join</button>);
+    }
+    if (eventInfoAccess !== 'host' && eventInfo.pending === 1) {
+      return (<span>Request Pending...</span>);
+    }
+  };
   return (
     <div id="eventInfoContainer">
       <div id="eventInfoContainer1">
@@ -52,6 +58,7 @@ export default function EventInfo({
         <span>{eventInfo.time.slice(0, 5)}</span>
         <span>${eventInfo.price}</span>
         {eventInfo.private === 1 ? <span>Attendance: {eventInfo.attendance_current}/{eventInfo.attendance_max}</span> : false}
+        {limitedButton()}
       </div>
       <div id="eventInfoContainer2">
         <span>{eventInfo.description}</span>

@@ -78,7 +78,7 @@ module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
 };
 
 module.exports.getEventInfoForHost = (eventId, cb) => {
-  const query = 'select e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, u_e.pending, u.display_name from events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id INNER JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = ?';
+  const query = 'select e.event_id, e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, u_e.pending, u.display_name from events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id INNER JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = ?';
   db.query(query, [eventId], (err, data) => {
     if (err) {
       cb(err);
@@ -90,7 +90,7 @@ module.exports.getEventInfoForHost = (eventId, cb) => {
 
 module.exports.getEventInfoForNonHost = (eventId, userId, hasAccess, cb) => {
   if (hasAccess) {
-    const query = 'select e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, e.host_id, (SELECT pending from users_events_attending where event_id = ? and user_id = ? LIMIT 1) AS pending from events e where event_id = ?';
+    const query = 'select e.event_id, e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, e.host_id, (SELECT pending from users_events_attending where event_id = ? and user_id = ? LIMIT 1) AS pending from events e where event_id = ?';
     db.query(query, [eventId, userId, eventId], (err, data) => {
       if (err) {
         cb(err);
@@ -99,7 +99,7 @@ module.exports.getEventInfoForNonHost = (eventId, userId, hasAccess, cb) => {
       cb(null, data);
     });
   } else {
-    const query = 'select e.title, e.description, e.date, e.time, e.price, e.private, e.city, e.state, e.attendance_max, e.attendance_current, e.host_id, (SELECT pending from users_events_attending where event_id = ? and user_id = ? LIMIT 1) AS pending from events e where event_id = ?';
+    const query = 'select e.event_id, e.title, e.description, e.date, e.time, e.price, e.private, e.city, e.state, e.attendance_max, e.attendance_current, e.host_id, (SELECT pending from users_events_attending where event_id = ? and user_id = ? LIMIT 1) AS pending from events e where event_id = ?';
     db.query(query, [eventId, userId, eventId], (err, data) => {
       if (err) {
         cb(err);

@@ -88,6 +88,9 @@ class App extends React.Component {
     this.getEventsForDashboard = this.getEventsForDashboard.bind(this);
     this.getAllStates = this.getAllStates.bind(this);
     this.handleGuestBackToLandingPage = this.handleGuestBackToLandingPage.bind(this);
+    this.eventRequestApproval = this.eventRequestApproval.bind(this);
+    this.eventAcceptRequest = this.eventAcceptRequest.bind(this);
+    this.eventRejectRequest = this.eventRejectRequest.bind(this);
   }
 
   componentDidMount() {
@@ -374,6 +377,47 @@ class App extends React.Component {
       });
   }
 
+  eventRequestApproval(eventId) {
+    const body = { eventId };
+    if (!this.state.userId) {
+      body.userId = 0;
+    } else {
+      body.userId = this.state.userId;
+    }
+    axios.post('/pending', {
+      body,
+    })
+      .catch((err) => {
+        if (err) {
+          console.log('openEventInfoModal - Error requesting approval');
+        }
+      });
+  }
+
+  eventAcceptRequest(eventId, displayName) {
+    const body = { eventId, displayName };
+    axios.put('/pending', {
+      body,
+    })
+      .catch((err) => {
+        if (err) {
+          console.log('openEventInfoModal - Error accepting request');
+        }
+      });
+  }
+
+  eventRejectRequest(eventId, displayName) {
+    const reqParams = { eventId, displayName };
+    axios.put('/pending', {
+      params: {reqParams},
+    })
+      .catch((err) => {
+        if (err) {
+          console.log('openEventInfoModal - Error accepting request');
+        }
+      });
+  }
+
   closeEventInfoModal() {
     this.setState({
       eventInfoDisplayed: false,
@@ -527,6 +571,9 @@ class App extends React.Component {
                   <EventInfo
                     eventInfoAccess={this.state.eventInfoAccess}
                     eventInfo={this.state.eventInfo}
+                    eventRequestApproval={this.eventRequestApproval}
+                    eventAcceptRequest={this.eventAcceptRequest}
+                    eventRejectRequest={this.eventRejectRequest}
                   />
                 )}
                 handleShow={this.openEventInfoModal}
