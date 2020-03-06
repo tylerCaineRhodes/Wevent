@@ -539,6 +539,9 @@ p.eventInfo
   filter: drop-shadow(0 0 0.15rem black)
   cursor: pointer
 
+.rbc-off-range-bg
+  background-color: transparent
+
 #mainFilter
   width: 20%
   display: inline-block
@@ -570,14 +573,17 @@ p.eventInfo
   top: 0
 .rbc-toolbar
   .rbc-btn-group
+    button
+      &:focus
+        outline: 5px auto rgba(255,251,243, .7) !important
+        color: rgb(80,82,84)
     &:last-child
       button
         &:last-child
-          color: white
           font-size: 0
           &:after
             font: 400 15px system-ui
-            color: black
+            color: white
             float: left
             content: "Event List"
 
