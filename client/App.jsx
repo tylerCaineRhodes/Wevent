@@ -404,6 +404,9 @@ class App extends React.Component {
           }, this.getEventsForDashboard);
         }
       })
+      .then(() => {
+        this.filterEvents();
+      })
       .catch((error) => {
         console.error(error);
       });
