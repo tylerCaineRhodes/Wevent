@@ -161,7 +161,8 @@ app.get('/getCategories', (req, res) => {
 });
 
 app.delete('/event', (req, res) => {
-  db.deleteEvent(parseInt(req.query.eventId, 10), (err, data) => {
+  console.log('here is the passed object ---->', req.query.uniqueId);
+  db.deleteEvent(req.query.uniqueId, (err, data) => {
     if (err) {
       console.log(err);
       res.sendStatus(500);

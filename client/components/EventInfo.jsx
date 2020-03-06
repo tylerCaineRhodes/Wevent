@@ -1,13 +1,15 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
 
-export default function EventInfo({ eventInfo, eventInfoAccess, handleRemoveGuest, handleAttendEvent, handleAcceptPending}) {
-
+export default function EventInfo({
+  eventId, eventInfo, eventInfoAccess, handleRemoveGuest, handleAttendEvent, handleAcceptPending, handleDeleteHostEvent,
+}) {
   let button = '';
-
-  // if (eventInfoAccess === 'full') {button = (<button type="button" className="attend-delete-button">Un-attend</button>)}
-  if (eventInfoAccess === 'limited'){eventInfo.pending !== 1 ? button = <button type="button" className="attend-delete-button" onClick={handleAttendEvent}>Attend</button> : button = <button type="button" className="attend-delete-button">Pending</button>}
-  if (eventInfo.private === 0) {button = null}
-  if (eventInfoAccess === 'host') {button = (<button type="button" className="attend-delete-button">DELETE</button>)}
+  
+  if (eventInfoAccess === 'full') { button = (<button type="button" className="attend-delete-button">Un-attend</button>); }
+  if (eventInfoAccess === 'limited') { eventInfo.pending !== 1 ? button = <button type="button" className="attend-delete-button" onClick={handleDeleteHostEvent}>Attend</button> : button = <button type="button" className="attend-delete-button">Pending</button>; }
+  if (eventInfo.private === 0) { button = null; }
+  if (eventInfoAccess === 'host') { button = (<button type="button" className="attend-delete-button" onClick={(e) => handleDeleteHostEvent(eventId)}>DELETE</button>); }
 
   return (
     <div className={`grid-parent-${eventInfoAccess}`}>
@@ -49,7 +51,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess, handleRemoveGues
                   <div key={index} id={`pending${index}`}>
                     <p className="pend-accept-name">{pending}</p>
                     <button type="button" className="check-x-button" id={`pending${index}1`} onClick={handleRemoveGuest}>&#x274C;</button>
-                    <button type="button" className="check-x-button" id={`pending${index}2`}onClick={handleAcceptPending}>&#9989;</button>
+                    <button type="button" className="check-x-button" id={`pending${index}2`} onClick={handleAcceptPending}>&#9989;</button>
                   </div>
                 ))}
               </div>
