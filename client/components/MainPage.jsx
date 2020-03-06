@@ -25,6 +25,7 @@ const MainPage = ({
   states,
 }) => (
   <div id="mainPage">
+    <img className="mainPageBackgroundImage" src="./img/mainPage.jpg" />
     <Title
       handleGuestBackToLandingPage={handleGuestBackToLandingPage}
       loginDisplayName={loginDisplayName}

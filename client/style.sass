@@ -475,25 +475,61 @@ p.eventInfo
   border-color: orange
   border-radius: 3px
   position: relative
-  height: 7vh;
-  width: 94%;
-  align-items: center;
-  justify-content: center;
+  height: 7vh
+  width: 94%
+  align-items: center
+  justify-content: center
   margin: 3% 0 3% 0
   left: 3%
   overflow: scroll
+
+.mainPageBackgroundImage
+  z-index: -1000
+  filter: blur(5px)
+  position: fixed
+  top: 0
+  width: 100%
+  height: 100%
+  opacity: .8
 
 #mainCalendar
   width: 72%
   display: inline-block
   float: right
+  color: white
   margin-right: 2.5%
   margin-top: 2.5%
   margin-bottom: 2.5%
   padding: 1.25%
-  background-color: white
+  background-color: rgba(42, 46, 65, 0.8)
   border-radius: 15px
-  filter: drop-shadow(0 0 0.15rem black)
+
+.rbc-toolbar button
+  color: white
+
+.rbc-today
+  background-color: rgba(42, 46, 65, 0.4)
+
+.rbc-off-range-bg
+  background-color:rgba(255,251,243, .7)
+
+.rbc-month-view
+  border-color: rgba(221,221,221, .7)
+
+.rbc-month-row + .rbc-month-row
+  border-top: none
+
+.rbc-day-bg + .rbc-day-bg
+  border-left: none
+
+.rbc-header + .rbc-header
+  border-left: none
+
+.rbc-month-view
+  border: none
+
+.rbc-header
+  border-bottom: none
 
 #mainFilter
   width: 20%
@@ -502,20 +538,16 @@ p.eventInfo
   margin-top: 2.5%
   margin-bottom: 2.5%
   padding: 1.25%
-  background-color: white
+  background-color: rgba(255, 255, 255, 0.7)
   border-radius: 15px
-  filter: drop-shadow(0 0 0.15rem black)
-
-#mainPage
-  background-color: #fffbf3
 
 .navbar
   filter: drop-shadow(0 0 0.1rem black)
   height: 75px
 
 .rbc-agenda-date-cell
-  background-color: white
-  color: black
+  background-color: rgba(42, 46, 65, 0.7) !important
+  color: White
 
 .rbc-toolbar-label
   font-size: 25px
