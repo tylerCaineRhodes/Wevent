@@ -1,12 +1,11 @@
 import React from 'react';
 
-export default function EventInfo({ eventInfo, eventInfoAccess, handleRemoveGuest }) {
+export default function EventInfo({ eventInfo, eventInfoAccess, handleRemoveGuest, handleAttendEvent, handleAcceptPending}) {
 
   let button = '';
 
- 
   if (eventInfoAccess === 'full') {button = (<button type="button" className="attend-delete-button">Un-attend</button>)}
-  if (eventInfoAccess === 'limited'){button = (<button type="button" className="attend-delete-button">Attend</button>)}
+  if (eventInfoAccess === 'limited'){button = (<button type="button" className="attend-delete-button" onClick={handleAttendEvent}>Attend</button>)}
   if (eventInfo.private === 0) {button = null}
   if (eventInfoAccess === 'host') {button = (<button type="button" className="attend-delete-button">DELETE</button>)} 
 
@@ -35,15 +34,6 @@ export default function EventInfo({ eventInfo, eventInfoAccess, handleRemoveGues
         }
         <div>
           { button }
-           
-            {/* // eslint-disable-next-line no-nested-ternary
-            // eventInfoAccess === 'host' ? (<button type="button" className="attend-delete-button">DELETE</button>
-            // ) : eventInfoAccess === 'full' ? (
-            //   <button type="button" className="attend-delete-button">Un-attend</button>
-            // ) : (
-            //   <button type="button" className="attend-delete-button">Attend</button>
-            // )
-          // } */}
         </div>
       </div>
       <div className={`grid-right-${eventInfoAccess}`}>
@@ -59,7 +49,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess, handleRemoveGues
                   <div key={index} id={`pending${index}`}>
                     <p className="pend-accept-name">{pending}</p>
                     <button type="button" className="check-x-button" id={`pending${index}1`} onClick={handleRemoveGuest}>&#x274C;</button>
-                    <button type="button" className="check-x-button">&#9989;</button>
+                    <button type="button" className="check-x-button" id={`pending${index}2`}onClick={handleAcceptPending}>&#9989;</button>
                   </div>
                 ))}
               </div>
