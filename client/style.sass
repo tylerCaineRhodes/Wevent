@@ -422,9 +422,10 @@ p.eventInfo
   font-weight: 200
 
 .dashboard-main
-  background-image: url("https://www.roterrucksack.com/wp-content/uploads/2016/09/Badlands-Nationalpark-South-Dakota-USA-Head.jpg")
-  height: 100vh
-
+  z-index: -1000
+  filter: blur(8px)
+  position: fixed
+  top: 0
 .dashboardButton
   position: relative
   right: -35%
