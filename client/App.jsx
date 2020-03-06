@@ -210,6 +210,7 @@ class App extends React.Component {
     if (this.state.page === 'MainPage') {
       return (
         <MainPage
+          states={this.state.states}
           handleStateChange={this.handleStateChange}
           filterEvents={this.filterEvents}
           calendarEvents={this.state.filteredEvents}
@@ -245,7 +246,7 @@ class App extends React.Component {
     //if city is initial value, ignore
     for (let i = 0; i < this.state.calendarEvents.length; i++) {
       if (this.state.calendarEvents[i].city.toUpperCase() === this.state.filterCityValue.toUpperCase() || this.state.filterCityValue === '') {
-        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '' || this.state.filterStateValue === 'Select State') {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
               if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '' || this.state.filterCategoryValue.id === 0) {
@@ -360,7 +361,7 @@ class App extends React.Component {
       params,
     })
       .then((res) => {
-        //console.log(res.data);
+        console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
@@ -482,6 +483,7 @@ class App extends React.Component {
             createEventMaxPeople: 50,
           }, () => {
             this.getAllEvents();
+            this.getEventsForDashboard();
             // eslint-disable-next-line no-alert
             alert('Event Created!');
           });
@@ -502,6 +504,8 @@ class App extends React.Component {
               <ModalReuseable
                 body={(
                   <CreateEvent
+                    filterDropdownCategories={this.state.filterDropdownCategories}
+                    states={this.state.states}
                     handleStateChange={this.handleStateChange}
                     createEventTitle={this.state.createEventTitle}
                     createEventDescription={this.state.createEventDescription}

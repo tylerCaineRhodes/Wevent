@@ -20,7 +20,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
             ) : null
         }
         <p className="eventInfo">{eventInfo.city}, {eventInfo.state}<br />{eventInfo.zipcode}</p>
-        <p className="eventInfo">Price: ${eventInfo.price.toFixed(2)}</p>
+        <p className="eventInfo">Price: $ {eventInfo.price.toFixed(2)}</p>
         {
           eventInfo.attendance_max !== null
             ? (
