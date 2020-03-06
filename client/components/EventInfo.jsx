@@ -25,7 +25,7 @@ export default function EventInfo({
         <button
           type="button"
           className="attend-delete-button"
-          onClick={handleDeleteHostEvent}
+          onClick={handleAttendEvent}
         >
           Attend
         </button>
