@@ -50,7 +50,7 @@ app.get('/eventInfo', (req, res) => {
       res.sendStatus(500);
       return;
     }
-    console.log("PENDING", info[0]);
+    // console.log("PENDING", info[0]);
     if (info[0].host_id === req.query.userId) {
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
