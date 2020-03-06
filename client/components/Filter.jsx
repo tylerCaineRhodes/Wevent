@@ -21,6 +21,7 @@ const Filter = ({
   handleFilterSubmit,
   filterDropdownCategories,
   loginDisplayName,
+  states,
 }) => (
   <div className="filter-container">
     <Accordion>
@@ -33,6 +34,7 @@ const Filter = ({
         {/* <Accordion.Collapse eventKey="0"> */}
         <Card.Body>
           <Location
+            states={states}
             filterEvents={filterEvents}
             handleStateChange={handleStateChange}
             filterCityValue={filterCityValue}

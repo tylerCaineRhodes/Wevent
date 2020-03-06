@@ -213,6 +213,7 @@ class App extends React.Component {
     if (this.state.page === 'MainPage') {
       return (
         <MainPage
+          states={this.state.states}
           handleStateChange={this.handleStateChange}
           filterEvents={this.filterEvents}
           calendarEvents={this.state.filteredEvents}
@@ -248,7 +249,7 @@ class App extends React.Component {
     //if city is initial value, ignore
     for (let i = 0; i < this.state.calendarEvents.length; i++) {
       if (this.state.calendarEvents[i].city.toUpperCase() === this.state.filterCityValue.toUpperCase() || this.state.filterCityValue === '') {
-        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '' || this.state.filterStateValue === 'Select State') {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
               if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '' || this.state.filterCategoryValue.id === 0) {
@@ -453,6 +454,9 @@ class App extends React.Component {
           }, this.getEventsForDashboard);
         }
       })
+      .then(() => {
+        this.filterEvents();
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -474,8 +478,11 @@ class App extends React.Component {
   }
 
   handleCalendarEventClick(event) {
-    //console.log('POOP :)', event, this.state.calendarEvents);
-    this.openEventInfoModal(event.eventId);
+    this.setState({
+      eventId: event.eventId,
+    }, () => {
+      this.openEventInfoModal(event.eventId);
+    });
   }
 
   handleCreateEventSubmit(event) {
@@ -528,6 +535,7 @@ class App extends React.Component {
             createEventMaxPeople: 50,
           }, () => {
             this.getAllEvents();
+            this.getEventsForDashboard();
             // eslint-disable-next-line no-alert
             alert('Event Created!');
           });
@@ -548,6 +556,8 @@ class App extends React.Component {
               <ModalReuseable
                 body={(
                   <CreateEvent
+                    filterDropdownCategories={this.state.filterDropdownCategories}
+                    states={this.state.states}
                     handleStateChange={this.handleStateChange}
                     createEventTitle={this.state.createEventTitle}
                     createEventDescription={this.state.createEventDescription}
@@ -565,7 +575,7 @@ class App extends React.Component {
                     handleCreateEventSubmit={this.handleCreateEventSubmit}
                   />
                 )}
-                title="Create Event"
+               // title="Create Event"
                 handleShow={this.openCreateEventModal}
                 handleClose={this.closeCreateEventModal}
                 show={this.state.createEventDisplayed}
@@ -601,7 +611,7 @@ class App extends React.Component {
                   handleSignUpSubmit={this.handleSignUpSubmit}
                 />
               )}
-              title="Sign Up!"
+              // title="Sign Up!"
               handleShow={this.openSignUpModal}
               handleClose={this.closeSignUpModal}
               show={this.state.signUpDisplayed}

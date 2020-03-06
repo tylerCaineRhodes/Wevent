@@ -52,6 +52,7 @@ app.get('/eventInfo', (req, res) => {
       res.sendStatus(500);
       return;
     }
+    // console.log("PENDING", info[0]);
     if (info[0].host_id === req.query.userId) {
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
@@ -174,6 +175,11 @@ app.delete('/event', (req, res) => {
 });
 
 app.post('/pending', (req, res) => {
+<<<<<<< HEAD
+=======
+  console.log('Yup');
+  console.log(req.body);
+>>>>>>> 989cea34f037c85ab274524a3ab5d28f39f1bd8e
   db.askToJoinEvent(req.body.userId, req.body.eventId, (err, data) => {
     if (err) {
       console.log(err);
@@ -183,6 +189,7 @@ app.post('/pending', (req, res) => {
     res.sendStatus(200);
   });
 });
+
 app.put('/pending', (req, res) => {
   db.approvePending(req.body.displayName, req.body.eventId, (err, data) => {
     if (err) {

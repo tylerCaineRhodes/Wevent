@@ -10,7 +10,7 @@ const Category = ({
     <form>
       <label htmlFor="category">
         <select value={filterCategoryValue.name} data-id={filterCategoryValue.id} onChange={(e) => handleStateChange({ name: e.target.value, id: e.target.selectedIndex }, 'filterCategoryValue', filterEvents)}>
-          <option> </option>
+          <option>Select Category</option>
           {filterDropdownCategories.map((category) => (
             <option key={category.category_id}>{category.category_name}</option>
           ))}
