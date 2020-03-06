@@ -8,7 +8,7 @@ const Location = ({
 }) => (
   <form>
     <label htmlFor="city">
-      City:
+      <span>City:</span>
       <input type="text" value={filterCityValue} onChange={(e) => handleStateChange(e.target.value, 'filterCityValue', filterEvents)} />
     </label>
     <label htmlFor="state">

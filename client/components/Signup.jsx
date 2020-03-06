@@ -29,7 +29,7 @@ const Signup = ({
         <Form.Control onChange={(e) => handleStateChange(e.target.value, 'signUpState')} as="select">
           <option>Select State</option>
           {states.map((state, index) => (
-            <option key={state}>{state}</option>
+            <option key={state.state_id}>{state.state_name}</option>
           ))}
         </Form.Control>
       </Form.Group>

@@ -17,7 +17,6 @@ const Cost = ({
 
   return (
     <div className={classes.root}>
-      <span>Cost</span>
       <Slider valueLabelDisplay="auto" aria-labelledby="range-slider" value={filterCostValue} onChange={(e, v) => handleStateChange(v, 'filterCostValue', filterEvents)} />
     </div>
   );
