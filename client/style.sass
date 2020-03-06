@@ -322,11 +322,11 @@ p.eventInfo
   text-align: center
   border-width: 1px
   border-style: solid
-  border-color: grey
+  border-color: transparent
   border-radius: 10px
   margin-left: 35%
   margin-right: 35%
-  margin-top: 1%
+  margin-top: 4%
 
 .landingPageUsernameField, .landingPagePasswordField
   width: 45%
@@ -334,27 +334,32 @@ p.eventInfo
   margin-top: 2.5%
   margin-left: 27.5%
   margin-right: 27.5%
+  border-radius: 10px
+
 
 .loginButton
   margin: 2%
   width: 45%
-  background-color: orange
+  background-color: #644a6f
   border-color: gray
+  border-radius: 5px
 .loginButton:hover
-  background-color: #ff8d00
+  background-color: #644a6f
   border-color: gray
+  border-radius: 5px
 .loginButton:active
-  background-color: #ffb255
+  border-radius: 5px
+  background-color: #644a6f
 
 #signupButton
   background-color: orange
   border-color: gray
   width: 100%
 #signupButton:hover
-  background-color: #ff8d00
+  background-color: #644a6f
   border-color: gray
 #signupButton:active
-  background-color: #ffb255
+  background-color: #644a6f
 
 #noAccountText, #noAccountButton
   display: inline-block
@@ -410,6 +415,48 @@ p.eventInfo
 .attending-dash-pending1
   color: grey
 
+.card-body
+  .MuiFormControl-root
+    &:first-child
+      .MuiFormControlLabel-root
+        &.MuiFormControlLabel-labelPlacementStart
+          .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track
+            background-color: orange !important
+
+.card-body
+  .MuiFormControl-root
+    &:last-child
+      .MuiFormControlLabel-root
+        &.MuiFormControlLabel-labelPlacementStart
+          .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track
+            background-color: #fc6565 !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiSwitch-track
+    background-color: orange !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track 
+    background-color: #fc6565 !important
+
+#eventPrivate + .MuiSwitch-root
+ .MuiButtonBase-root 
+    &.MuiIconButton-root 
+      &.PrivateSwitchBase-root-50 
+        &.MuiSwitch-switchBase 
+          &.MuiSwitch-colorSecondary
+            color: orange !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiButtonBase-root 
+    &.MuiIconButton-root 
+      &.PrivateSwitchBase-root-50 
+        &.MuiSwitch-switchBase 
+          &.MuiSwitch-colorSecondary 
+            &.PrivateSwitchBase-checked-51 
+              &.Mui-checked
+                color: #fc6565 !important
+                
 .dashboardListItem
   display: flex
   border-width: 1px
