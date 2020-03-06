@@ -172,6 +172,7 @@ app.delete('/event', (req, res) => {
 });
 
 app.post('/pending', (req, res) => {
+  console.log('Yup');
   console.log(req.body);
   db.askToJoinEvent(req.body.userId, req.body.eventId, (err, data) => {
     if (err) {
@@ -182,6 +183,7 @@ app.post('/pending', (req, res) => {
     res.sendStatus(200);
   });
 });
+
 app.put('/pending', (req, res) => {
   db.approvePending(req.body.displayName, req.body.eventId, (err, data) => {
     if (err) {

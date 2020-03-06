@@ -49,6 +49,7 @@ class App extends React.Component {
 
       eventInfoAccess: '',
       eventInfo: '',
+      eventId: '',
 
       createEventTitle: '',
       createEventDescription: '',
@@ -88,6 +89,9 @@ class App extends React.Component {
     this.getEventsForDashboard = this.getEventsForDashboard.bind(this);
     this.getAllStates = this.getAllStates.bind(this);
     this.handleGuestBackToLandingPage = this.handleGuestBackToLandingPage.bind(this);
+    this.handleRemoveGuest = this.handleRemoveGuest.bind(this);
+    this.handleAttendEvent = this.handleAttendEvent.bind(this);
+    this.handleAcceptPending = this.handleAcceptPending.bind(this);
   }
 
   componentDidMount() {
@@ -361,7 +365,7 @@ class App extends React.Component {
       params,
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
@@ -379,6 +383,62 @@ class App extends React.Component {
     this.setState({
       eventInfoDisplayed: false,
     });
+  }
+
+  handleRemoveGuest(event) {
+    let id = (event.target.id.substring(0, event.target.id.length - 1));
+    let displayName = (document.getElementById(id).childNodes[0].innerHTML);
+    // console.log(displayName);
+    // console.log(this.state.eventId);
+    axios.delete('/pending', {
+      params: {
+        displayName,
+        eventId: this.state.eventId,
+      },
+    })
+      .then((res) => {
+        // console.log(res.data); //<-------------------------Remove
+        this.openEventInfoModal(this.state.eventId);
+      })
+      .catch((err) => {
+        if (err) {
+          console.log('handleRemoveGuest - Error delete pend/attend from DB');
+        }
+      });
+  }
+
+  handleAttendEvent(event) {
+    axios.post('/pending', {
+        userId: this.state.userId,
+        eventId: this.state.eventId,
+    })
+      .then((res) => {
+        // console.log(res.data); //<-------------------------Remove
+        this.openEventInfoModal(this.state.eventId);
+      })
+      .catch((err) => {
+        if (err) {
+          console.log('handleAttendEvent - Error post attending user to DB');
+        }
+      });
+  }
+
+  handleAcceptPending(event) {
+    let id = (event.target.id.substring(0, event.target.id.length - 1));
+    let displayName = (document.getElementById(id).childNodes[0].innerHTML);
+    axios.put('/pending', {
+        displayName,
+        eventId: this.state.eventId,
+    })
+      .then((res) => {
+        // console.log(res.data); //<-------------------------Remove
+        this.openEventInfoModal(this.state.eventId);
+      })
+      .catch((err) => {
+        if (err) {
+          console.log('handleAttendPending - Error put pending user to DB');
+        }
+      });
   }
 
   handleLoginSubmit(event) {
@@ -429,9 +489,14 @@ class App extends React.Component {
   }
 
   handleCalendarEventClick(event) {
-    //console.log('POOP :)', event, this.state.calendarEvents);
-    this.openEventInfoModal(event.eventId);
+    this.setState({
+      eventId: event.eventId,
+    }, () => {
+      this.openEventInfoModal(event.eventId);
+    });
   }
+    //console.log('POOP :)', event, this.state.calendarEvents);
+    
 
   handleCreateEventSubmit(event) {
     event.preventDefault();
@@ -534,6 +599,9 @@ class App extends React.Component {
                   <EventInfo
                     eventInfoAccess={this.state.eventInfoAccess}
                     eventInfo={this.state.eventInfo}
+                    handleRemoveGuest={this.handleRemoveGuest}
+                    handleAttendEvent={this.handleAttendEvent}
+                    handleAcceptPending={this.handleAcceptPending}
                   />
                 )}
                 handleShow={this.openEventInfoModal}
