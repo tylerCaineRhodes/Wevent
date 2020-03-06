@@ -5,7 +5,7 @@ export default function EventInfo({
   eventId, eventInfo, eventInfoAccess, handleRemoveGuest, handleAttendEvent, handleAcceptPending, handleDeleteHostEvent,
 }) {
   let button = '';
-
+  
   if (eventInfoAccess === 'full') { button = (<button type="button" className="attend-delete-button">Un-attend</button>); }
   if (eventInfoAccess === 'limited') { eventInfo.pending !== 1 ? button = <button type="button" className="attend-delete-button" onClick={handleDeleteHostEvent}>Attend</button> : button = <button type="button" className="attend-delete-button">Pending</button>; }
   if (eventInfo.private === 0) { button = null; }
