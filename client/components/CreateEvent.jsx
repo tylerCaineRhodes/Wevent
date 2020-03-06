@@ -18,6 +18,8 @@ const CreateEvent = ({
   createEventZipcode,
   createEventMaxPeople,
   handleCreateEventSubmit,
+  filterDropdownCategories,
+  states,
 }) => (
   <div id="createEventDiv">
     <form id="createEventForm">
@@ -25,14 +27,10 @@ const CreateEvent = ({
       <input required type="text" id="createEventTitle" name="Event Title" defaultValue={createEventTitle} onChange={(e) => handleStateChange(e.target.value, 'createEventTitle')} />
       <span>Event Category:</span>
       <select required id="createEventCategory" name="Event Category" defaultValue={createEventCategory} onChange={(e) => handleStateChange(e.target.value, 'createEventCategory')}>
-        <option>  </option>
-        <option>TX</option>
-        <option>AZ</option>
-        <option>TN</option>
-        <option>HI</option>
-        <option>NY</option>
-        <option>HI</option>
-        <option>MA</option>
+        <option>Select Category</option>
+        {filterDropdownCategories.map((category, index) => (
+          <option key={category.category_id}>{category.category_name}</option>
+        ))}
       </select>
       <span>Event Date:</span>
       <input required type="date" id="createEventDate" name="Event Date" defaultValue={moment().format('YYYY-MM-DD')} onChange={(e) => handleStateChange(e.target.value, 'createEventDate')} />
@@ -50,12 +48,10 @@ const CreateEvent = ({
       <input required type="text" id="createEventCity" name="Event City" defaultValue={createEventCity} onChange={(e) => handleStateChange(e.target.value, 'createEventCity')} />
       <span>Event State:</span>
       <select required id="createEventState" name="Event State" defaultValue={createEventState} onChange={(e) => handleStateChange(e.target.value, 'createEventState')}>
-        <option>TX</option>
-        <option>AZ</option>
-        <option>TN</option>
-        <option>NY</option>
-        <option>HI</option>
-        <option>MA</option>
+        <option>Select State</option>
+        {states.map((state, index) => (
+          <option key={state.state_id}>{state.state_name}</option>
+        ))}
       </select>
       <span>Event Zipcode:</span>
       <input required type="number" id="createEventZipcode" name="Event Zipcode" defaultValue={createEventZipcode} onChange={(e) => handleStateChange(e.target.value, 'createEventZipcode')} />

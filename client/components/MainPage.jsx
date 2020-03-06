@@ -22,9 +22,11 @@ const MainPage = ({
   loginDisplayName,
   filterEvents,
   handleGuestBackToLandingPage,
+  states,
 }) => (
   <div id="mainPage">
     <Title
+      handleGuestBackToLandingPage={handleGuestBackToLandingPage}
       loginDisplayName={loginDisplayName}
       buttonText={loginDisplayName === 'Guest' ? 'Login/Signup' : 'Create Event'}
       buttonClass="createNewEvent-button"
@@ -34,6 +36,7 @@ const MainPage = ({
     />
     <div id="mainFilter">
       <Filter
+        states={states}
         loginDisplayName={loginDisplayName}
         handleStateChange={handleStateChange}
         filterEvents={filterEvents}
