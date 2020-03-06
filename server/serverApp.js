@@ -43,16 +43,14 @@ app.get('/dashboard', (req, res) => {
 
 //Get the pending variable
 app.get('/eventInfo', (req, res) => {
-  console.log('query',req.query);
   req.query.userId = parseInt(req.query.userId, 10);
-  console.log('queryid',req.query.userId);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
-    if (err || info === undefined) {
+    if (err || info[0] === undefined) {
       console.error(err);
       res.sendStatus(500);
       return;
     }
-    if (info.host_id === req.query.userId) {
+    if (info[0].host_id === req.query.userId) {
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
           console.error(error);
@@ -62,7 +60,7 @@ app.get('/eventInfo', (req, res) => {
         const eventInfo = middleware.prettifyHostingForEventInfo(infoForEvent);
         res.send({ access: 'host', eventInfo });
       });
-    } else if (info.private === 0 || info.pending === 0) {
+    } else if (info[0].private === 0 || info[0].pending === 0) {
       db.getEventInfoForNonHost(req.query.eventId, req.query.userId, true, (goofUp, eventInfo) => {
         if (goofUp) {
           console.error(goofUp);
@@ -174,11 +172,6 @@ app.delete('/event', (req, res) => {
 });
 
 app.post('/pending', (req, res) => {
-<<<<<<< HEAD
-=======
-  console.log('Yup');
-  console.log(req.body);
->>>>>>> 989cea34f037c85ab274524a3ab5d28f39f1bd8e
   db.askToJoinEvent(req.body.userId, req.body.eventId, (err, data) => {
     if (err) {
       console.log(err);
@@ -188,7 +181,6 @@ app.post('/pending', (req, res) => {
     res.sendStatus(200);
   });
 });
-
 app.put('/pending', (req, res) => {
   db.approvePending(req.body.displayName, req.body.eventId, (err, data) => {
     if (err) {

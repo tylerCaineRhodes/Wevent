@@ -1,6 +1,5 @@
 import React from 'react';
 
-<<<<<<< HEAD
 export default function EventInfo({
   eventInfo,
   eventInfoAccess,
@@ -14,40 +13,6 @@ export default function EventInfo({
   const pendingViewable = (access) => {
     if (access === 'host') {
       return (
-=======
-export default function EventInfo({ eventInfo, eventInfoAccess, handleRemoveGuest, handleAttendEvent, handleAcceptPending}) {
-
-  let button = '';
-
-  // if (eventInfoAccess === 'full') {button = (<button type="button" className="attend-delete-button">Un-attend</button>)}
-  if (eventInfoAccess === 'limited'){eventInfo.pending !== 1 ? button = <button type="button" className="attend-delete-button" onClick={handleAttendEvent}>Attend</button> : button = <button type="button" className="attend-delete-button">Pending</button>}
-  if (eventInfo.private === 0) {button = null}
-  if (eventInfoAccess === 'host') {button = (<button type="button" className="attend-delete-button">DELETE</button>)}
-
-  return (
-    <div className={`grid-parent-${eventInfoAccess}`}>
-      <div className="grid-title">
-        <p className="eventInfoTitle">{eventInfo.title}</p>
-        <p className="eventInfoLocation">{eventInfo.city}, {eventInfo.state}</p>
-      </div>
-      <div className={`grid-left-${eventInfoAccess}`}>
-        {/* <p className="eventInfo">Host {eventInfoAccess}</p> Displays User Role ***To Be Removed*** */}
-        <p className="eventInfo">Time {eventInfo.time}</p>
-        {
-          eventInfoAccess !== 'limited'
-            ? (
-              <p className="eventInfo">{eventInfo.address_1}<br />{eventInfo.address_2}</p>
-            ) : null
-        }
-        <p className="eventInfo">{eventInfo.city}, {eventInfo.state}<br />{eventInfo.zipcode}</p>
-        <p className="eventInfo">Price: $ {eventInfo.price.toFixed(2)}</p>
-        {
-          eventInfo.attendance_max !== null
-            ? (
-              <p className="eventInfo">Attendance: {eventInfo.attendance_current} / {eventInfo.attendance_max}</p>
-            ) : null
-        }
->>>>>>> e3c2072cc6d442da2419a37eb0826dda047a03f7
         <div>
           <div id="eventInfoContainer3">
             Attending
