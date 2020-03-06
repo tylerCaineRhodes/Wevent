@@ -42,7 +42,7 @@ const CreateEvent = ({
       <input required type="time" id="createEventTime" name="Event Time" defaultValue={moment().format('hh:mm')} onChange={(e) => handleStateChange(e.target.value, 'createEventTime')} />
       <span>Event Cost:</span>
       <Slider id="createEventCost" name="Event Cost" valueLabelDisplay="auto" aria-labelledby="range-slider" value={createEventCost} onChange={(e, v) => handleStateChange(v, 'createEventCost')} />
-      <span>Event Private?</span>
+      <span id="eventPrivate">Event Private?</span>
       <Switch id="createEventPrivate" name="Event Private" size="medium" label="Private" checked={createEventPrivate} onChange={(e, v) => handleStateChange(v, 'createEventPrivate')} />
       <span>Event Address 1:</span>
       <input required type="text" id="createEventAddress1" name="Event Address 1" defaultValue={createEventAddress1} onChange={(e) => handleStateChange(e.target.value, 'createEventAddress1')} />
