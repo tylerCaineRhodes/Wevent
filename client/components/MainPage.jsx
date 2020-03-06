@@ -26,6 +26,7 @@ const MainPage = ({
 }) => (
   <div id="mainPage">
     <Title
+      handleGuestBackToLandingPage={handleGuestBackToLandingPage}
       loginDisplayName={loginDisplayName}
       buttonText={loginDisplayName === 'Guest' ? 'Login/Signup' : 'Create Event'}
       buttonClass="createNewEvent-button"

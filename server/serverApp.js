@@ -51,8 +51,10 @@ app.get('/eventInfo', (req, res) => {
       return;
     }
     if (info[0].host_id === req.query.userId) {
+      console.log('poop')
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
+          console.log('dumb')
           console.error(error);
           res.sendStatus(500);
           return;
