@@ -483,6 +483,7 @@ class App extends React.Component {
             createEventMaxPeople: 50,
           }, () => {
             this.getAllEvents();
+            this.getEventsForDashboard();
             // eslint-disable-next-line no-alert
             alert('Event Created!');
           });
