@@ -410,6 +410,48 @@ p.eventInfo
 .attending-dash-pending1
   color: grey
 
+.card-body
+  .MuiFormControl-root
+    &:first-child
+      .MuiFormControlLabel-root
+        &.MuiFormControlLabel-labelPlacementStart
+          .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track
+            background-color: orange !important
+
+.card-body
+  .MuiFormControl-root
+    &:last-child
+      .MuiFormControlLabel-root
+        &.MuiFormControlLabel-labelPlacementStart
+          .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track
+            background-color: #fc6565 !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiSwitch-track
+    background-color: orange !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track 
+    background-color: #fc6565 !important
+
+#eventPrivate + .MuiSwitch-root
+ .MuiButtonBase-root 
+    &.MuiIconButton-root 
+      &.PrivateSwitchBase-root-50 
+        &.MuiSwitch-switchBase 
+          &.MuiSwitch-colorSecondary
+            color: orange !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiButtonBase-root 
+    &.MuiIconButton-root 
+      &.PrivateSwitchBase-root-50 
+        &.MuiSwitch-switchBase 
+          &.MuiSwitch-colorSecondary 
+            &.PrivateSwitchBase-checked-51 
+              &.Mui-checked
+                color: #fc6565 !important
+                
 .dashboardListItem
   display: flex
   border-width: 1px
