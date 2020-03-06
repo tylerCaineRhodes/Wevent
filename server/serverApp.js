@@ -43,7 +43,9 @@ app.get('/dashboard', (req, res) => {
 
 //Get the pending variable
 app.get('/eventInfo', (req, res) => {
+  console.log('query',req.query);
   req.query.userId = parseInt(req.query.userId, 10);
+  console.log('queryid',req.query.userId);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
     if (err || info[0] === undefined) {
       console.error(err);

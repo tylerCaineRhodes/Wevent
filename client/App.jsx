@@ -360,7 +360,7 @@ class App extends React.Component {
       params,
     })
       .then((res) => {
-        //console.log(res.data);
+        // console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
