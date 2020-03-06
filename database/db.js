@@ -66,17 +66,24 @@ module.exports.deleteEvent = (eventId, callback) => {
 // routes for event info
 
 module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
-  //mysql UNION expects the same # of columns in both queries. The query for 'user_id' serves only to add a second column to the second query
-  const query = 'SELECT host_id, private FROM events WHERE event_id = ? UNION SELECT pending, user_id from users_events_attending WHERE event_id = ? AND user_id = ?';
+  const query = 'SELECT host_id, private FROM events WHERE event_id = ?';
   db.query(query, [eventId, eventId, userId], (err, data) => {
     if (err) {
       cb(err);
       return;
     }
-    cb(null, data);
+    const innerQuery = 'SELECT pending from users_events_attending WHERE event_id = ? AND user_id = ?';
+    db.query(innerQuery, [eventId, userId], (kerfuffle, innerData) => {
+      if (kerfuffle) {
+        cb(kerfuffle);
+        return;
+      }
+      const results = Object.assign(data[0], innerData[0]);
+      console.log('RESULT', results);
+      cb(null, results);
+    });
   });
 };
-
 module.exports.getEventInfoForHost = (eventId, cb) => {
   const query = 'select e.event_id, e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, u_e.pending, u.display_name from events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id INNER JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = ?';
   db.query(query, [eventId], (err, data) => {
