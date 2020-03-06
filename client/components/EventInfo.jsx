@@ -19,7 +19,7 @@ export default function EventInfo({
             <div id="eventInfoAttending">
               <ul>
                 {eventInfo.attending.map((user, index) =>{
-                  return (<li key={index}>{user} <button onClick={() => eventRejectRequest(eventInfo.eventId, user)}>Remove</button></li>);
+                  return (<li key={index}>{user} <button onClick={() => eventRejectRequest(eventInfo.event_id, user)}>Remove</button></li>);
                 })}
               </ul>
             </div>
@@ -29,7 +29,7 @@ export default function EventInfo({
             <div id="eventInfoPending">
               <ul>
                 {eventInfo.pending.map((user, index) => {
-                  return (<li key={index}>{user} <button onClick={() => eventAcceptRequest(eventInfo.eventId, user)}>Accept</button><button onClick={() => eventRejectRequest(eventInfo.eventId, loginDisplayName)}>Reject</button></li>);
+                  return (<li key={index}>{user} <button onClick={() => eventAcceptRequest(eventInfo.event_id, user)}>Accept</button><button onClick={() => eventRejectRequest(eventInfo.eventId, loginDisplayName)}>Reject</button></li>);
                 })}
               </ul>
             </div>
@@ -40,7 +40,7 @@ export default function EventInfo({
   };
   const limitedButton = () => {
     if (eventInfoAccess === 'limited' && eventInfo.pending === null) {
-      return (<button onClick={() => eventRequestApproval(eventInfo.eventId)}>Request to Join</button>);
+      return (<button onClick={() => eventRequestApproval(eventInfo.event_id)}>Request to Join</button>);
     }
     if (eventInfoAccess !== 'host' && eventInfo.pending === 1) {
       return (<span>Request Pending...</span>);

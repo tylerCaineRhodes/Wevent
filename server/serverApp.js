@@ -174,7 +174,6 @@ app.delete('/event', (req, res) => {
 });
 
 app.post('/pending', (req, res) => {
-  console.log(req.body);
   db.askToJoinEvent(req.body.userId, req.body.eventId, (err, data) => {
     if (err) {
       console.log(err);

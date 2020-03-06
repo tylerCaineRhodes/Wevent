@@ -384,9 +384,10 @@ class App extends React.Component {
     } else {
       body.userId = this.state.userId;
     }
-    axios.post('/pending', {
-      body,
-    })
+    axios.post('/pending', body)
+      .then(() => {
+        this.openEventInfoModal(eventId);
+      })
       .catch((err) => {
         if (err) {
           console.log('openEventInfoModal - Error requesting approval');
@@ -396,9 +397,10 @@ class App extends React.Component {
 
   eventAcceptRequest(eventId, displayName) {
     const body = { eventId, displayName };
-    axios.put('/pending', {
-      body,
-    })
+    axios.put('/pending', body)
+      .then(() => {
+        this.openEventInfoModal(eventId);
+      })
       .catch((err) => {
         if (err) {
           console.log('openEventInfoModal - Error accepting request');
@@ -408,9 +410,12 @@ class App extends React.Component {
 
   eventRejectRequest(eventId, displayName) {
     const reqParams = { eventId, displayName };
-    axios.put('/pending', {
-      params: {reqParams},
+    axios.delete('/pending', {
+      params: reqParams,
     })
+      .then(() => {
+        this.openEventInfoModal(eventId);
+      })
       .catch((err) => {
         if (err) {
           console.log('openEventInfoModal - Error accepting request');
