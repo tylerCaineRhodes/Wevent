@@ -522,7 +522,7 @@ class App extends React.Component {
                     handleCreateEventSubmit={this.handleCreateEventSubmit}
                   />
                 )}
-                title="Create Event"
+               // title="Create Event"
                 handleShow={this.openCreateEventModal}
                 handleClose={this.closeCreateEventModal}
                 show={this.state.createEventDisplayed}
@@ -555,7 +555,7 @@ class App extends React.Component {
                   handleSignUpSubmit={this.handleSignUpSubmit}
                 />
               )}
-              title="Sign Up!"
+              // title="Sign Up!"
               handleShow={this.openSignUpModal}
               handleClose={this.closeSignUpModal}
               show={this.state.signUpDisplayed}
