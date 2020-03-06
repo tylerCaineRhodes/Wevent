@@ -365,11 +365,7 @@ class App extends React.Component {
       params,
     })
       .then((res) => {
-<<<<<<< HEAD
-        // console.log(res.data); //<-------------------------Remove
-=======
-        console.log(res.data);
->>>>>>> fa4311a8199342add0da0065d0659fe4bf689c92
+        // console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
