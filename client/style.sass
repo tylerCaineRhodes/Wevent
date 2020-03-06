@@ -192,25 +192,20 @@ p.eventInfo
   top: 0
 
 .outerDash  
-
   text-align: center
-  border-width: 1px
   width: 70%
   margin: auto
   height: 80vh
-  border-style: solid
-  border-color: black
-  margin-top: 5%
-  border-radius: 10px  
+  margin-top: 5% 
   #displayName
-    color: orange
     font-size: xx-large 
 
 
 
 
 .hostingDash 
-  box-shadow: -1px 1px 10px grey;
+  background-color: white
+  box-shadow: -1px 1px 10px black
   position: absolute
   font-family: apple
   text-align: center
@@ -223,16 +218,18 @@ p.eventInfo
   left: 50%
   margin: 2% 
   margin-top: 5%
-  display: flex;
-  flex-direction: column;
+  display: flex
+  flex-direction: column
   .h4
     background-color: #fc6565 
     color: white
     padding: 20px
+   
 
 
 .attendingDash 
-  box-shadow: -1px 1px 10px grey;
+  background-color: white
+  box-shadow: -1px 1px 10px black;
   position: absolute
   font-family: apple
   text-align: center
@@ -251,6 +248,9 @@ p.eventInfo
     background-color: orange
     color: white
     padding: 20px
+
+.scroll
+  overflow: scroll
  
 .modalStyles
   width: fit-content
@@ -355,29 +355,29 @@ p.eventInfo
 .loginButton
   margin: 2%
   width: 45%
-  background-color: #644a6f
-  border-color: #644a6f
+  background-color: #e99f41
+  border-color: #e99f41
   border-radius: 5px
 .loginButton:hover
-  background-color: #644a6f
+  background-color: #e99f41
   border-color: gray
   border-radius: 5px
 .loginButton:active
   border-radius: 5px
-  background-color: #644a6f !important
-  border-color: #644a6f !important
+  background-color: #e99f41 !important
+  border-color: #e99f41 !important
 .loginButton:focus
-  box-shadow: 0 0 0 0.2rem rgba(100,74,111, .7) !important
+  box-shadow: 0 0 0 0.2rem rgba(233,159,65, .7) !important
 
 #signupButton
   background-color: orange
   border-color: gray
   width: 100%
 #signupButton:hover
-  background-color: #644a6f
-  border-color: gray
+  background-color: #e99f41
+  border-color: #e99f41
 #signupButton:active
-  background-color: #644a6f
+  background-color: #e99f41
 
 #noAccountText, #noAccountButton
   display: inline-block
@@ -409,9 +409,12 @@ p.eventInfo
 
 .landingPageImage
   z-index: -1000
-  filter: blur(8px)
+  filter: blur(5px)
   position: fixed
   top: 0
+  width: 100%
+  height: 100%
+  opacity: .8
 
 #continueAsGuestButton
   color: gray
@@ -482,25 +485,68 @@ p.eventInfo
   border-color: orange
   border-radius: 3px
   position: relative
-  height: 7vh;
-  width: 94%;
-  align-items: center;
-  justify-content: center;
+  height: 7vh
+  width: 94%
+  align-items: center
+  justify-content: center
   margin: 3% 0 3% 0
   left: 3%
-  overflow: scroll
+  cursor: pointer
+
+  
+
+.mainPageBackgroundImage
+  z-index: -1000
+  filter: blur(5px)
+  position: fixed
+  top: 0
+  width: 100%
+  height: 100%
+  opacity: .8
 
 #mainCalendar
   width: 72%
   display: inline-block
   float: right
+  color: white
   margin-right: 2.5%
   margin-top: 2.5%
   margin-bottom: 2.5%
   padding: 1.25%
-  background-color: white
+  background-color:  rgba(42, 46, 65, 0.8)
   border-radius: 15px
+
+.rbc-toolbar button
+  color: white
+
+.rbc-today
+  background-color: rgba(42, 46, 65, 0.4)
+
+.rbc-off-range-bg
+  background-color:rgba(255,251,243, .7)
+
+.rbc-month-view
+  border-color: rgba(221,221,221, .7)
+
+.rbc-month-row + .rbc-month-row
+  border-top: none
+
+.rbc-day-bg + .rbc-day-bg
+  border-left: none
+
+.rbc-header + .rbc-header
+  border-left: none
+
+.rbc-month-view
+  border: none
+
+.rbc-header
+  border-bottom: none
   filter: drop-shadow(0 0 0.15rem black)
+  cursor: pointer
+
+.rbc-off-range-bg
+  background-color: transparent
 
 #mainFilter
   width: 20%
@@ -509,35 +555,41 @@ p.eventInfo
   margin-top: 2.5%
   margin-bottom: 2.5%
   padding: 1.25%
-  background-color: white
+  background-color: rgba(255, 255, 255, 0.7)
   border-radius: 15px
-  filter: drop-shadow(0 0 0.15rem black)
-
-#mainPage
-  background-color: #fffbf3
 
 .navbar
   filter: drop-shadow(0 0 0.1rem black)
   height: 75px
+  background-color: transparent
+  color: white
 
 .rbc-agenda-date-cell
-  background-color: white
-  color: black
+  background-color: rgba(42, 46, 65, 0.7) !important
+  color: White
 
 .rbc-toolbar-label
   font-size: 25px
   font-weight: 200
 
+.dashboard-main
+  z-index: -1000
+  filter: blur(8px)
+  position: fixed
+  top: 0
 .rbc-toolbar
   .rbc-btn-group
+    button
+      &:focus
+        outline: 5px auto rgba(255,251,243, .7) !important
+        color: rgb(80,82,84)
     &:last-child
       button
         &:last-child
-          color: white
           font-size: 0
           &:after
             font: 400 15px system-ui
-            color: black
+            color: white
             float: left
             content: "Event List"
 
@@ -549,10 +601,9 @@ p.eventInfo
   border-radius: 5px
   border-width: 2px
   border-color: white
-  
-// .logoutButton
-//   background-color: orange
-//   color: white
-//   border-radius: 5px
-//   border-width: 2px
-//   border-color: white
+
+.MuiSlider-root
+  color: orange !important
+.MuiSlider-rail 
+  background-color: grey !important
+

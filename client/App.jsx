@@ -92,6 +92,8 @@ class App extends React.Component {
     this.handleRemoveGuest = this.handleRemoveGuest.bind(this);
     this.handleAttendEvent = this.handleAttendEvent.bind(this);
     this.handleAcceptPending = this.handleAcceptPending.bind(this);
+    this.handleDeleteHostEvent = this.handleDeleteHostEvent.bind(this);
+    //finish this path for deleting event
   }
 
   componentDidMount() {
@@ -386,8 +388,8 @@ class App extends React.Component {
   }
 
   handleRemoveGuest(event) {
-    let id = (event.target.id.substring(0, event.target.id.length - 1));
-    let displayName = (document.getElementById(id).childNodes[0].innerHTML);
+    const id = (event.target.id.substring(0, event.target.id.length - 1));
+    const displayName = (document.getElementById(id).childNodes[0].innerHTML);
     // console.log(displayName);
     // console.log(this.state.eventId);
     axios.delete('/pending', {
@@ -409,8 +411,8 @@ class App extends React.Component {
 
   handleAttendEvent(event) {
     axios.post('/pending', {
-        userId: this.state.userId,
-        eventId: this.state.eventId,
+      userId: this.state.userId,
+      eventId: this.state.eventId,
     })
       .then((res) => {
         // console.log(res.data); //<-------------------------Remove
@@ -424,11 +426,11 @@ class App extends React.Component {
   }
 
   handleAcceptPending(event) {
-    let id = (event.target.id.substring(0, event.target.id.length - 1));
-    let displayName = (document.getElementById(id).childNodes[0].innerHTML);
+    const id = (event.target.id.substring(0, event.target.id.length - 1));
+    const displayName = (document.getElementById(id).childNodes[0].innerHTML);
     axios.put('/pending', {
-        displayName,
-        eventId: this.state.eventId,
+      displayName,
+      eventId: this.state.eventId,
     })
       .then((res) => {
         // console.log(res.data); //<-------------------------Remove
@@ -474,6 +476,21 @@ class App extends React.Component {
     // DO ALL THE API CALLS TO VERIFY USER THEN SET PAGE STATE TO PAGE OR WHATEVER
   }
 
+  handleDeleteHostEvent(uniqueId) {
+    const params = { uniqueId };
+    axios.delete('/event', {
+      params,
+    })
+      .then((response) => {
+        this.getAllEvents();
+        this.closeEventInfoModal();
+        this.getEventsForDashboard();
+      })
+      .catch((err) => {
+        console.log('didn\'t work from axios', err);
+      });
+  }
+
   handleGuestSubmit(event) {
     this.setState({
       loginDisplayName: 'Guest',
@@ -495,8 +512,8 @@ class App extends React.Component {
       this.openEventInfoModal(event.eventId);
     });
   }
-    //console.log('POOP :)', event, this.state.calendarEvents);
-    
+  //console.log('POOP :)', event, this.state.calendarEvents);
+
 
   handleCreateEventSubmit(event) {
     event.preventDefault();
@@ -597,6 +614,8 @@ class App extends React.Component {
               <ModalReuseable
                 body={(
                   <EventInfo
+                    eventId={this.state.eventId}
+                    handleDeleteHostEvent={this.handleDeleteHostEvent}
                     eventInfoAccess={this.state.eventInfoAccess}
                     eventInfo={this.state.eventInfo}
                     handleRemoveGuest={this.handleRemoveGuest}

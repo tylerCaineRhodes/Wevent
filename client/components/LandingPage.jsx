@@ -13,7 +13,7 @@ const LandingPage = ({
   handleStateChange,
 }) => (
   <div className="landingPage">
-    <img className="landingPageImage" src="https://upload.wikimedia.org/wikipedia/commons/d/da/Austin-skyline.jpg" />
+    <img className="landingPageImage" src="./img/LandingPage2.jpeg" />
     <span className="landingPageHeader">
       Wevent
     </span>

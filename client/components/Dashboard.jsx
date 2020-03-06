@@ -14,6 +14,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
+        <img src="https://www.roterrucksack.com/wp-content/uploads/2016/09/Badlands-Nationalpark-South-Dakota-USA-Head.jpg" className="dashboard-main" />
         <Title buttonText="Back" buttonClass="createNewEvent-button" onClick={this.props.changePage} />
         <div className="outerDash">
           <span id="displayName">{this.props.info.nameAndLocation[0].display_name}</span>
@@ -21,18 +22,18 @@ class Dashboard extends React.Component {
           <span>{this.props.info.nameAndLocation[0].location_state}</span>
           <div className="hostingDash">
             <h4 className="h4">Hosting</h4>
-            <>{this.props.info.hosting.map((event, i) => {
+            <div className="scroll">{this.props.info.hosting.map((event, i) => {
               let pending;
               if (event.pending >= 1) {
                 pending = 1;
               }
               return (<div data-eventid={event.event_id} key={i} className={`hosting-dash-pending${pending} dashboardListItem`} onClick={this.onClick.bind(this)}>{event.title}</div>);
             })}
-            </>
+            </div>
           </div>
           <div className="attendingDash">
             <h4 className="h4">Attending</h4>
-            <>{this.props.info.attending.map((event, i) => (<div data-eventid={event.event_id} key={i} className={`attending-dash-pending${event.pending} dashboardListItem`} onClick={this.onClick.bind(this)}>{event.title}</div>))}</>
+            <div className="scroll">{this.props.info.attending.map((event, i) => (<div data-eventid={event.event_id} key={i} className={`attending-dash-pending${event.pending} dashboardListItem`} onClick={this.onClick.bind(this)}>{event.title}</div>))}</div>
           </div>
         </div>
       </div>
