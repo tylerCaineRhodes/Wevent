@@ -386,8 +386,8 @@ class App extends React.Component {
   }
 
   handleRemoveGuest(event) {
-    let id = (event.target.id.substring(0, event.target.id.length - 1));
-    let displayName = (document.getElementById(id).childNodes[0].innerHTML);
+    const id = (event.target.id.substring(0, event.target.id.length - 1));
+    const displayName = (document.getElementById(id).childNodes[0].innerHTML);
     // console.log(displayName);
     // console.log(this.state.eventId);
     axios.delete('/pending', {
@@ -409,8 +409,8 @@ class App extends React.Component {
 
   handleAttendEvent(event) {
     axios.post('/pending', {
-        userId: this.state.userId,
-        eventId: this.state.eventId,
+      userId: this.state.userId,
+      eventId: this.state.eventId,
     })
       .then((res) => {
         // console.log(res.data); //<-------------------------Remove
@@ -424,11 +424,11 @@ class App extends React.Component {
   }
 
   handleAcceptPending(event) {
-    let id = (event.target.id.substring(0, event.target.id.length - 1));
-    let displayName = (document.getElementById(id).childNodes[0].innerHTML);
+    const id = (event.target.id.substring(0, event.target.id.length - 1));
+    const displayName = (document.getElementById(id).childNodes[0].innerHTML);
     axios.put('/pending', {
-        displayName,
-        eventId: this.state.eventId,
+      displayName,
+      eventId: this.state.eventId,
     })
       .then((res) => {
         // console.log(res.data); //<-------------------------Remove
@@ -495,8 +495,7 @@ class App extends React.Component {
       this.openEventInfoModal(event.eventId);
     });
   }
-    //console.log('POOP :)', event, this.state.calendarEvents);
-    
+
 
   handleCreateEventSubmit(event) {
     event.preventDefault();
