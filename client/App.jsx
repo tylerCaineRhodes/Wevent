@@ -49,6 +49,7 @@ class App extends React.Component {
 
       eventInfoAccess: '',
       eventInfo: '',
+      eventId: '',
 
       createEventTitle: '',
       createEventDescription: '',
@@ -88,6 +89,9 @@ class App extends React.Component {
     this.getEventsForDashboard = this.getEventsForDashboard.bind(this);
     this.getAllStates = this.getAllStates.bind(this);
     this.handleGuestBackToLandingPage = this.handleGuestBackToLandingPage.bind(this);
+    this.handleRemoveGuest = this.handleRemoveGuest.bind(this);
+    this.handleAttendEvent = this.handleAttendEvent.bind(this);
+    this.handleAcceptPending = this.handleAcceptPending.bind(this);
   }
 
   componentDidMount() {
@@ -210,6 +214,7 @@ class App extends React.Component {
     if (this.state.page === 'MainPage') {
       return (
         <MainPage
+          states={this.state.states}
           handleStateChange={this.handleStateChange}
           filterEvents={this.filterEvents}
           calendarEvents={this.state.filteredEvents}
@@ -245,7 +250,7 @@ class App extends React.Component {
     //if city is initial value, ignore
     for (let i = 0; i < this.state.calendarEvents.length; i++) {
       if (this.state.calendarEvents[i].city.toUpperCase() === this.state.filterCityValue.toUpperCase() || this.state.filterCityValue === '') {
-        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '') {
+        if (this.state.calendarEvents[i].state === this.state.filterStateValue || this.state.filterStateValue === '' || this.state.filterStateValue === 'Select State') {
           if (((this.state.calendarEvents[i].attendance_current >= this.state.filterNumOfPeopleValues[0]) && (this.state.calendarEvents[i].attendance_current <= this.state.filterNumOfPeopleValues[1])) || this.state.calendarEvents[i].attendance_current === null) {
             if (this.state.calendarEvents[i].price <= this.state.filterCostValue) {
               if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '' || this.state.filterCategoryValue.id === 0) {
@@ -360,7 +365,7 @@ class App extends React.Component {
       params,
     })
       .then((res) => {
-        //console.log(res.data);
+        // console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
@@ -378,6 +383,62 @@ class App extends React.Component {
     this.setState({
       eventInfoDisplayed: false,
     });
+  }
+
+  handleRemoveGuest(event) {
+    let id = (event.target.id.substring(0, event.target.id.length - 1));
+    let displayName = (document.getElementById(id).childNodes[0].innerHTML);
+    // console.log(displayName);
+    // console.log(this.state.eventId);
+    axios.delete('/pending', {
+      params: {
+        displayName,
+        eventId: this.state.eventId,
+      },
+    })
+      .then((res) => {
+        // console.log(res.data); //<-------------------------Remove
+        this.openEventInfoModal(this.state.eventId);
+      })
+      .catch((err) => {
+        if (err) {
+          console.log('handleRemoveGuest - Error delete pend/attend from DB');
+        }
+      });
+  }
+
+  handleAttendEvent(event) {
+    axios.post('/pending', {
+        userId: this.state.userId,
+        eventId: this.state.eventId,
+    })
+      .then((res) => {
+        // console.log(res.data); //<-------------------------Remove
+        this.openEventInfoModal(this.state.eventId);
+      })
+      .catch((err) => {
+        if (err) {
+          console.log('handleAttendEvent - Error post attending user to DB');
+        }
+      });
+  }
+
+  handleAcceptPending(event) {
+    let id = (event.target.id.substring(0, event.target.id.length - 1));
+    let displayName = (document.getElementById(id).childNodes[0].innerHTML);
+    axios.put('/pending', {
+        displayName,
+        eventId: this.state.eventId,
+    })
+      .then((res) => {
+        // console.log(res.data); //<-------------------------Remove
+        this.openEventInfoModal(this.state.eventId);
+      })
+      .catch((err) => {
+        if (err) {
+          console.log('handleAttendPending - Error put pending user to DB');
+        }
+      });
   }
 
   handleLoginSubmit(event) {
@@ -404,6 +465,9 @@ class App extends React.Component {
           }, this.getEventsForDashboard);
         }
       })
+      .then(() => {
+        this.filterEvents();
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -425,9 +489,14 @@ class App extends React.Component {
   }
 
   handleCalendarEventClick(event) {
-    //console.log('POOP :)', event, this.state.calendarEvents);
-    this.openEventInfoModal(event.eventId);
+    this.setState({
+      eventId: event.eventId,
+    }, () => {
+      this.openEventInfoModal(event.eventId);
+    });
   }
+    //console.log('POOP :)', event, this.state.calendarEvents);
+    
 
   handleCreateEventSubmit(event) {
     event.preventDefault();
@@ -479,6 +548,7 @@ class App extends React.Component {
             createEventMaxPeople: 50,
           }, () => {
             this.getAllEvents();
+            this.getEventsForDashboard();
             // eslint-disable-next-line no-alert
             alert('Event Created!');
           });
@@ -499,6 +569,8 @@ class App extends React.Component {
               <ModalReuseable
                 body={(
                   <CreateEvent
+                    filterDropdownCategories={this.state.filterDropdownCategories}
+                    states={this.state.states}
                     handleStateChange={this.handleStateChange}
                     createEventTitle={this.state.createEventTitle}
                     createEventDescription={this.state.createEventDescription}
@@ -516,7 +588,7 @@ class App extends React.Component {
                     handleCreateEventSubmit={this.handleCreateEventSubmit}
                   />
                 )}
-                title="Create Event"
+               // title="Create Event"
                 handleShow={this.openCreateEventModal}
                 handleClose={this.closeCreateEventModal}
                 show={this.state.createEventDisplayed}
@@ -527,6 +599,9 @@ class App extends React.Component {
                   <EventInfo
                     eventInfoAccess={this.state.eventInfoAccess}
                     eventInfo={this.state.eventInfo}
+                    handleRemoveGuest={this.handleRemoveGuest}
+                    handleAttendEvent={this.handleAttendEvent}
+                    handleAcceptPending={this.handleAcceptPending}
                   />
                 )}
                 handleShow={this.openEventInfoModal}
@@ -549,7 +624,7 @@ class App extends React.Component {
                   handleSignUpSubmit={this.handleSignUpSubmit}
                 />
               )}
-              title="Sign Up!"
+              // title="Sign Up!"
               handleShow={this.openSignUpModal}
               handleClose={this.closeSignUpModal}
               show={this.state.signUpDisplayed}

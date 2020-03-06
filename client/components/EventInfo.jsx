@@ -1,9 +1,14 @@
 import React from 'react';
 
-export default function EventInfo({ eventInfo, eventInfoAccess }) {
-  
-  //console.log('Attending' + eventInfo.attending)
-  eventInfo.attending = []; //Temp variable until changes are pushed
+export default function EventInfo({ eventInfo, eventInfoAccess, handleRemoveGuest, handleAttendEvent, handleAcceptPending}) {
+
+  let button = '';
+
+  if (eventInfoAccess === 'full') {button = (<button type="button" className="attend-delete-button">Un-attend</button>)}
+  if (eventInfoAccess === 'limited'){eventInfo.pending !== 1 ? button = <button type="button" className="attend-delete-button" onClick={handleAttendEvent}>Attend</button> : button = <button type="button" className="attend-delete-button">Pending</button>}
+  if (eventInfo.private === 0) {button = null}
+  if (eventInfoAccess === 'host') {button = (<button type="button" className="attend-delete-button">DELETE</button>)}
+
   return (
     <div className={`grid-parent-${eventInfoAccess}`}>
       <div className="grid-title">
@@ -20,7 +25,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
             ) : null
         }
         <p className="eventInfo">{eventInfo.city}, {eventInfo.state}<br />{eventInfo.zipcode}</p>
-        <p className="eventInfo">Price: ${eventInfo.price.toFixed(2)}</p>
+        <p className="eventInfo">Price: $ {eventInfo.price.toFixed(2)}</p>
         {
           eventInfo.attendance_max !== null
             ? (
@@ -28,15 +33,7 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
             ) : null
         }
         <div>
-          {
-            // eslint-disable-next-line no-nested-ternary
-            eventInfoAccess === 'host' ? (<button type="button" className="attend-delete-button">DELETE</button>
-            ) : eventInfoAccess === 'full' ? (
-              <button type="button" className="attend-delete-button">Un-attend</button>
-            ) : (
-              <button type="button" className="attend-delete-button">Attend</button>
-            )
-          }
+          { button }
         </div>
       </div>
       <div className={`grid-right-${eventInfoAccess}`}>
@@ -48,20 +45,20 @@ export default function EventInfo({ eventInfo, eventInfoAccess }) {
             <div className="grid-host-pend-accept">
               <div className="grid-host-pend">
                 <div className="pend-accept-heading">Pending</div>
-                {eventInfo.pending.map((pend, index) => (
-                  <div key={index}>
-                    <p className="pend-accept-name">{pend}</p>
-                    <button type="button" className="check-x-button">&#x274C;</button>
-                    <button type="button" className="check-x-button">&#9989;</button>
+                {eventInfo.pending.map((pending, index) => (
+                  <div key={index} id={`pending${index}`}>
+                    <p className="pend-accept-name">{pending}</p>
+                    <button type="button" className="check-x-button" id={`pending${index}1`} onClick={handleRemoveGuest}>&#x274C;</button>
+                    <button type="button" className="check-x-button" id={`pending${index}2`}onClick={handleAcceptPending}>&#9989;</button>
                   </div>
                 ))}
               </div>
               <div className="grid-host-accept">
                 <div className="pend-accept-heading">Accepted</div>
-                {eventInfo.attending.map((accept, index) => (
-                  <div key={index}>
-                    <p className="pend-accept-name">{accept}</p>
-                    <button type="button" className="pend-accept-button">Remove</button>
+                {eventInfo.attending.map((attending, index) => (
+                  <div key={index} id={`attending${index}`}>
+                    <p className="pend-accept-name">{attending}</p>
+                    <button type="button" className="check-x-button" id={`attending${index}1`} onClick={handleRemoveGuest}>&#x274C;</button>
                   </div>
                 ))}
               </div>

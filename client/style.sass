@@ -6,11 +6,12 @@
   display: -ms-grid
   display: grid
   height: 650px
-  width: 50%
+  // width: 50%
   grid-template-columns: 1fr 1fr
   grid-auto-rows: 2
   border: 6px solid #fc6565
   border-radius: 10px
+  min-width: 520px;
   
 .grid-parent-full
   @include grid-parent
@@ -44,7 +45,8 @@
 .grid-left-host
   @include basic-styles
   @include grid-left
-  height: 330px
+  margin: 3px 0px 1px 3px;
+  height: 335px
 
 .grid-left-full
   @include basic-styles
@@ -82,7 +84,6 @@
   @include basic-styles
   height: 180px
   position: relative
-  top: 5px
   grid-column: 1/3
   grid-row: 3/4
   border-radius: 0px 0px 10px 10px;
@@ -95,22 +96,22 @@
   float: left
   position: relative
   top: 2px
-  border-radius: 10px;
   border: 3px solid  #fc6565
-  overflow-y: auto
-  padding: 20px
+  overflow-x: hidden
+  padding: 20px 15px
 
 .grid-host-pend
   @include grid-host
   grid-column: col 1 / span  1
   float: left
+
   
 .grid-host-accept
   @include grid-host
   grid-column: col 2 / span  1
   float: right
 
-@mixin button
+@mixin button 
   display: inline-block
   float: right
   border-radius: 5px
@@ -119,6 +120,8 @@
   background-color: #fc6565
   color: white
   margin: 2px
+  &:hover
+    cursor: pointer
 
 .pend-accept-button
   @include button
@@ -142,14 +145,18 @@
   position: relative
   top: -20px
   left: -20px
-  width: 118%
+  width: 119%
   border-bottom: 3px solid #fc6565
   text-shadow: #dd3d3d 0px 0px 3px
 
 .check-x-button
   float: right
   border: none
-  margin: -4px
+  margin: 2px 0px;
+  font-size: 13px
+
+.check-x-button:hover
+  cursor: pointer
 
 p.eventInfoTitle
   font-size: 40px
@@ -240,14 +247,13 @@ p.eventInfo
     background-color: orange
     color: white
     padding: 20px
-
-    
  
 .modalStyles
   width: fit-content
   max-width: 100%
   .modal-body
     height: 100%
+    width: 700px
 
 .createNewEvent-button
   position: relative
@@ -257,21 +263,68 @@ p.eventInfo
   border-width: 2px
   border-color: white
 
+// .importantButton
+//   position: relative
+//   background-color: orange
+//   color: white
+//   border-radius: 5px
+//   border-width: 2px
+//   border-color: white
+//   right: -15.25%
+
+
 .event-info-button
   position: relative
   background-color: orange
   color: white
   border-radius: 5px
   border-width: 2px
-  border-color: white
+  border-color: white  
 
 #createEventForm > input, span, select,
   display: block
 
+#createEventDate
+  width: 150px
+  margin-bottom: 10px
+
+#createEventTitle 
+  width: 100%
+  margin-bottom: 10px
+
+#createEventCategory 
+  width: 100%
+  margin-bottom: 10px 
+
+#createEventTime
+  margin-bottom: 10px 
+
 #createEventCost, #createEventMaxPeople
-  width: 15%
+  width: 50%
+
+#createEventAddress1  
+  width: 100%
+  margin-bottom: 10px
+
+#createEventAddress2  
+  width: 100%
+  margin-bottom: 10px
+
+#createEventCity 
+  width: 100%
+  margin-bottom: 10px
+
+#createEventState  
+  width: 100%
+  margin-bottom: 10px
+
+#createEventZipcode  
+  width: 100%
+  margin-bottom: 10px
 
 #createEventDescription
+  width: 100%
+  margin-bottom: 10px
   height: 150px
 
 .landingPageContent
@@ -280,11 +333,11 @@ p.eventInfo
   text-align: center
   border-width: 1px
   border-style: solid
-  border-color: grey
+  border-color: transparent
   border-radius: 10px
   margin-left: 35%
   margin-right: 35%
-  margin-top: 1%
+  margin-top: 4%
 
 .landingPageUsernameField, .landingPagePasswordField
   width: 45%
@@ -292,27 +345,35 @@ p.eventInfo
   margin-top: 2.5%
   margin-left: 27.5%
   margin-right: 27.5%
+  border-radius: 10px
+
 
 .loginButton
   margin: 2%
   width: 45%
-  background-color: orange
-  border-color: gray
+  background-color: #644a6f
+  border-color: #644a6f
+  border-radius: 5px
 .loginButton:hover
-  background-color: #ff8d00
+  background-color: #644a6f
   border-color: gray
+  border-radius: 5px
 .loginButton:active
-  background-color: #ffb255
+  border-radius: 5px
+  background-color: #644a6f !important
+  border-color: #644a6f !important
+.loginButton:focus
+  box-shadow: 0 0 0 0.2rem rgba(100,74,111, .7) !important
 
 #signupButton
   background-color: orange
   border-color: gray
   width: 100%
 #signupButton:hover
-  background-color: #ff8d00
+  background-color: #644a6f
   border-color: gray
 #signupButton:active
-  background-color: #ffb255
+  background-color: #644a6f
 
 #noAccountText, #noAccountButton
   display: inline-block
@@ -368,6 +429,48 @@ p.eventInfo
 .attending-dash-pending1
   color: grey
 
+.card-body
+  .MuiFormControl-root
+    &:first-child
+      .MuiFormControlLabel-root
+        &.MuiFormControlLabel-labelPlacementStart
+          .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track
+            background-color: orange !important
+
+.card-body
+  .MuiFormControl-root
+    &:last-child
+      .MuiFormControlLabel-root
+        &.MuiFormControlLabel-labelPlacementStart
+          .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track
+            background-color: #fc6565 !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiSwitch-track
+    background-color: orange !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track 
+    background-color: #fc6565 !important
+
+#eventPrivate + .MuiSwitch-root
+ .MuiButtonBase-root 
+    &.MuiIconButton-root 
+      &.PrivateSwitchBase-root-50 
+        &.MuiSwitch-switchBase 
+          &.MuiSwitch-colorSecondary
+            color: orange !important
+
+#eventPrivate + .MuiSwitch-root
+  .MuiButtonBase-root 
+    &.MuiIconButton-root 
+      &.PrivateSwitchBase-root-50 
+        &.MuiSwitch-switchBase 
+          &.MuiSwitch-colorSecondary 
+            &.PrivateSwitchBase-checked-51 
+              &.Mui-checked
+                color: #fc6565 !important
+                
 .dashboardListItem
   display: flex
   border-width: 1px
@@ -382,6 +485,7 @@ p.eventInfo
   margin: 3% 0 3% 0
   left: 3%
   overflow: scroll
+
 #mainCalendar
   width: 72%
   display: inline-block
@@ -434,4 +538,3 @@ p.eventInfo
   border-radius: 5px
   border-width: 2px
   border-color: white
-
