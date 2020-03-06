@@ -232,6 +232,7 @@ module.exports.getCategories = (callback) => {
 };
 
 module.exports.askToJoinEvent = (userId, eventId, callback) => {
+  
   const query = 'INSERT INTO users_events_attending(user_id, event_id, pending) VALUES (?, ?, 1)';
   db.query(query, [userId, eventId], (err, results) => {
     if (err) {
@@ -243,6 +244,7 @@ module.exports.askToJoinEvent = (userId, eventId, callback) => {
 };
 
 module.exports.approvePending = (displayName, eventId, callback) => {
+  console.log("APrrove", userId, eventId);
   const query = 'SELECT user_id from users WHERE display_name = ?';
   db.query(query, [displayName], (err, results) => {
     if (err) {
