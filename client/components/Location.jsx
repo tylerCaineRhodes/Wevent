@@ -5,6 +5,7 @@ const Location = ({
   filterCityValue,
   filterStateValue,
   filterEvents,
+  states,
 }) => (
   <form>
     <label htmlFor="city">
@@ -14,13 +15,10 @@ const Location = ({
     <label htmlFor="state">
       State:
       <select value={filterStateValue} onChange={(e) => handleStateChange(e.target.value, 'filterStateValue', filterEvents)}>
-        <option> </option>
-        <option>TX</option>
-        <option>AZ</option>
-        <option>HI</option>
-        <option>TN</option>
-        <option>NY</option>
-        <option>MA</option>
+        <option>Select State</option>
+        {states.map((state, index) => (
+          <option key={state.state_id}>{state.state_name}</option>
+        ))}
       </select>
     </label>
   </form>

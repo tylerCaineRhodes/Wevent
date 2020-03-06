@@ -22,6 +22,7 @@ const MainPage = ({
   loginDisplayName,
   filterEvents,
   handleGuestBackToLandingPage,
+  states,
 }) => (
   <div id="mainPage">
     <Title
@@ -34,6 +35,7 @@ const MainPage = ({
     />
     <div id="mainFilter">
       <Filter
+        states={states}
         loginDisplayName={loginDisplayName}
         handleStateChange={handleStateChange}
         filterEvents={filterEvents}
