@@ -502,6 +502,8 @@ class App extends React.Component {
               <ModalReuseable
                 body={(
                   <CreateEvent
+                    filterDropdownCategories={this.state.filterDropdownCategories}
+                    states={this.state.states}
                     handleStateChange={this.handleStateChange}
                     createEventTitle={this.state.createEventTitle}
                     createEventDescription={this.state.createEventDescription}
