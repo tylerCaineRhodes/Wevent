@@ -41,7 +41,7 @@ class Dashboard extends React.Component {
             <div className="scroll">{this.props.info.attending.map((event, i) => (
               <div className="dashboardListItem">
                 <div data-eventid={event.event_id} key={i} className={`attending-dash-pending${event.pending}`} onClick={this.onClick.bind(this)}>{event.title}</div>
-                {event.pending && <div className="attending-alert">Pending approval</div>}
+                {event.pending ? <div className="attending-alert">Pending approval</div> : <></>}
               </div>
             ))}
             </div>
