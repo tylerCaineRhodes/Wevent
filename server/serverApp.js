@@ -45,13 +45,12 @@ app.get('/dashboard', (req, res) => {
 app.get('/eventInfo', (req, res) => {
   req.query.userId = parseInt(req.query.userId, 10);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
-    if (err || info[0] === undefined) {
+    if (err || info === undefined) {
       console.error(err);
       res.sendStatus(500);
       return;
     }
-    // console.log("PENDING", info[0]);
-    if (info[0].host_id === req.query.userId) {
+    if (info.host_id === req.query.userId) {
       db.getEventInfoForHost(req.query.eventId, (error, infoForEvent) => {
         if (error) {
           console.error(error);
@@ -61,7 +60,7 @@ app.get('/eventInfo', (req, res) => {
         const eventInfo = middleware.prettifyHostingForEventInfo(infoForEvent);
         res.send({ access: 'host', eventInfo });
       });
-    } else if (info[0].private === 0 || info[0].pending === 0) {
+    } else if (info.private === 0 || info.pending === 0) {
       db.getEventInfoForNonHost(req.query.eventId, req.query.userId, true, (goofUp, eventInfo) => {
         if (goofUp) {
           console.error(goofUp);
@@ -162,7 +161,8 @@ app.get('/getCategories', (req, res) => {
 });
 
 app.delete('/event', (req, res) => {
-  db.deleteEvent(parseInt(req.query.eventId, 10), (err, data) => {
+  console.log('here is the passed object ---->', req.query.uniqueId);
+  db.deleteEvent(req.query.uniqueId, (err, data) => {
     if (err) {
       console.log(err);
       res.sendStatus(500);
