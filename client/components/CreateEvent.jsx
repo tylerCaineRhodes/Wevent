@@ -23,8 +23,6 @@ const CreateEvent = ({
     <form id="createEventForm">
       <span>Event Title:</span>
       <input required type="text" id="createEventTitle" name="Event Title" defaultValue={createEventTitle} onChange={(e) => handleStateChange(e.target.value, 'createEventTitle')} />
-      <span>Event Description:</span>
-      <textarea required id="createEventDescription" name="Event Description" defaultValue={createEventDescription} onChange={(e) => handleStateChange(e.target.value, 'createEventDescription')} />
       <span>Event Category:</span>
       <select required id="createEventCategory" name="Event Category" defaultValue={createEventCategory} onChange={(e) => handleStateChange(e.target.value, 'createEventCategory')}>
         <option>  </option>
@@ -63,8 +61,10 @@ const CreateEvent = ({
       <input required type="number" id="createEventZipcode" name="Event Zipcode" defaultValue={createEventZipcode} onChange={(e) => handleStateChange(e.target.value, 'createEventZipcode')} />
       <span>Event Max People:</span>
       <Slider id="createEventMaxPeople" name="Event Max People" valueLabelDisplay="auto" aria-labelledby="range-slider" value={createEventMaxPeople} onChange={(e, v) => handleStateChange(v, 'createEventMaxPeople')} />
+      <span>Event Description:</span>
+      <textarea required id="createEventDescription" name="Event Description" defaultValue={createEventDescription} onChange={(e) => handleStateChange(e.target.value, 'createEventDescription')} />
     </form>
-    <button type="submit" id="createEventSubmit" name="Event Submit" onClick={(e) => handleCreateEventSubmit(e)}>Create Event</button>
+    <button type="submit" id="createEventSubmit" name="Event Submit" onClick={(e) => handleCreateEventSubmit(e)} style={{ backgroundColor: 'orange', color: 'white' }}>Create Event</button>
   </div>
 );
 
