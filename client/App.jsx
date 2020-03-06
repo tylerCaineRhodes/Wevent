@@ -519,7 +519,7 @@ class App extends React.Component {
                     handleCreateEventSubmit={this.handleCreateEventSubmit}
                   />
                 )}
-                title="Create Event"
+               // title="Create Event"
                 handleShow={this.openCreateEventModal}
                 handleClose={this.closeCreateEventModal}
                 show={this.state.createEventDisplayed}
