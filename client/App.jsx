@@ -390,13 +390,8 @@ class App extends React.Component {
   }
 
   handleRemoveGuest(event) {
-<<<<<<< HEAD
     const displayName = event.target.getAttribute('data-name');
     const eventId = event.target.getAttribute('data-id');
-=======
-    // console.log("REMOVING")
-    const eventId = event.target.getAttribute('data-id')
->>>>>>> b82e831e8d66fc4ba6a230039952554133b9be34
     axios.delete('/pending', {
       params: {
         displayName,
@@ -417,7 +412,7 @@ class App extends React.Component {
   handleAttendEvent(event) {
     axios.post('/pending', {
       userId: this.state.userId,
-      eventId: event.target.getAttribute(data-id),
+      eventId: event.target.getAttribute('data-id'),
     })
       .then((res) => {
         this.getEventsForDashboard(this.state.userId);
