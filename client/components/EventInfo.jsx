@@ -97,6 +97,8 @@ export default function EventInfo({
                   type="button"
                   className="check-x-button"
                   id={`pending${index}1`}
+                  data-id={eventInfo.event_id}
+                  data-name={pending}
                   onClick={handleRemoveGuest}
                 >
                   &#x274C;
@@ -105,6 +107,8 @@ export default function EventInfo({
                   type="button"
                   className="check-x-button"
                   id={`pending${index}2`}
+                  data-id={eventInfo.event_id}
+                  data-name={pending}
                   onClick={handleAcceptPending}
                 >
                   &#9989;
@@ -121,6 +125,8 @@ export default function EventInfo({
                   type="button"
                   className="check-x-button"
                   id={`attending${index}1`}
+                  data-id={eventInfo.event_id}
+                  data-name={attending}
                   onClick={handleRemoveGuest}
                 >
                   &#x274C;
