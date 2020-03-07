@@ -15,7 +15,7 @@ const LandingPage = ({
   <div className="landingPage">
     <img className="landingPageImage" src="./img/LandingPage2.jpeg" />
     <span className="landingPageHeader">
-      <img className="landingLogo" src="./img/YellowLandingLogo.png" />
+      <img className="landingLogo" src="./img/LandingLogo.png" />
     </span>
     <div className="landingPageContent">
       <Form className="login">
