@@ -370,7 +370,6 @@ class App extends React.Component {
       params,
     })
       .then((res) => {
-        // console.log(res.data);
         this.setState({
           eventInfoAccess: res.data.access,
           eventInfo: res.data.eventInfo[0],
@@ -391,19 +390,16 @@ class App extends React.Component {
   }
 
   handleRemoveGuest(event) {
-    const id = (event.target.id.substring(0, event.target.id.length - 1));
-    const displayName = (document.getElementById(id).childNodes[0].innerHTML);
-    // console.log(displayName);
-    // console.log(this.state.eventId);
+    // console.log("REMOVING")
+    const eventId = event.target.getAttribute('data-id')
     axios.delete('/pending', {
       params: {
-        displayName,
-        eventId: this.state.eventId,
+        displayName: event.target.getAttribute('data-name'),
+        eventId,
       },
     })
-      .then((res) => {
-        // console.log(res.data); //<-------------------------Remove
-        this.openEventInfoModal(this.state.eventId);
+      .then(() => {
+        this.openEventInfoModal(eventId);
       })
       .catch((err) => {
         if (err) {
@@ -418,7 +414,6 @@ class App extends React.Component {
       eventId: this.state.eventId,
     })
       .then((res) => {
-        // console.log(res.data); //<-------------------------Remove
         this.openEventInfoModal(this.state.eventId);
       })
       .catch((err) => {
@@ -429,15 +424,14 @@ class App extends React.Component {
   }
 
   handleAcceptPending(event) {
-    const id = (event.target.id.substring(0, event.target.id.length - 1));
-    const displayName = (document.getElementById(id).childNodes[0].innerHTML);
+    const displayName = event.target.getAttribute('data-name');
+    const eventId = event.target.getAttribute('data-id');
     axios.put('/pending', {
       displayName,
-      eventId: this.state.eventId,
+      eventId,
     })
       .then((res) => {
-        // console.log(res.data); //<-------------------------Remove
-        this.openEventInfoModal(this.state.eventId);
+        this.openEventInfoModal(eventId);
       })
       .catch((err) => {
         if (err) {
@@ -480,18 +474,21 @@ class App extends React.Component {
   }
 
   handleDeleteHostEvent(uniqueId) {
-    const params = { uniqueId };
-    axios.delete('/event', {
-      params,
-    })
-      .then((response) => {
-        this.getAllEvents();
-        this.closeEventInfoModal();
-        this.getEventsForDashboard();
+    let retVal = confirm('Are you sure you want to delete this event?');
+    if (retVal === true) {
+      const params = { uniqueId };
+      axios.delete('/event', {
+        params,
       })
-      .catch((err) => {
-        console.log('didn\'t work from axios', err);
-      });
+        .then((response) => {
+          this.getAllEvents();
+          this.closeEventInfoModal();
+          this.getEventsForDashboard();
+        })
+        .catch((err) => {
+          console.log('didn\'t work from axios', err);
+        });
+    } 
   }
 
   handleGuestSubmit(event) {
