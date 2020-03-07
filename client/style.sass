@@ -216,16 +216,16 @@ p.eventInfo
 
 
 .hostingDash 
-  background-color: white
+  background-color: rgba(42, 46, 65, 0.9)
   box-shadow: -1px 1px 10px black
   position: absolute
   font-family: apple
   text-align: center
-  border-width: 1px
+  border-width: 2px
   width: 31%
   height: 58vh
   border-style: solid
-  border-color: #fc6565 
+  border-color: rgba(11, 173, 135, 0.4) 
   border-radius: 5px
   left: 50%
   margin: 2% 
@@ -233,23 +233,25 @@ p.eventInfo
   display: flex
   flex-direction: column
   .h4
-    background-color: #fc6565 
+    background-color: rgba(11, 173, 135, 0.4) 
     color: white
     padding: 20px
-   
+  .scroll
+    .dashboardListItem
+      border-color: rgba(11, 173, 135, 0.4) 
 
 
 .attendingDash 
-  background-color: white
+  background-color: rgba(42, 46, 65, 0.9)
   box-shadow: -1px 1px 10px black;
   position: absolute
   font-family: apple
   text-align: center
-  border-width: 1px
+  border-width: 2px
   width: 31%
   height: 58vh
   border-style: solid
-  border-color: orange
+  border-color: rgba(138, 71, 228, 0.4)
   margin-top: 5%
   border-radius: 5px
   margin: 2%
@@ -257,9 +259,12 @@ p.eventInfo
   display: flex;
   flex-direction: column;
   .h4
-    background-color: orange
+    background-color: rgba(138, 71, 228, 0.4)
     color: white
     padding: 20px
+  .scroll
+    .dashboardListItem
+      border-color: rgba(138, 71, 228, 0.4)
 
 .scroll
   overflow: scroll
@@ -273,7 +278,7 @@ p.eventInfo
 
 .createNewEvent-button
   position: relative
-  background-color: orange
+  background-color: rgba(138, 71, 228, 0.4)
   color: white
   border-radius: 5px
   border-width: 2px
@@ -281,7 +286,7 @@ p.eventInfo
 
 // .importantButton
 //   position: relative
-//   background-color: orange
+//   background-color: rgba(138, 71, 228, 0.4)
 //   color: white
 //   border-radius: 5px
 //   border-width: 2px
@@ -291,7 +296,7 @@ p.eventInfo
 
 .event-info-button
   position: relative
-  background-color: orange
+  background-color: rgba(138, 71, 228, 0.4)
   color: white
   border-radius: 5px
   border-width: 2px
@@ -382,7 +387,7 @@ p.eventInfo
   box-shadow: 0 0 0 0.2rem rgba(233,159,65, .7) !important
 
 #signupButton
-  background-color: orange
+  background-color: rgba(138, 71, 228, 0.4)
   border-color: gray
   width: 100%
 #signupButton:hover
@@ -404,7 +409,7 @@ p.eventInfo
   cursor: pointer
 
 .guestButton
-  background-color: orange
+  background-color: rgba(138, 71, 228, 0.4)
   color: white
   border-radius: 5px2
   border-width: 2px
@@ -460,7 +465,7 @@ p.eventInfo
       .MuiFormControlLabel-root
         &.MuiFormControlLabel-labelPlacementStart
           .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track
-            background-color: orange !important
+            background-color: rgba(138, 71, 228, 0.4) !important
 
 .card-body
   .MuiFormControl-root
@@ -468,15 +473,15 @@ p.eventInfo
       .MuiFormControlLabel-root
         &.MuiFormControlLabel-labelPlacementStart
           .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track
-            background-color: #fc6565 !important
+            background-color: rgba(11, 173, 135, 0.4) !important
 
 #eventPrivate + .MuiSwitch-root
   .MuiSwitch-track
-    background-color: orange !important
+    background-color: rgba(138, 71, 228, 0.4) !important
 
 #eventPrivate + .MuiSwitch-root
   .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track 
-    background-color: #fc6565 !important
+    background-color: rgba(11, 173, 135, 0.4) !important
 
 #eventPrivate + .MuiSwitch-root
  .MuiButtonBase-root 
@@ -484,7 +489,7 @@ p.eventInfo
       &.PrivateSwitchBase-root-50 
         &.MuiSwitch-switchBase 
           &.MuiSwitch-colorSecondary
-            color: orange !important
+            color: rgba(138, 71, 228, 0.4) !important
 
 #eventPrivate + .MuiSwitch-root
   .MuiButtonBase-root 
@@ -494,14 +499,14 @@ p.eventInfo
           &.MuiSwitch-colorSecondary 
             &.PrivateSwitchBase-checked-51 
               &.Mui-checked
-                color: #fc6565 !important
+                color: rgba(11, 173, 135, 0.4) !important
                 
 .dashboardListItem
   display: flex
-  border-width: 1px
+  border-width: 2px
   border-style: solid
-  border-color: orange
-  border-radius: 3px
+  // border-color: rgba(11, 173, 135, 0.4)
+  border-radius: 10px
   position: relative
   height: 7vh
   width: 94%
@@ -511,6 +516,7 @@ p.eventInfo
   left: 3%
   cursor: pointer
   font-size: 20px
+  color: white
 
   .hosting-alert
     font-size: 12px
@@ -601,9 +607,11 @@ p.eventInfo
 
 .dashboard-main
   z-index: -1000
-  filter: blur(8px)
+  filter: blur(2.5px)
   position: fixed
   top: 0
+  width: 100vw
+  height: 100vh
 
 .rbc-toolbar
   .rbc-btn-group
@@ -636,25 +644,25 @@ p.eventInfo
 .dashboardButton
   position: relative
   right: -35%
-  background-color: orange
+  background-color: rgba(138, 71, 228, 0.4)
   color: white
   border-radius: 5px
   border-width: 2px
   border-color: white
 
 .MuiSlider-root
-  color: orange !important
+  color: rgba(138, 71, 228, 0.4) !important
 
 .MuiSlider-rail 
   background-color: grey !important
 
 tr
-  &[style*="background-color: orange; color: white;"]
+  &[style*="background-color: rgba(138, 71, 228, 0.4); color: white;"]
     .rbc-agenda-event-cell
-      background-color: orange !important
+      background-color: rgba(138, 71, 228, 0.4) !important
     background-color: transparent !important
-  &[style="background-color: rgb(252, 101, 101); color: white;"]
+  &[style="background-color: rgba(11, 173, 135, 0.4); color: white;"]
     .rbc-agenda-event-cell
-      background-color: rgb(252, 101, 101) !important
+      background-color: rgba(11, 173, 135, 0.4) !important
     background-color: transparent !important
 
