@@ -404,10 +404,7 @@ class App extends React.Component {
       },
     })
       .then(() => {
-<<<<<<< HEAD
         this.getEventsForDashboard(this.state.userId);
-=======
->>>>>>> b82e831e8d66fc4ba6a230039952554133b9be34
         this.openEventInfoModal(eventId);
       })
       .catch((err) => {
@@ -513,7 +510,6 @@ class App extends React.Component {
   }
 
   handleFilterSubmit() {
-    // console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
     this.filterEvents();
   }
 
