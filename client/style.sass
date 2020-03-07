@@ -599,10 +599,13 @@ p.eventInfo
           &:hover
             &:after
               color: black
-          &:focus
+          &.rbc-active
             &:after
               color: #505254
-
+            &:not(:focus)
+              &:after
+                color: black
+            
 .dashboardButton
   position: relative
   right: -35%
@@ -617,3 +620,14 @@ p.eventInfo
 
 .MuiSlider-rail 
   background-color: grey !important
+
+tr
+  &[style*="background-color: orange; color: white;"]
+    .rbc-agenda-event-cell
+      background-color: orange !important
+    background-color: transparent !important
+  &[style="background-color: rgb(252, 101, 101); color: white;"]
+    .rbc-agenda-event-cell
+      background-color: rgb(252, 101, 101) !important
+    background-color: transparent !important
+
