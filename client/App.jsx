@@ -417,7 +417,7 @@ class App extends React.Component {
   handleAttendEvent(event) {
     axios.post('/pending', {
       userId: this.state.userId,
-      eventId: this.state.eventId,
+      eventId: event.target.getAttribute(data-id),
     })
       .then((res) => {
         this.getEventsForDashboard(this.state.userId);
