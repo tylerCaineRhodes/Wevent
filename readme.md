@@ -1,4 +1,4 @@
-// Need TO ADD WEVENT LOGO
+// NEED TO ADD WEVENT LOGO
 
 ## Wevent
 
