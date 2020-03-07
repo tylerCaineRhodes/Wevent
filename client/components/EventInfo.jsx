@@ -19,6 +19,7 @@ export default function EventInfo({
       </button>
     );
   }
+
   if (eventInfoAccess === 'limited') {
     eventInfo.pending !== 1
       ? (button = (
@@ -36,9 +37,11 @@ export default function EventInfo({
         </button>
       ));
   }
+
   if (eventInfo.private === 0) {
     button = null;
   }
+
   if (eventInfoAccess === 'host') {
     button = (
       <button
@@ -50,6 +53,9 @@ export default function EventInfo({
       </button>
     );
   }
+  
+  let zip = '00000' + eventInfo.zipcode;
+  zip = zip.substring(zip.length-5);
 
   return (
     <div className={`grid-parent-${eventInfoAccess}`}>
@@ -72,7 +78,7 @@ export default function EventInfo({
         <p className="eventInfo">
           {eventInfo.city}, {eventInfo.state}
           <br />
-          {eventInfo.zipcode}
+          {zip}
         </p>
         <p className="eventInfo">Price: $ {eventInfo.price.toFixed(2)}</p>
         {eventInfo.attendance_max !== null ? (
@@ -92,7 +98,7 @@ export default function EventInfo({
             <div className="pend-accept-heading">Pending</div>
             {eventInfo.pending.map((pending, index) => (
               <div key={index} id={`pending${index}`}>
-                <p className="pend-accept-name">{pending}</p>
+                <p className="pend-name">{pending}</p>
                 <button
                   type="button"
                   className="check-x-button"
@@ -120,7 +126,7 @@ export default function EventInfo({
             <div className="pend-accept-heading">Accepted</div>
             {eventInfo.attending.map((attending, index) => (
               <div key={index} id={`attending${index}`}>
-                <p className="pend-accept-name">{attending}</p>
+                <p className="accept-name">{attending}</p>
                 <button
                   type="button"
                   className="check-x-button"
