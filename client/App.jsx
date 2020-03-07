@@ -391,18 +391,16 @@ class App extends React.Component {
   }
 
   handleRemoveGuest(event) {
-    console.log("REMOVING")
-    // console.log(displayName);
-    // console.log(this.state.eventId);
-    const eventId = event.target.getAttribute('data-id')
+    const displayName = event.target.getAttribute('data-name');
+    const eventId = event.target.getAttribute('data-id');
     axios.delete('/pending', {
       params: {
-        displayName: event.target.getAttribute('data-name'),
+        displayName,
         eventId,
       },
     })
       .then(() => {
-        // console.log(res.data); //<-------------------------Remove
+        this.getEventsForDashboard(this.state.userId);
         this.openEventInfoModal(eventId);
       })
       .catch((err) => {
@@ -419,6 +417,7 @@ class App extends React.Component {
     })
       .then((res) => {
         // console.log(res.data); //<-------------------------Remove
+        this.getEventsForDashboard(this.state.userId);
         this.openEventInfoModal(this.state.eventId);
       })
       .catch((err) => {
@@ -437,6 +436,7 @@ class App extends React.Component {
     })
       .then((res) => {
         // console.log(res.data); //<-------------------------Remove
+        this.getEventsForDashboard(this.state.userId);
         this.openEventInfoModal(eventId);
       })
       .catch((err) => {
