@@ -43,10 +43,11 @@ app.get('/dashboard', (req, res) => {
 
 //Get the pending variable
 app.get('/eventInfo', (req, res) => {
+  // console.log(req.query);
   req.query.userId = parseInt(req.query.userId, 10);
   db.getEventInfoForConditionalRender(req.query.eventId, req.query.userId, (err, info) => {
     if (err || info === undefined) {
-      console.error(err);
+      console.error('Error getting events for conditional render', err);
       res.sendStatus(500);
       return;
     }
@@ -161,7 +162,7 @@ app.get('/getCategories', (req, res) => {
 });
 
 app.delete('/event', (req, res) => {
-  console.log('here is the passed object ---->', req.query.uniqueId);
+  // console.log('here is the passed object ---->', req.query.uniqueId);
   db.deleteEvent(req.query.uniqueId, (err, data) => {
     if (err) {
       console.log(err);
@@ -173,8 +174,7 @@ app.delete('/event', (req, res) => {
 });
 
 app.post('/pending', (req, res) => {
-  console.log('Yup');
-  console.log(req.body);
+  // console.log(req.body);
   db.askToJoinEvent(req.body.userId, req.body.eventId, (err, data) => {
     if (err) {
       console.log(err);
