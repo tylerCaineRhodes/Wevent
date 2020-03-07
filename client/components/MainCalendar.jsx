@@ -19,8 +19,8 @@ const MainCalendar = ({
     eventPropGetter={(event) => ({
       style: {
         backgroundColor: event.private === 0
-          ? 'orange'
-          : '#fc6565',
+          ? 'rgba(138, 71, 228, 0.4)'
+          : 'rgba(11, 173, 135, 0.4)',
         color: 'white',
       },
     })}

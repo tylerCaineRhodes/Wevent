@@ -60,7 +60,7 @@ const CreateEvent = ({
       <span>Event Description:</span>
       <textarea required id="createEventDescription" name="Event Description" defaultValue={createEventDescription} onChange={(e) => handleStateChange(e.target.value, 'createEventDescription')} />
     </form>
-    <button type="submit" id="createEventSubmit" name="Event Submit" onClick={(e) => handleCreateEventSubmit(e)} style={{ backgroundColor: 'orange', color: 'white' }}>Create Event</button>
+    <button type="submit" id="createEventSubmit" name="Event Submit" onClick={(e) => handleCreateEventSubmit(e)} style={{ backgroundColor: 'rgba(138, 71, 228, 0.4)', color: 'white' }}>Create Event</button>
   </div>
 );
 
