@@ -32,12 +32,12 @@
 
 @mixin grid-left
   font-weight: bold
-  background-color: rgb(2, 133, 102)
+  background-color: rgb(0, 100, 77)
   grid-column: 1/2
   grid-row: 2/3
   padding: 20px
   margin: 0px 0px 0px 6px
-  border-radius: 5px
+  border-radius: 10px
   border: 2px solid rgb(51, 230, 188)
   color: white
 
@@ -104,12 +104,14 @@
   @include grid-host
   grid-column: col 1 / span  1
   float: left
+  border-left: 0;
 
   
 .grid-host-accept
   @include grid-host
   grid-column: col 2 / span  1
   float: right
+  border-right: 0;
 
 @mixin button 
   display: inline-block
@@ -187,6 +189,8 @@ p.eventInfo
   text-shadow: rgb(5, 99, 77) 2px 2px 5px
 
 //End eventInfo styling
+.landingLogo
+  width: 400px
 
 @import 'react-big-calendar/lib/sass/styles'
 
@@ -389,7 +393,9 @@ p.eventInfo
 
 #noAccountText, #noAccountButton
   display: inline-block
-  color: grey
+  // color: grey
+  color: #444444
+  text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white
   margin: 1%
 
 #noAccountButton
@@ -425,13 +431,17 @@ p.eventInfo
   opacity: .8
 
 #continueAsGuestButton
-  color: gray
+  // color: gray
+  color: #444444
+  text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white
   text-decoration: underline
   margin-bottom: 2.5%
   cursor: pointer
 
 #landingPageOr
-  color: gray
+  // color: gray
+  color: #444444
+  text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white
 
 #signup
   width: 200px

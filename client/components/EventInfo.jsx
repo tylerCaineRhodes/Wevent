@@ -12,11 +12,6 @@ export default function EventInfo({
 }) {
   let button = '';
 
-  if (eventInfoAccess === 'full') { button = (<button type="button" className="attend-delete-button">Un-attend</button>); }
-  if (eventInfoAccess === 'limited') { eventInfo.pending !== 1 ? button = <button type="button" className="attend-delete-button" onClick={handleAttendEvent}>Attend</button> : button = <button type="button" className="attend-delete-button">Pending</button>; }
-  if (eventInfo.private === 0) { button = null; }
-  if (eventInfoAccess === 'host') { button = (<button type="button" className="attend-delete-button" onClick={(e) => handleDeleteHostEvent(eventId)}>DELETE</button>); }
-
   if (eventInfoAccess === 'full') {
     button = (
       <button type="button" className="attend-delete-button">
@@ -24,6 +19,7 @@ export default function EventInfo({
       </button>
     );
   }
+
   if (eventInfoAccess === 'limited') {
     eventInfo.pending !== 1
       ? (button = (
@@ -41,9 +37,11 @@ export default function EventInfo({
         </button>
       ));
   }
+
   if (eventInfo.private === 0) {
     button = null;
   }
+
   if (eventInfoAccess === 'host') {
     button = (
       <button
@@ -55,6 +53,9 @@ export default function EventInfo({
       </button>
     );
   }
+  
+  let zip = '00000' + eventInfo.zipcode;
+  zip = zip.substring(zip.length-5);
 
   return (
     <div className={`grid-parent-${eventInfoAccess}`}>
@@ -77,7 +78,7 @@ export default function EventInfo({
         <p className="eventInfo">
           {eventInfo.city}, {eventInfo.state}
           <br />
-          {eventInfo.zipcode}
+          {zip}
         </p>
         <p className="eventInfo">Price: $ {eventInfo.price.toFixed(2)}</p>
         {eventInfo.attendance_max !== null ? (
