@@ -366,6 +366,7 @@ class App extends React.Component {
     } else {
       params.userId = this.state.userId;
     }
+    console.log("PARAMS", params);
     axios.get('/eventInfo', {
       params,
     })
@@ -378,7 +379,7 @@ class App extends React.Component {
       })
       .catch((err) => {
         if (err) {
-          console.log('openEventInfoModal - Error retrieving from DB');
+          console.log('openEventInfoModal - Error retrieving from DB', err);
         }
       });
   }

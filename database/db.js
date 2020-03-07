@@ -76,27 +76,17 @@ module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
     }
     console.log("CONDITONAL DATA", data[0]);
     cb(null, data[0]);
-  //   const innerQuery = 'SELECT pending from users_events_attending WHERE event_id = ? AND user_id = ?';
-  //   db.query(innerQuery, [eventId, userId], (kerfuffle, innerData) => {
-  //     if (kerfuffle) {
-  //       cb(kerfuffle);
-  //       return;
-  //     }
-  //     const results = Object.assign(data[0], innerData[0]);
-  //     console.log('RESULT', results);
-  //     cb(null, results);
-  //   });
-  // });
   });
 };
 
 module.exports.getEventInfoForHost = (eventId, cb) => {
-  const query = 'select e.event_id, e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, u_e.pending, u.display_name from events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id LEFT JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = ?';
+  const query = 'select e.event_id, e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, u_e.pending, group_concat(u.display_name separator ",") AS attending_pending from events e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id LEFT JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = ? group by u_e.pending ORDER BY u_e.pending ASC;';
   db.query(query, [eventId], (err, data) => {
     if (err) {
       cb(err);
       return;
     }
+    console.log(data);
     cb(null, data);
   });
 };
@@ -122,8 +112,6 @@ module.exports.getEventInfoForNonHost = (eventId, userId, hasAccess, cb) => {
     });
   }
 };
-
-// select e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, group_concat(u.display_name ORDER BY u_e.pending asc separator ","), e.attendance_max, e.attendance_current, u_e.pending from events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id INNER JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = 1 group by u_e.pending;
 
 module.exports.loginCheck = (id, pass, callback) => {
   //console.log(id, pass);
