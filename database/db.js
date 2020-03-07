@@ -66,6 +66,7 @@ module.exports.deleteEvent = (eventId, callback) => {
 // routes for event info
 
 module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
+  console.log("inputs", eventId, userId);
   const query = `SELECT host_id, private, (SELECT pending from users_events_attending WHERE event_id = ${eventId} AND user_id = ${userId}) AS pending FROM events WHERE event_id = ${eventId}`;
   // const query = 'SELECT host_id, private FROM events WHERE event_id = ?';
   db.query(query, (err, data) => {
@@ -73,6 +74,7 @@ module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
       cb(err);
       return;
     }
+    console.log("CONDITONAL DATA", data[0]);
     cb(null, data[0]);
   //   const innerQuery = 'SELECT pending from users_events_attending WHERE event_id = ? AND user_id = ?';
   //   db.query(innerQuery, [eventId, userId], (kerfuffle, innerData) => {
