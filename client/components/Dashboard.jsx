@@ -14,12 +14,11 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <img src="https://www.roterrucksack.com/wp-content/uploads/2016/09/Badlands-Nationalpark-South-Dakota-USA-Head.jpg" className="dashboard-main" />
+        <img src="https://www.banfflakelouise.com/sites/default/files/styles/l_1600_natural/public/hiking_sentinel_pass_jake_dyson_2_horizontal.jpg?itok=N4iHQ0em.com/wp-content/uploads/2016/09/Badlands-Nationalpark-South-Dakota-USA-Head.jpg" className="dashboard-main" />
         <Title buttonText="Back" buttonClass="createNewEvent-button" onClick={this.props.changePage} />
         <div className="outerDash">
           <span id="displayName">{this.props.info.nameAndLocation[0].display_name}</span>
-          <span id="location">{this.props.info.nameAndLocation[0].location_city}</span>
-          <span>{this.props.info.nameAndLocation[0].location_state}</span>
+          <span id="location">{this.props.info.nameAndLocation[0].location_city}, {this.props.info.nameAndLocation[0].location_state}</span>
           <div className="hostingDash">
             <h4 className="h4">Hosting</h4>
             <div className="scroll">{this.props.info.hosting.map((event, i) => {
