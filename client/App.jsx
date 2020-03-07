@@ -161,6 +161,9 @@ class App extends React.Component {
     axios.get('/dashboard', { params: { userId } })
       .then((data) => {
         this.setState({ dashboardInfo: data.data });
+      })
+      .catch((err) => {
+        console.log('something went wrong setting dashboard info', err);
       });
   }
 
@@ -512,7 +515,6 @@ class App extends React.Component {
       this.openEventInfoModal(event.eventId);
     });
   }
-  //console.log('POOP :)', event, this.state.calendarEvents);
 
 
   handleCreateEventSubmit(event) {
