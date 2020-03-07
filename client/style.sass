@@ -196,7 +196,7 @@ p.eventInfo
   width: 70%
   margin: auto
   height: 80vh
-  margin-top: 5% 
+  margin-top: 2% 
   #displayName
     font-size: xx-large 
 
@@ -492,8 +492,17 @@ p.eventInfo
   margin: 3% 0 3% 0
   left: 3%
   cursor: pointer
+  font-size: 20px
 
-  
+  .hosting-alert
+    font-size: 12px
+    color: red
+    margin-left: 5px
+
+  .attending-alert
+    font-size: 12px
+    color: grey
+    margin-left: 5px
 
 .mainPageBackgroundImage
   z-index: -1000
@@ -577,14 +586,18 @@ p.eventInfo
   filter: blur(8px)
   position: fixed
   top: 0
+
 .rbc-toolbar
   .rbc-btn-group
+    .rbc-active
+      color: black
     button
       &:focus
         outline: 5px auto rgba(255,251,243, .7) !important
         color: rgb(80,82,84)
     &:last-child
       button
+        &:first-child
         &:last-child
           font-size: 0
           &:after
@@ -592,7 +605,16 @@ p.eventInfo
             color: white
             float: left
             content: "Event List"
-
+          &:hover
+            &:after
+              color: black
+          &.rbc-active
+            &:after
+              color: #505254
+            &:not(:focus)
+              &:after
+                color: black
+            
 .dashboardButton
   position: relative
   right: -35%
@@ -604,6 +626,17 @@ p.eventInfo
 
 .MuiSlider-root
   color: orange !important
+
 .MuiSlider-rail 
   background-color: grey !important
+
+tr
+  &[style*="background-color: orange; color: white;"]
+    .rbc-agenda-event-cell
+      background-color: orange !important
+    background-color: transparent !important
+  &[style="background-color: rgb(252, 101, 101); color: white;"]
+    .rbc-agenda-event-cell
+      background-color: rgb(252, 101, 101) !important
+    background-color: transparent !important
 
