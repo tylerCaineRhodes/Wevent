@@ -84,4 +84,3 @@ INSERT INTO users_events_attending (user_id, event_id, pending) values (3, 6, 0)
 INSERT INTO users_events_attending (user_id, event_id, pending) values (14, 13, 0),(6, 13, 0),(3, 13, 0),(18, 13, 0),(17, 13, 0),(5, 13, 0),(8, 13, 0),(1, 13, 0),(9, 13, 0),(7, 13, 0),(15, 13, 0),(4, 13, 0),(19, 13, 1),(10, 13, 1);
 INSERT INTO users_events_attending (user_id, event_id, pending) values (3, 14, 0),(18, 14, 0),(12, 14, 0);
 INSERT INTO users_events_attending (user_id, event_id, pending) values (7, 15, 0),(20, 15, 0),(17, 15, 0),(11, 15, 0),(3, 15, 0),(19, 15, 0),(5, 15, 0),(10, 15, 0),(12, 15, 0),(2, 15, 0),(16, 15, 0),(13, 15, 0),(14, 15, 1),(9, 15, 1);
-INSERT INTO users_events_attending (user_id, event_id, pending) values (7, 15, 0),(20, 15, 0),(17, 15, 0),(11, 15, 0),(3, 15, 0),(19, 15, 0),(5, 15, 0),(10, 15, 0),(12, 15, 0),(2, 15, 0),(16, 15, 0),(13, 15, 0),(14, 15, 1),(9, 15, 1);
