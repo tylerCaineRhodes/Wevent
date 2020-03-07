@@ -1,8 +1,6 @@
-# <p align="center">
-  <img width="800" height="500" src="https://files.slack.com/files-pri/T2SVC7RB3-FV36ATJS3/download/screen_shot_2020-03-07_at_10.12.38_am.png">
-</p>
+// Need TO ADD WEVENT LOGO
 
-## About
+## Wevent
 
 *Wevent* is a responsive web application that allows users to view events on a calendar  based on a set location. Users can search for events by applying  filters based on their location (city, state), category type, number of attendees, private / public , or the cost of an event. Users can choose whether or not to attend and event or just as easily create a new event with similar filters
 
@@ -25,6 +23,8 @@
 ## Tech Stack
 
 *Wevent* was built primarily with ReactJS on the front-end and Node/Express on the backend. Other key technologies used are listed below:
+
+// NEED TO ADD TECH STACK
 
 ## Technical Challenges / Research
 
@@ -85,9 +85,9 @@ OR What are all the place the data travels?  What happens to that data?
 Optionally include a diagram
 How does the tech stack come together?
 
-// Need to a add video of the application
+// NEED TO ADD VIDEO OF APPLICATION
 
-![Image of Schema](https://files.slack.com/files-pri/T2SVC7RB3-FUFU41D09/download/screen_shot_2020-02-29_at_2.51.35_pm.png)
+// NEED TO ADD SCHEMA IMAGE
 
 ### Development Workflow
 Our team managed workflow and responsibilities by utilizing Agile methodology. [Trello](https://trello.com/b/JIxuLxiP/blue-ocean) was used to to keep track of tickets. All development work was specifically associated with a ticket. At any point in time the status of a ticket could be ascertained by finding it on the board. After our daily standup meeting we assessed the status of our application then updated and reassigned tickets based on workload.
