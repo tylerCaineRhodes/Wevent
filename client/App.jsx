@@ -261,7 +261,7 @@ class App extends React.Component {
               if (this.state.calendarEvents[i].category_ids.indexOf((this.state.filterCategoryValue.id).toString()) !== -1 || this.state.filterCategoryValue.id === '' || this.state.filterCategoryValue.id === 0) {
                 const display = moment(this.state.calendarEvents[i].start).format('hh:mm:ss');
                 const timeArray = this.state.filterToDValue.split('-');
-                if ((display >= timeArray[0] && display <= timeArray[1]) || (this.state.filterToDValue.length === 0)) {
+                if ((display >= timeArray[0] && display <= timeArray[1]) || (this.state.filterToDValue.length === 0) || this.state.filterToDValue === 'Select Time') {
                   //check and see for time of day or empty string
                   if ((this.state.calendarEvents[i].private === 1 && this.state.filterPrivateValue) && (this.state.loginDisplayName !== 'Guest')) {
                     storage.push(this.state.calendarEvents[i]);
@@ -410,7 +410,7 @@ class App extends React.Component {
   }
 
   handleAttendEvent(event) {
-    const eventId = event.target.getAttribute('data-id')
+    const eventId = event.target.getAttribute('data-id');
     axios.post('/pending', {
       userId: this.state.userId,
       eventId,
@@ -479,7 +479,7 @@ class App extends React.Component {
   }
 
   handleDeleteHostEvent(uniqueId) {
-    let retVal = confirm('Are you sure you want to delete this event?');
+    const retVal = confirm('Are you sure you want to delete this event?');
     if (retVal === true) {
       const params = { uniqueId };
       axios.delete('/event', {
@@ -493,7 +493,7 @@ class App extends React.Component {
         .catch((err) => {
           console.log('didn\'t work from axios', err);
         });
-    } 
+    }
   }
 
   handleGuestSubmit(event) {
