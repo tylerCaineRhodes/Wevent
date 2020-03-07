@@ -410,13 +410,14 @@ class App extends React.Component {
   }
 
   handleAttendEvent(event) {
+    const eventId = event.target.getAttribute('data-id')
     axios.post('/pending', {
       userId: this.state.userId,
-      eventId: event.target.getAttribute('data-id'),
+      eventId,
     })
       .then((res) => {
         this.getEventsForDashboard(this.state.userId);
-        this.openEventInfoModal(this.state.eventId);
+        this.openEventInfoModal(eventId);
       })
       .catch((err) => {
         if (err) {
