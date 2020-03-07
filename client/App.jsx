@@ -390,15 +390,16 @@ class App extends React.Component {
   }
 
   handleRemoveGuest(event) {
-    // console.log("REMOVING")
-    const eventId = event.target.getAttribute('data-id')
+    const displayName = event.target.getAttribute('data-name');
+    const eventId = event.target.getAttribute('data-id');
     axios.delete('/pending', {
       params: {
-        displayName: event.target.getAttribute('data-name'),
+        displayName,
         eventId,
       },
     })
       .then(() => {
+        this.getEventsForDashboard(this.state.userId);
         this.openEventInfoModal(eventId);
       })
       .catch((err) => {
@@ -409,12 +410,14 @@ class App extends React.Component {
   }
 
   handleAttendEvent(event) {
+    const eventId = event.target.getAttribute('data-id')
     axios.post('/pending', {
       userId: this.state.userId,
-      eventId: this.state.eventId,
+      eventId,
     })
       .then((res) => {
-        this.openEventInfoModal(this.state.eventId);
+        this.getEventsForDashboard(this.state.userId);
+        this.openEventInfoModal(eventId);
       })
       .catch((err) => {
         if (err) {
@@ -431,6 +434,8 @@ class App extends React.Component {
       eventId,
     })
       .then((res) => {
+        // console.log(res.data); //<-------------------------Remove
+        this.getEventsForDashboard(this.state.userId);
         this.openEventInfoModal(eventId);
       })
       .catch((err) => {
@@ -501,7 +506,6 @@ class App extends React.Component {
   }
 
   handleFilterSubmit() {
-    // console.log('DO ALL THE THINGS TO THE FILTER STATES. Sample filter state:', this.state.filterCityValue);
     this.filterEvents();
   }
 
