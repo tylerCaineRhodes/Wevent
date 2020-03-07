@@ -366,7 +366,6 @@ class App extends React.Component {
     } else {
       params.userId = this.state.userId;
     }
-    console.log("PARAMS", params);
     axios.get('/eventInfo', {
       params,
     })
