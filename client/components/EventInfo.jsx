@@ -11,13 +11,11 @@ export default function EventInfo({
   handleDeleteHostEvent,
 }) {
   let button = '';
-<<<<<<< HEAD
-  
+
   if (eventInfoAccess === 'full') { button = (<button type="button" className="attend-delete-button">Un-attend</button>); }
   if (eventInfoAccess === 'limited') { eventInfo.pending !== 1 ? button = <button type="button" className="attend-delete-button" onClick={handleAttendEvent}>Attend</button> : button = <button type="button" className="attend-delete-button">Pending</button>; }
   if (eventInfo.private === 0) { button = null; }
   if (eventInfoAccess === 'host') { button = (<button type="button" className="attend-delete-button" onClick={(e) => handleDeleteHostEvent(eventId)}>DELETE</button>); }
-=======
 
   if (eventInfoAccess === 'full') {
     button = (
@@ -57,7 +55,6 @@ export default function EventInfo({
       </button>
     );
   }
->>>>>>> 5b76c759bc1d2d357704a8b9cc334d442d3d47ff
 
   return (
     <div className={`grid-parent-${eventInfoAccess}`}>
@@ -100,7 +97,7 @@ export default function EventInfo({
             <div className="pend-accept-heading">Pending</div>
             {eventInfo.pending.map((pending, index) => (
               <div key={index} id={`pending${index}`}>
-                <p className="pend-accept-name">{pending}</p>
+                <p className="pend-name">{pending}</p>
                 <button
                   type="button"
                   className="check-x-button"
@@ -128,7 +125,7 @@ export default function EventInfo({
             <div className="pend-accept-heading">Accepted</div>
             {eventInfo.attending.map((attending, index) => (
               <div key={index} id={`attending${index}`}>
-                <p className="pend-accept-name">{attending}</p>
+                <p className="accept-name">{attending}</p>
                 <button
                   type="button"
                   className="check-x-button"
