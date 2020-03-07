@@ -128,8 +128,8 @@ module.exports.getEventInfoForNonHost = (eventId, userId, hasAccess, cb) => {
 module.exports.loginCheck = (id, pass, callback) => {
   //console.log(id, pass);
   // eslint-disable-next-line sql/no-unsafe-query
-  const query = `select user_id from users where display_name = '${id}' and password_hash = '${pass}';`;
-  db.query(query, (err, results) => {
+  const query = 'select user_id from users where display_name = ? and password_hash = ?;';
+  db.query(query, [id, pass], (err, results) => {
     //console.log(err, results);
     if (err) {
       callback(err);
@@ -141,8 +141,8 @@ module.exports.loginCheck = (id, pass, callback) => {
 
 module.exports.signUpCheck = (displayName, callback) => {
   // eslint-disable-next-line sql/no-unsafe-query
-  const query = `select * from users where display_name = '${displayName}'`;
-  db.query(query, (err, results) => {
+  const query = 'select * from users where display_name = ?';
+  db.query(query, [displayName], (err, results) => {
     if (err) {
       callback(err);
     } else {
@@ -153,8 +153,8 @@ module.exports.signUpCheck = (displayName, callback) => {
 
 module.exports.signUpAddUser = (displayName, password, city, state, callback) => {
   // eslint-disable-next-line sql/no-unsafe-query
-  const query = `INSERT INTO users (display_name, password_hash, location_state, location_city) values ('${displayName}', '${password}', '${state}', '${city}')`;
-  db.query(query, (err, results) => {
+  const query = 'INSERT INTO users (display_name, password_hash, location_state, location_city) values (?,?,?,?)';
+  db.query(query, [displayName, password, state, city], (err, results) => {
     if (err) {
       callback(err);
     } else {
@@ -165,15 +165,17 @@ module.exports.signUpAddUser = (displayName, password, city, state, callback) =>
 
 module.exports.createEvent = (userId, title, description, category, date, time, cost, privateEvent, address1, address2, city, state, zipcode, maxPeople, callback) => {
   let query = '';
+  let args;
   if (privateEvent) {
-    // eslint-disable-next-line sql/no-unsafe-query
-    query = `INSERT INTO events (host_id, title, description, date, time, price, private, address_1, address_2, city, state, zipcode, attendance_max, attendance_current) values ('${userId}', '${title}', '${description}', '${date}', '${time}', ${cost}, ${privateEvent}, '${address1}', '${address2}', '${city}', '${state}', ${zipcode}, ${maxPeople}, 0)`;
+    query = 'INSERT INTO events (host_id, title, description, date, time, price, private, address_1, address_2, city, state, zipcode, attendance_max, attendance_current) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0);';
+    args = [userId, title, description, date, time, cost, privateEvent, address1, address2, city, state, zipcode, maxPeople];
   } else {
     // eslint-disable-next-line sql/no-unsafe-query
     query = `INSERT INTO events (host_id, title, description, date, time, price, private, address_1, address_2, city, state, zipcode) values ('${userId}', '${title}', '${description}', '${date}', '${time}', ${cost}, ${privateEvent}, '${address1}', '${address2}', '${city}', '${state}', ${zipcode})`;
+    args = [userId, title, description, date, time, cost, privateEvent, address1, address2, city, state, zipcode];
   }
 
-  db.query(query, (err, results) => {
+  db.query(query, args, (err, results) => {
     if (err) {
       callback(err);
     } else {

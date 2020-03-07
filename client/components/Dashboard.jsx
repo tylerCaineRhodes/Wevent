@@ -30,7 +30,7 @@ class Dashboard extends React.Component {
               return (
                 <div className="dashboardListItem">
                   <div data-eventid={event.event_id} key={i} className={`hosting-dash-pending${classNum}`} onClick={this.onClick.bind(this)}>{event.title}</div>
-                  {event.pending ? <div className="hosting-alert">{`${event.pending} events pending`}</div> : <></>}
+                  {event.pending ? <div className="hosting-alert">{`${event.pending} requests pending`}</div> : <></>}
                 </div>
               );
             })}
