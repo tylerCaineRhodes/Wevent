@@ -59,7 +59,7 @@ app.get('/eventInfo', (req, res) => {
           return;
         }
         let eventInfo;
-        console.log('Event info', infoForEvent[1]);
+        // console.log('Event info', infoForEvent[1]);
         if (infoForEvent[1]) {
           const attending = infoForEvent[0].attending_pending.split(',');
           const pending = infoForEvent[1].attending_pending.split(',');
@@ -97,7 +97,7 @@ app.get('/eventInfo', (req, res) => {
     } else {
       db.getEventInfoForNonHost(req.query.eventId, req.query.userId, false, (quandary, eventInfo) => {
         if (quandary) {
-          console.error(quandary);
+          // console.error(quandary);
           res.sendStatus(500);
           return;
         }
