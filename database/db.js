@@ -66,7 +66,7 @@ module.exports.deleteEvent = (eventId, callback) => {
 // routes for event info
 
 module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
-  console.log("inputs", eventId, userId);
+  // console.log("inputs", eventId, userId);
   const query = `SELECT host_id, private, (SELECT pending from users_events_attending WHERE event_id = ${eventId} AND user_id = ${userId}) AS pending FROM events WHERE event_id = ${eventId}`;
   // const query = 'SELECT host_id, private FROM events WHERE event_id = ?';
   db.query(query, (err, data) => {
@@ -74,7 +74,7 @@ module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
       cb(err);
       return;
     }
-    console.log("CONDITONAL DATA", data[0]);
+    // console.log("CONDITONAL DATA", data[0]);
     cb(null, data[0]);
   });
 };
@@ -86,7 +86,7 @@ module.exports.getEventInfoForHost = (eventId, cb) => {
       cb(err);
       return;
     }
-    console.log(data);
+    // console.log(data);
     cb(null, data);
   });
 };
@@ -251,7 +251,7 @@ module.exports.approvePending = (displayName, eventId, callback) => {
     if (err) {
       callback(err);
     }
-    console.log('RESULTS', results[0].user_id);
+    // console.log('RESULTS', results[0].user_id);
     const innerQuery = 'UPDATE users_events_attending SET pending = 0 WHERE event_id = ? AND user_id = ?';
     db.query(innerQuery, [eventId, results[0].user_id], (error, findings) => {
       if (error) {

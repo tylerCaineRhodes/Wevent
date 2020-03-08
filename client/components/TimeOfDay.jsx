@@ -9,7 +9,7 @@ const TimeOfDay = ({
     <form>
       <label htmlFor="timeofday">
         <select value={filterToDValue} onChange={(e) => handleStateChange(e.target.value, 'filterToDValue', filterEvents)}>
-          <option></option>
+          <option>Select Time</option>
           <option>05:00-08:00</option>
           <option>08:00-11:00</option>
           <option>11:00-13:00</option>
