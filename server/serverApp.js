@@ -58,7 +58,31 @@ app.get('/eventInfo', (req, res) => {
           res.sendStatus(500);
           return;
         }
-        const eventInfo = middleware.prettifyHostingForEventInfo(infoForEvent);
+        let eventInfo;
+        // console.log('Event info', infoForEvent[1]);
+        if (infoForEvent[1]) {
+          const attending = infoForEvent[0].attending_pending.split(',');
+          const pending = infoForEvent[1].attending_pending.split(',');
+          eventInfo = Object.assign(infoForEvent[0], { attending, pending });
+          delete eventInfo.attending_pending;
+        } else if (infoForEvent[0].pending) {
+          const attending = [];
+          const pending = infoForEvent[0].attending_pending.split(',');
+          eventInfo = Object.assign(infoForEvent[0], { attending, pending });
+          delete eventInfo.attending_pending;
+        } else if (infoForEvent[0].pending === 0) {
+          const pending = [];
+          const attending = infoForEvent[0].attending_pending.split(',');
+          eventInfo = Object.assign(infoForEvent[0], { attending, pending });
+          delete eventInfo.attending_pending;
+        } else {
+          const pending = [];
+          const attending = [];
+          eventInfo = Object.assign(infoForEvent[0], { attending, pending });
+          delete eventInfo.attending_pending;
+        }
+        eventInfo = [eventInfo];
+        // console.log('Sending', eventInfo);
         res.send({ access: 'host', eventInfo });
       });
     } else if (info.private === 0 || info.pending === 0) {
@@ -73,7 +97,7 @@ app.get('/eventInfo', (req, res) => {
     } else {
       db.getEventInfoForNonHost(req.query.eventId, req.query.userId, false, (quandary, eventInfo) => {
         if (quandary) {
-          console.error(quandary);
+          // console.error(quandary);
           res.sendStatus(500);
           return;
         }

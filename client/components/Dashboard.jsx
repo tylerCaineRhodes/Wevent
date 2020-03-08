@@ -27,9 +27,9 @@ class Dashboard extends React.Component {
                 classNum = 1;
               }
               return (
-                <div className="dashboardListItem">
+                <div data-eventid={event.event_id} className="dashboardListItem" onClick={this.onClick.bind(this)}>
                   <div data-eventid={event.event_id} key={i} className={`hosting-dash-pending${classNum}`} onClick={this.onClick.bind(this)}>{event.title}</div>
-                  {event.pending ? <div className="hosting-alert">{`${event.pending} events pending`}</div> : <></>}
+                  {event.pending ? <div data-eventid={event.event_id} className="hosting-alert" onClick={this.onClick.bind(this)}>{`${event.pending} requests pending`}</div> : <></>}
                 </div>
               );
             })}
@@ -38,9 +38,9 @@ class Dashboard extends React.Component {
           <div className="attendingDash">
             <h4 className="h4">Attending</h4>
             <div className="scroll">{this.props.info.attending.map((event, i) => (
-              <div className="dashboardListItem">
+              <div data-eventid={event.event_id} className="dashboardListItem" onClick={this.onClick.bind(this)}>
                 <div data-eventid={event.event_id} key={i} className={`attending-dash-pending${event.pending}`} onClick={this.onClick.bind(this)}>{event.title}</div>
-                {event.pending ? <div className="attending-alert">Pending approval</div> : <></>}
+                {event.pending ? <div data-eventid={event.event_id} className="attending-alert" onClick={this.onClick.bind(this)}>Pending approval</div> : <></>}
               </div>
             ))}
             </div>

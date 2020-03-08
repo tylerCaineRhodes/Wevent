@@ -66,7 +66,7 @@ module.exports.deleteEvent = (eventId, callback) => {
 // routes for event info
 
 module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
-  console.log("inputs", eventId, userId);
+  // console.log("inputs", eventId, userId);
   const query = `SELECT host_id, private, (SELECT pending from users_events_attending WHERE event_id = ${eventId} AND user_id = ${userId}) AS pending FROM events WHERE event_id = ${eventId}`;
   // const query = 'SELECT host_id, private FROM events WHERE event_id = ?';
   db.query(query, (err, data) => {
@@ -74,29 +74,19 @@ module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
       cb(err);
       return;
     }
-    console.log("CONDITONAL DATA", data[0]);
+    // console.log("CONDITONAL DATA", data[0]);
     cb(null, data[0]);
-  //   const innerQuery = 'SELECT pending from users_events_attending WHERE event_id = ? AND user_id = ?';
-  //   db.query(innerQuery, [eventId, userId], (kerfuffle, innerData) => {
-  //     if (kerfuffle) {
-  //       cb(kerfuffle);
-  //       return;
-  //     }
-  //     const results = Object.assign(data[0], innerData[0]);
-  //     console.log('RESULT', results);
-  //     cb(null, results);
-  //   });
-  // });
   });
 };
 
 module.exports.getEventInfoForHost = (eventId, cb) => {
-  const query = 'select e.event_id, e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, u_e.pending, u.display_name from events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id LEFT JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = ?';
+  const query = 'select e.event_id, e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, e.attendance_max, e.attendance_current, u_e.pending, group_concat(u.display_name separator ",") AS attending_pending from events e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id LEFT JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = ? group by u_e.pending ORDER BY u_e.pending ASC;';
   db.query(query, [eventId], (err, data) => {
     if (err) {
       cb(err);
       return;
     }
+    // console.log(data);
     cb(null, data);
   });
 };
@@ -123,13 +113,11 @@ module.exports.getEventInfoForNonHost = (eventId, userId, hasAccess, cb) => {
   }
 };
 
-// select e.title, e.description, e.date, e.time, e.price, e.private, e.address_1, e.address_2, e.zipcode, e.city, e.state, group_concat(u.display_name ORDER BY u_e.pending asc separator ","), e.attendance_max, e.attendance_current, u_e.pending from events AS e LEFT JOIN users_events_attending AS u_e ON e.event_id = u_e.event_id INNER JOIN users AS u ON u_e.user_id = u.user_id WHERE e.event_id = 1 group by u_e.pending;
-
 module.exports.loginCheck = (id, pass, callback) => {
   //console.log(id, pass);
   // eslint-disable-next-line sql/no-unsafe-query
-  const query = `select user_id from users where display_name = '${id}' and password_hash = '${pass}';`;
-  db.query(query, (err, results) => {
+  const query = 'select user_id from users where display_name = ? and password_hash = ?;';
+  db.query(query, [id, pass], (err, results) => {
     //console.log(err, results);
     if (err) {
       callback(err);
@@ -141,8 +129,8 @@ module.exports.loginCheck = (id, pass, callback) => {
 
 module.exports.signUpCheck = (displayName, callback) => {
   // eslint-disable-next-line sql/no-unsafe-query
-  const query = `select * from users where display_name = '${displayName}'`;
-  db.query(query, (err, results) => {
+  const query = 'select * from users where display_name = ?';
+  db.query(query, [displayName], (err, results) => {
     if (err) {
       callback(err);
     } else {
@@ -153,8 +141,8 @@ module.exports.signUpCheck = (displayName, callback) => {
 
 module.exports.signUpAddUser = (displayName, password, city, state, callback) => {
   // eslint-disable-next-line sql/no-unsafe-query
-  const query = `INSERT INTO users (display_name, password_hash, location_state, location_city) values ('${displayName}', '${password}', '${state}', '${city}')`;
-  db.query(query, (err, results) => {
+  const query = 'INSERT INTO users (display_name, password_hash, location_state, location_city) values (?,?,?,?)';
+  db.query(query, [displayName, password, state, city], (err, results) => {
     if (err) {
       callback(err);
     } else {
@@ -165,15 +153,17 @@ module.exports.signUpAddUser = (displayName, password, city, state, callback) =>
 
 module.exports.createEvent = (userId, title, description, category, date, time, cost, privateEvent, address1, address2, city, state, zipcode, maxPeople, callback) => {
   let query = '';
+  let args;
   if (privateEvent) {
-    // eslint-disable-next-line sql/no-unsafe-query
-    query = `INSERT INTO events (host_id, title, description, date, time, price, private, address_1, address_2, city, state, zipcode, attendance_max, attendance_current) values ('${userId}', '${title}', '${description}', '${date}', '${time}', ${cost}, ${privateEvent}, '${address1}', '${address2}', '${city}', '${state}', ${zipcode}, ${maxPeople}, 0)`;
+    query = 'INSERT INTO events (host_id, title, description, date, time, price, private, address_1, address_2, city, state, zipcode, attendance_max, attendance_current) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0);';
+    args = [userId, title, description, date, time, cost, privateEvent, address1, address2, city, state, zipcode, maxPeople];
   } else {
     // eslint-disable-next-line sql/no-unsafe-query
     query = `INSERT INTO events (host_id, title, description, date, time, price, private, address_1, address_2, city, state, zipcode) values ('${userId}', '${title}', '${description}', '${date}', '${time}', ${cost}, ${privateEvent}, '${address1}', '${address2}', '${city}', '${state}', ${zipcode})`;
+    args = [userId, title, description, date, time, cost, privateEvent, address1, address2, city, state, zipcode];
   }
 
-  db.query(query, (err, results) => {
+  db.query(query, args, (err, results) => {
     if (err) {
       callback(err);
     } else {
@@ -261,7 +251,7 @@ module.exports.approvePending = (displayName, eventId, callback) => {
     if (err) {
       callback(err);
     }
-    console.log('RESULTS', results[0].user_id);
+    // console.log('RESULTS', results[0].user_id);
     const innerQuery = 'UPDATE users_events_attending SET pending = 0 WHERE event_id = ? AND user_id = ?';
     db.query(innerQuery, [eventId, results[0].user_id], (error, findings) => {
       if (error) {
