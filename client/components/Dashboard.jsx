@@ -28,6 +28,7 @@ class Dashboard extends React.Component {
               }
               return (
                 <div data-eventid={event.event_id} className="dashboardListItem" onClick={this.onClick.bind(this)}>
+                  {/*eslint-disable-next-line react/no-array-index-key*/}
                   <div data-eventid={event.event_id} key={i} className={`hosting-dash-pending${classNum}`} onClick={this.onClick.bind(this)}>{event.title}</div>
                   {event.pending ? <div data-eventid={event.event_id} className="hosting-alert" onClick={this.onClick.bind(this)}>{`${event.pending} requests pending`}</div> : <></>}
                 </div>
@@ -39,6 +40,7 @@ class Dashboard extends React.Component {
             <h4 className="h4">Attending</h4>
             <div className="scroll">{this.props.info.attending.map((event, i) => (
               <div data-eventid={event.event_id} className="dashboardListItem" onClick={this.onClick.bind(this)}>
+                {/*eslint-disable-next-line react/no-array-index-key*/}
                 <div data-eventid={event.event_id} key={i} className={`attending-dash-pending${event.pending}`} onClick={this.onClick.bind(this)}>{event.title}</div>
                 {event.pending ? <div data-eventid={event.event_id} className="attending-alert" onClick={this.onClick.bind(this)}>Pending approval</div> : <></>}
               </div>

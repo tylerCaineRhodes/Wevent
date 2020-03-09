@@ -479,6 +479,7 @@ class App extends React.Component {
   }
 
   handleDeleteHostEvent(uniqueId) {
+    // eslint-disable-next-line no-restricted-globals
     const retVal = confirm('Are you sure you want to delete this event?');
     if (retVal === true) {
       const params = { uniqueId };
