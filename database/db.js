@@ -66,15 +66,13 @@ module.exports.deleteEvent = (eventId, callback) => {
 // routes for event info
 
 module.exports.getEventInfoForConditionalRender = (eventId, userId, cb) => {
-  console.log("inputs", eventId, userId);
-  const query = `SELECT host_id, private, (SELECT pending from users_events_attending WHERE event_id = ${eventId} AND user_id = ${userId}) AS pending FROM events WHERE event_id = ${eventId}`;
+  const query = 'SELECT host_id, private, (SELECT pending from users_events_attending WHERE event_id = ? AND user_id = ?) AS pending FROM events WHERE event_id = ?';
   // const query = 'SELECT host_id, private FROM events WHERE event_id = ?';
-  db.query(query, (err, data) => {
+  db.query(query, [eventId, userId, eventId], (err, data) => {
     if (err) {
       cb(err);
       return;
     }
-    console.log("CONDITONAL DATA", data[0]);
     cb(null, data[0]);
   });
 };
@@ -220,11 +218,11 @@ module.exports.getAllStates = (callback) => {
       callback(null, results);
     }
   });
-};
-
-module.exports.getCategories = (callback) => {
-  const query = 'Select * from categories order by category_id;';
-
+  
+  module.exports.getCategories = (callback) => {
+    const query = 'Select * from categories order by category_id;';
+    
+  };
   db.query(query, (err, results) => {
     if (err) {
       callback(err);
