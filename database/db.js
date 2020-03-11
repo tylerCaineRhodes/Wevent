@@ -159,7 +159,7 @@ module.exports.createEvent = (userId, title, description, category, date, time, 
     args = [userId, title, description, date, time, cost, privateEvent, address1, address2, city, state, zipcode, maxPeople];
   } else {
     // eslint-disable-next-line sql/no-unsafe-query
-    query = `INSERT INTO events (host_id, title, description, date, time, price, private, address_1, address_2, city, state, zipcode) values ('${userId}', '${title}', '${description}', '${date}', '${time}', ${cost}, ${privateEvent}, '${address1}', '${address2}', '${city}', '${state}', ${zipcode})`;
+    query = 'INSERT INTO events (host_id, title, description, date, time, price, private, address_1, address_2, city, state, zipcode) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
     args = [userId, title, description, date, time, cost, privateEvent, address1, address2, city, state, zipcode];
   }
 
@@ -168,20 +168,20 @@ module.exports.createEvent = (userId, title, description, category, date, time, 
       callback(err);
     } else {
       // eslint-disable-next-line sql/no-unsafe-query
-      const eventQuery = `SELECT event_id FROM events WHERE title = '${title}'`;
-      db.query(eventQuery, (error, eventId) => {
+      const eventQuery = 'SELECT event_id FROM events WHERE title = ?';
+      db.query(eventQuery, [title], (error, eventId) => {
         if (error) {
           callback(error);
         } else {
           // eslint-disable-next-line sql/no-unsafe-query
-          const categoryQuery = `SELECT category_id FROM categories WHERE category_name = '${category}'`;
-          db.query(categoryQuery, (er, categoryId) => {
+          const categoryQuery = 'SELECT category_id FROM categories WHERE category_name = ?';
+          db.query(categoryQuery, [category], (er, categoryId) => {
             if (er) {
               callback(er);
             } else {
               // eslint-disable-next-line sql/no-unsafe-query
-              const eventsCategoriesQuery = `INSERT INTO events_categories (event_id, category_id) values (${eventId[0].event_id}, ${categoryId[0].category_id})`;
-              db.query(eventsCategoriesQuery, (finalError, finalQuery) => {
+              const eventsCategoriesQuery = 'INSERT INTO events_categories (event_id, category_id) values (?,?)';
+              db.query(eventsCategoriesQuery, [eventId[0].event_id, categoryId[0].category_id], (finalError, finalQuery) => {
                 if (finalError) {
                   callback(finalError);
                 } else {

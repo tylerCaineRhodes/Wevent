@@ -36,7 +36,7 @@ export default function EventInfo({
         <button type="button" className="attend-delete-button">
           Pending
         </button>
-      ));
+    ));
   }
 
   if (eventInfo.private === 0) {
