@@ -21,12 +21,13 @@ export default function EventInfo({
   }
 
   if (eventInfoAccess === 'limited') {
+    // eslint-disable-next-line no-unused-expressions
     eventInfo.pending !== 1
       ? (button = (
         <button
           type="button"
           className="attend-delete-button"
-          data-id = {eventInfo.event_id}
+          data-id={eventInfo.event_id}
           onClick={handleAttendEvent}
         >
           Attend
@@ -54,9 +55,10 @@ export default function EventInfo({
       </button>
     );
   }
-  
+
+  // eslint-disable-next-line prefer-template
   let zip = '00000' + eventInfo.zipcode;
-  zip = zip.substring(zip.length-5);
+  zip = zip.substring(zip.length - 5);
 
   return (
     <div className={`grid-parent-${eventInfoAccess}`}>
