@@ -1,8 +1,17 @@
-// NEED TO ADD WEVENT LOGO
 
-## Wevent
+![Main logo] (./dist/img/LandingLogo.png)
 
-*Wevent* is a responsive web application that allows users to view events on a calendar  based on a set location. Users can search for events by applying  filters based on their location (city, state), category type, number of attendees, private / public , or the cost of an event. Users can choose whether or not to attend and event or just as easily create a new event with similar filters
+## In action
+
+What happens behind the scenes when the user interacts with it? 
+OR What are all the place the data travels?  What happens to that data?
+Optionally include a diagram
+How does the tech stack come together?
+
+// NEED TO ADD VIDEO OF APPLICATION
+
+Schema:
+![Schema] (./readme/schema.png)
 
 ## Contributors
 
@@ -20,19 +29,9 @@
 
 [Mark Wallace](https://github.com/mwallace999)
 
-## Tech Stack
+## Wevent
 
-*Wevent* was built primarily with ReactJS on the front-end and Node/Express on the backend. Other key technologies used are listed below:
-
-// NEED TO ADD TECH STACK
-
-## Technical Challenges / Research
-
- - Why, what was the plan to overcome those challenges
- - What did you learn
-
-## Unexpected Challenges
- - What were the user stories / what was MVP (mention Minimal Viable Product)
+*Wevent* is a responsive web application that allows users to create and view events on a calendar  based their location. Users can search for events by applying  filters based on their location (city, state), category type, number of attendees, private / public , or the cost of an event. Users can choose whether or not to attend and event or just as easily create a new event with similar filters
 
 ## Client Deliverables 
 
@@ -74,20 +73,42 @@ Calendar
  - Calendar displays events based on filter
  - User can filter events by category, distance, # of people, cost, keyword, duration/time, private/public event
 
-## Minimum Viable Product (MVP)
 
-// Incomplete
 
-## How the app works
+## Tech Stack
 
-What happens behind the scenes when the user interacts with it? 
-OR What are all the place the data travels?  What happens to that data?
-Optionally include a diagram
-How does the tech stack come together?
+Front End:
+- React
+- Material UI
+- SASS
 
-// NEED TO ADD VIDEO OF APPLICATION
+Backend:
+- Node.js
+- Express
+- mySQL
 
-// NEED TO ADD SCHEMA IMAGE
+Deployment/Testing:
+- Jest/Supertest
+- Docker
+- AWS EC2
+
+## Technical Challenges / Research
+
+Challenge
+ - 1. Allow the user to filter events on the calendar in real time by six different metrics.
+ - 2. Display only the event information that the user is allowed to see based on their permissions status (host, full access, or limited access)
+ - 3. Allow users to request to join a private event (get full access). Allow user to accept or reject this request
+
+Implementatation
+ - 1. Logging in automatically populates the calendar with all events in the user's area by setting each metric in the filter to a default. When the user moves the filter, a new database call is automatically triggered.
+ - 2. When the server is notified that a user has clicked an event, it first determines what information that user has access to. It then makes one of three database calls (event info for host, full access, or limited access) and sends only the appropriate information back to the front end.
+ - 3. Users attending or interested in an event are tracked in a join table that stores a user id, event id, and pending boolean. The latter describes the current status of the user's relationship to that event. It is true if the user is pending approval, false if they are approved, and the realtionship is non-existant if the user has not submitted a request or has been rejected.
+
+## Unexpected Challenges
+
+
+
+
 
 ### Development Workflow
 Our team managed workflow and responsibilities by utilizing Agile methodology. [Trello](https://trello.com/b/JIxuLxiP/blue-ocean) was used to to keep track of tickets. All development work was specifically associated with a ticket. At any point in time the status of a ticket could be ascertained by finding it on the board. After our daily standup meeting we assessed the status of our application then updated and reassigned tickets based on workload.

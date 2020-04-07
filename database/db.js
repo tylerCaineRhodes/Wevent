@@ -219,11 +219,10 @@ module.exports.getAllStates = (callback) => {
       callback(null, results);
     }
   });
-  
-  module.exports.getCategories = (callback) => {
-    const query = 'Select * from categories order by category_id;';
-    
-  };
+};
+
+module.exports.getCategories = (callback) => {
+  const query = 'Select * from categories order by category_id;';
   db.query(query, (err, results) => {
     if (err) {
       callback(err);
