@@ -30,6 +30,54 @@ Schema:
 [Mark Wallace](https://github.com/mwallace999)
 
 ## Wevent
+## Tech Stack
+
+*Wevent* was built primarily with ReactJS on the front-end and Node/Express on the backend. Other key technologies used are listed below:
+
+<table>
+  <tr>
+  </tr>
+  <tr>
+    <td align="center">Front-end</td>
+    <td align="center">Back-end</td>
+    <td align="center">Deployment</td>
+    <td align="center">APIs</td>
+    <td align="center">Testing</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png" width="65"/></td>
+    <td align="center"><img src="https://miro.medium.com/max/1200/1*m5RYM_Wkj4LsZewpigV5tg.jpeg" width="65"/></td>
+    <td align="center"><img src="https://www.docker.com/sites/default/files/social/docker_facebook_share.png" width="65"/></td>
+    <td align="center"><img /></td>
+    <td align="center"><img /></td>
+  </tr>  
+  <tr>
+    <td align="center"><img src="https://material-ui.com/static/logo_raw.svg" width="65"/></td>
+    <td align="center"><img src="https://miro.medium.com/max/766/1*uPL1uCtLBRSk6akPL2hNzg.jpeg" width="65"/></td>
+    <td align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/1280px-Amazon_Web_Services_Logo.svg.png"  width="65"/></td>
+    <td align="center"><img /></td>
+    <td align="center"><img /></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Sass_Logo_Color.svg/1200px-Sass_Logo_Color.svg.png" width="65"/></td>
+    <td align="center"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png" width="65"/></td>
+    <td align="center"><img src="https://mpng.subpng.com/20180412/yiw/kisspng-amazon-com-aws-elastic-beanstalk-amazon-web-servic-amazon-5ad02a76cd0691.8059126715235917988398.jpg" width="65"/></td>
+    <td align="center"><img /></td>
+    <td align="center"><img /></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="https://mpng.subpng.com/20180531/sas/kisspng-bootstrap-react-software-framework-javascript-fron-5b0f9b1ab26fd7.9058729715277494027309.jpg" width="65"/></td>
+    <td align="center"><img /></td>
+    <td align="center"><img /></td>
+    <td align="center"><img /></td>
+    <td align="center"><img /></td>
+  </tr>
+</table>
+
+## Technical Challenges / Research
+
+ - Why, what was the plan to overcome those challenges
+ - What did you learn
 
 *Wevent* is a responsive web application that allows users to create and view events on a calendar  based their location. Users can search for events by applying  filters based on their location (city, state), category type, number of attendees, private / public , or the cost of an event. Users can choose whether or not to attend and event or just as easily create a new event with similar filters
 
@@ -103,10 +151,6 @@ Implementatation
  - 1. Logging in automatically populates the calendar with all events in the user's area by setting each metric in the filter to a default. When the user moves the filter, a new database call is automatically triggered.
  - 2. When the server is notified that a user has clicked an event, it first determines what information that user has access to. It then makes one of three database calls (event info for host, full access, or limited access) and sends only the appropriate information back to the front end.
  - 3. Users attending or interested in an event are tracked in a join table that stores a user id, event id, and pending boolean. The latter describes the current status of the user's relationship to that event. It is true if the user is pending approval, false if they are approved, and the realtionship is non-existant if the user has not submitted a request or has been rejected.
-
-## Unexpected Challenges
-
-
 
 
 
