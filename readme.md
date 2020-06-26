@@ -1,4 +1,4 @@
-<img src ="Wevent Logo.png" />
+<img src ="Wevent-Logo.png" />
 
 ## Wevent
 
