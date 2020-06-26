@@ -1,4 +1,4 @@
-<img src ="Wevent Logo.png" width="65" height="40" />
+<img src ="Wevent Logo.png" width="250" height="160" />
 
 ## Wevent
 
@@ -113,8 +113,7 @@ Calendar
  - User can filter events by category, distance, # of people, cost, keyword, duration/time, private/public event
 
 ## Minimum Viable Product (MVP)
-
-// Incomplete
+This MVP was completed under a strict time constraint- six days from the initial meeting with our client. This required us to seriously prioritize efficiency and core functionality over other superfluous features. 
 
 ## How the app works
 
@@ -130,7 +129,7 @@ How does the tech stack come together?
 ### Development Workflow
 Our team managed workflow and responsibilities by utilizing Agile methodology. [Trello](https://trello.com/b/JIxuLxiP/blue-ocean) was used to to keep track of tickets. All development work was specifically associated with a ticket. At any point in time the status of a ticket could be ascertained by finding it on the board. After our daily standup meeting we assessed the status of our application then updated and reassigned tickets based on workload.
 
-<img src ="WeventTrello.png" width="65" height="40" />
+<img src ="WeventTrello.png" width="250" height="160" />
 
 ## Version Control and Continuous Integration
 
@@ -146,8 +145,8 @@ Writing tests
 Link to your trello board, discuss completed tickets
 
 ## What additional features do you plan to add, how do you plan to implement those features?
+As an app scales and complexity increases, localizing state becomes an even greater priority. This can be alleviated by using Redux/a central store to keep state seperate from the components, and Wevent is already at a size which is begging for a refactor. 
 
-Future refactoring?
 Additional dev ops considerations?
 UI/UX additions?
 
