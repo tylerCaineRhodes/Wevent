@@ -1,4 +1,4 @@
-// NEED TO ADD WEVENT LOGO
+<img src ="Wevent Logo.png" />
 
 ## Wevent
 
