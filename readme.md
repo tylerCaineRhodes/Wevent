@@ -1,4 +1,4 @@
-<img src ="Wevent Logo.png" width="250" height="160" />
+<img src ="Wevent Logo.png" width="450" height="160" />
 
 ## Wevent
 
@@ -129,7 +129,7 @@ How does the tech stack come together?
 ### Development Workflow
 Our team managed workflow and responsibilities by utilizing Agile methodology. [Trello](https://trello.com/b/JIxuLxiP/blue-ocean) was used to to keep track of tickets. All development work was specifically associated with a ticket. At any point in time the status of a ticket could be ascertained by finding it on the board. After our daily standup meeting we assessed the status of our application then updated and reassigned tickets based on workload.
 
-<img src ="WeventTrello.png" width="250" height="160" />
+<img src ="WeventTrello.png" width="450" height="260" />
 
 ## Version Control and Continuous Integration
 
