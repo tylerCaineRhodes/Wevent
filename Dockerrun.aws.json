@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "bpernick/blueocean:latest",
+    "Name": "rhodetyl000/wevent",
     "Update": "true"
   },
   "Ports": [
